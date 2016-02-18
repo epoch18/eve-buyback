@@ -86,6 +86,18 @@ return [
 			'prefix'   => '',
 		],
 
+		'evesde' => [
+			'driver'	=> 'mysql',
+			'host'		=> env('DB_SDE_HOST', 'localhost'),
+			'database'	=> env('DB_SDE_DATABASE', 'forge'),
+			'username'	=> env('DB_SDE_USERNAME', 'forge'),
+			'password'	=> env('DB_SDE_PASSWORD', ''),
+			'charset'	=> 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'	=> '',
+			'strict'	=> false,
+			'engine'	=> null,
+		],
 	],
 
 	/*
