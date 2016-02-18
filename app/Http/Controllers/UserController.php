@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use \App\EveOnline\SSO;
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
+
+use App\EveOnline\SSO;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+	/**
+	* @var Illuminate\Http\Request
+	*/
+	private $request;
+
 	/**
 	* @var App\EveOnline\SSO
 	*/
