@@ -86,6 +86,12 @@ return [
 			'prefix'   => '',
 		],
 
+		'testing' => [
+			'driver'   => 'sqlite',
+			'database' => ':memory:',
+			'prefix'   => '',
+		],
+
 		'evesde' => [
 			'driver'	=> 'mysql',
 			'host'		=> env('DB_SDE_HOST', 'localhost'),

@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserControllerTest extends TestCase
 {
-	use DatabaseTransactions;
-
 	/**
 	 * @var App\EveOnline\SSO
 	 */
@@ -17,12 +15,15 @@ class UserControllerTest extends TestCase
 	{
 		parent::setUp();
 
+		Artisan::call('migrate');
+		Artisan::call('db:seed');
+
 		$this->sso = Mockery::mock(App\EveOnline\SSO::class);
 	}
 
 	public function testLoginRouteWhileLoggedIn()
 	{
-		\Auth::shouldReceive('check')
+		Auth::shouldReceive('check')
 		     ->once()
 		     ->andReturn(true);
 

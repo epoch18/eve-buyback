@@ -6,6 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+	const ADMINISTRATOR = 1;
+
 	/**
 	 * The primary key.
 	 *
@@ -58,4 +60,27 @@ class User extends Authenticatable
 		'allianceTicker'     => 'string',
 		'flags'              => 'integer',
 	];
+
+	/**
+	 * Checks if the user is an administrator.
+	 * @return boolean
+	 */
+	public function isAdministrator()
+	{
+		return ($this->flags & self::ADMINISTRATOR) == self::ADMINISTRATOR;
+	}
+
+	/**
+	 * Sets the administrator flag for the user.
+	 * @param boolean $value
+	 */
+	public function setAdministrator($value)
+	{
+		if ($value) {
+			$this->flags |= self::ADMINISTRATOR;
+
+		} else {
+			$this->flags &= ~self::ADMINISTRATOR;
+		}
+	}
 }

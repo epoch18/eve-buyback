@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SSOTest extends TestCase
 {
-	use DatabaseTransactions;
-
 	/**
 	 * @var GuzzleHttp\Client
 	 */
@@ -27,6 +25,9 @@ class SSOTest extends TestCase
 	{
 		parent::setUp();
 
+		Artisan::call('migrate');
+		Artisan::call('db:seed');
+
 		$this->guzzle  = Mockery::mock(\GuzzleHttp\Client::class);
 		$this->request = Mockery::mock(\Illuminate\Http\Request::class);
 		$this->user    = Mockery::mock(\App\Models\User::class);
@@ -39,20 +40,14 @@ class SSOTest extends TestCase
 		              ->once()
 		              ->andReturn('https://login.eveonline.com');
 
-		$sso = new \App\EveOnline\SSO($this->guzzle, $this->request, $this->user);
-
-		$this->assertEquals(true, $sso->isReferredByEveOnline());
-	}
-
-	public function testNotReferredByEveOnline()
-	{
 		$this->request->shouldReceive('header')
 		              ->with('Referer')
 		              ->once()
-		              ->andReturn('https://localhost');
+		              ->andReturn('https://not.login.eveonline.com');
 
 		$sso = new \App\EveOnline\SSO($this->guzzle, $this->request, $this->user);
 
+		$this->assertEquals(true , $sso->isReferredByEveOnline());
 		$this->assertEquals(false, $sso->isReferredByEveOnline());
 	}
 
@@ -71,7 +66,7 @@ class SSOTest extends TestCase
 		// request
 		$this->request->shouldReceive('input')
 		              ->once()
-		              ->andReturn('');
+		              ->andReturn('code');
 
 		// getAccessToken
 		$response1 = Mockery::mock(stdClass::class);

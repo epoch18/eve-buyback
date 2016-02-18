@@ -18,12 +18,12 @@ class CreateUsersTable extends Migration
 			$table->integer   ('characterID'       )->unsigned();
 			$table->string    ('characterName'     );
 			$table->string    ('characterOwnerHash');
-			$table->integer   ('corporationID'     )->unsigned();
-			$table->string    ('corporationName'   );
-			$table->string    ('corporationTicker' );
-			$table->integer   ('allianceID'        )->unsigned();
-			$table->string    ('allianceName'      );
-			$table->string    ('allianceTicker'    );
+			$table->integer   ('corporationID'     )->nullable()->unsigned();
+			$table->string    ('corporationName'   )->nullable();
+			$table->string    ('corporationTicker' )->nullable();
+			$table->integer   ('allianceID'        )->nullable()->unsigned();
+			$table->string    ('allianceName'      )->nullable();
+			$table->string    ('allianceTicker'    )->nullable();
 			$table->integer   ('flags'             )->unsigned()->default(0);
 
 			$table->rememberToken();
