@@ -58,55 +58,44 @@ class SSOTest extends TestCase
 
 	public function testRedirectToEveOnline()
 	{
-		//
+		$sso      = new \App\EveOnline\SSO($this->guzzle, $this->request, $this->user);
+		$response = $sso->redirectToEveOnline();
+
+		$this->assertInstanceOf(Illuminate\Http\RedirectResponse::class, $response);
+
+		$this->assertStringStartsWith('https://login.eveonline.com/oauth/authorize', $response->headers->get('location'));
 	}
 
 	public function testGetAuthenticatedUser()
 	{
-		//
-	}
+		// request
+		$this->request->shouldReceive('input')
+		              ->once()
+		              ->andReturn('');
 
-	public function testGetAccessToken()
-	{
+		// getAccessToken
+		$response1 = Mockery::mock(stdClass::class);
+		$response1->shouldReceive('getBody')
+		          ->once()
+		          ->andReturn('{ "access_token": "token", "token_type": "Bearer", "expires_in": 300, "refresh_token": null }');
+
 		$this->guzzle->shouldReceive('request')
 		             ->once()
-		             ->andReturn($this->guzzle);
+		             ->andReturn($response1);
 
-		$this->guzzle->shouldReceive('getBody')
-		             ->once()
-		             ->andReturn('{ "access_token": "token", "token_type": "Bearer", "expires_in": 300, "refresh_token": null }');
+		// getCharacterDetails
+		$response2 = Mockery::mock(stdClass::class);
+		$response2->shouldReceive('getBody')
+		          ->once()
+		          ->andReturn('{ "CharacterID": 273042051, "CharacterName": "CCP illurkall", "ExpiresOn": "2014-05-23T15:01:15.182864Z", "Scopes": " ", "TokenType": "Character", "CharacterOwnerHash": "XM4D...FoY=" }');
 
-		$sso = new \App\EveOnline\SSO($this->guzzle, $this->request, $this->user);
-
-		$this->assertEquals('token', $sso->getAccessToken(''));
-	}
-
-	public function testGetCharacterDetails()
-	{
 		$this->guzzle->shouldReceive('request')
 		             ->once()
-		             ->andReturn($this->guzzle);
+		             ->andReturn($response2);
 
-		$this->guzzle->shouldReceive('getBody')
-		             ->once()
-		             ->andReturn('{ "CharacterID": 273042051, "CharacterName": "CCP illurkall", "ExpiresOn": "2014-05-23T15:01:15.182864Z", "Scopes": " ", "TokenType": "Character", "CharacterOwnerHash": "XM4D...FoY=" }');
-
-		$sso       = new \App\EveOnline\SSO($this->guzzle, $this->request, $this->user);
-		$character = $sso->getCharacterDetails('');
-
-		$this->assertArrayHasKey('CharacterID'       , $character);
-		$this->assertArrayHasKey('CharacterName'     , $character);
-		$this->assertArrayHasKey('CharacterOwnerHash', $character);
-	}
-
-	public function testFirstOrCreateUser()
-	{
+		// test
 		$sso  = new \App\EveOnline\SSO($this->guzzle, $this->request, new \App\Models\User);
-		$user = $sso->firstOrCreateUser([
-			'CharacterID'        => 273042051,
-			'CharacterName'      => 'CCP illurkall',
-			'CharacterOwnerHash' => 'XM4D...FoY=',
-		]);
+		$user = $sso->getAuthenticatedUser();
 
 		$this->assertEquals(273042051      , $user->characterID);
 		$this->assertEquals('CCP illurkall', $user->characterName);

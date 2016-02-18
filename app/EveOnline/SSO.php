@@ -87,7 +87,7 @@ class SSO
 	 * @param  string $code
 	 * @return string
 	 */
-	public function getAccessToken($code)
+	private function getAccessToken($code)
 	{
 		$client   = config('sso.client');
 		$secret   = config('sso.secret');
@@ -104,7 +104,7 @@ class SSO
 	 * @param  string $token
 	 * @return array
 	 */
-	public function getCharacterDetails($token)
+	private function getCharacterDetails($token)
 	{
 		$url      = 'https://login.eveonline.com/oauth/verify';
 
@@ -119,7 +119,7 @@ class SSO
 	 * @param array $character
 	 * @return App\Models\User
 	 */
-	public function firstOrCreateUser($character)
+	private function firstOrCreateUser($character)
 	{
 		return $this->user->firstOrCreate([
 			'characterID'        => $character['CharacterID'       ],
