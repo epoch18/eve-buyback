@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
 	return view('welcome');
-});
+})->name('index');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +27,8 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-	//
+	Route::group(['prefix' => 'user'], function () {
+        Route::get('login' , 'UserController@login' )->name('login' );
+        Route::get('logout', 'UserController@logout')->name('logout');
+	});
 });

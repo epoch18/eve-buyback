@@ -11,11 +11,18 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 	return [
-		'name' => $faker->name,
-		'email' => $faker->email,
-		'password' => bcrypt(str_random(10)),
-		'remember_token' => str_random(10),
+		'characterID'        => rand(100000, 999999),
+		'characterName'      => $faker->name,
+		'characterOwnerHash' => str_random(10),
+		'corporationID'      => rand(100000, 999999),
+		'corporationName'    => $faker->company,
+		'corporationTicker'  => strtoupper(str_random(5)),
+		'allianceID'         => rand(100000, 999999),
+		'allianceName'       => $faker->company,
+		'allianceTicker'     => strtoupper(str_random(5)),
+		'flags'              => 0,
+		'remember_token'     => str_random(10),
 	];
 });
