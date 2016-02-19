@@ -35,4 +35,15 @@ return [
 		'secret' => env('STRIPE_SECRET'),
 	],
 
+	'eveapi' => [
+		'keyid' => env('EVE_API_KEYID', ''),
+		'vcode' => env('EVE_API_VCODE', ''),
+	],
+
+	'evesso' => [
+		'client'   => env('EVE_SSO_CLIENT_ID'   , ''),
+		'secret'   => env('EVE_SSO_SECRET_KEY'  , ''),
+		'callback' => env('EVE_SSO_CALLBACK_URL', ''),
+	],
+
 ];

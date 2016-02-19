@@ -56,8 +56,8 @@ class SSO
 	 */
 	public function redirectToEveOnline()
 	{
-		$callback = config('sso.callback');
-		$client   = config('sso.client'  );
+		$callback = config('services.evesso.callback');
+		$client   = config('services.evesso.client'  );
 		$url      = "https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri={$callback}&client_id={$client}&scope=&state=";
 
 		return redirect()->to($url, 302);
@@ -89,8 +89,8 @@ class SSO
 	 */
 	private function getAccessToken($code)
 	{
-		$client   = config('sso.client');
-		$secret   = config('sso.secret');
+		$client   = config('services.evesso.client');
+		$secret   = config('services.evesso.secret');
 		$url      = "https://login.eveonline.com/oauth/token/?grant_type=authorization_code&code={$code}";
 
 		$response = $this->guzzle->request('POST', $url, ['auth' => [$client, $secret]]);

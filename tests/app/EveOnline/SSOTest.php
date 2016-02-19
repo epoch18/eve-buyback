@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SSOTest extends TestCase
 {
+	use DatabaseMigrations;
+
 	/**
 	 * @var GuzzleHttp\Client
 	 */
@@ -24,9 +26,6 @@ class SSOTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-
-		Artisan::call('migrate');
-		Artisan::call('db:seed');
 
 		$this->guzzle  = Mockery::mock(\GuzzleHttp\Client::class);
 		$this->request = Mockery::mock(\Illuminate\Http\Request::class);
