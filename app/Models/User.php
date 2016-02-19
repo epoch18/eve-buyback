@@ -9,6 +9,13 @@ class User extends Authenticatable
 	const ADMINISTRATOR = 1;
 
 	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'buyback_users';
+
+	/**
 	 * The primary key.
 	 *
 	 * @var string
@@ -72,7 +79,7 @@ class User extends Authenticatable
 
 	/**
 	 * Sets the administrator flag for the user.
-	 * @param boolean $value
+	 * @param \App\Models\User
 	 */
 	public function setAdministrator($value)
 	{
@@ -82,5 +89,7 @@ class User extends Authenticatable
 		} else {
 			$this->flags &= ~self::ADMINISTRATOR;
 		}
+
+		return $this;
 	}
 }

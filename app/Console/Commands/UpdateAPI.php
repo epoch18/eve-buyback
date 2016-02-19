@@ -14,6 +14,11 @@ class UpdateAPI extends Command
 	private $dispatcher;
 
 	/**
+	 * @var \App\Jobs\UpdateAPI
+	 */
+	private $job;
+
+	/**
 	 * The name and signature of the console command.
 	 * @var string
 	 */
@@ -28,13 +33,15 @@ class UpdateAPI extends Command
 	/**
 	 * Create a new command instance.
 	 * @param  \Illuminate\Bus\Dispatcher $dispatcher
+	 * @param  \App\Jobs\UpdateAPI        $job
 	 * @return void
 	 */
-	public function __construct(Dispatcher $dispatcher)
+	public function __construct(Dispatcher $dispatcher, Job $job)
 	{
 		parent::__construct();
 
 		$this->dispatcher = $dispatcher;
+		$this->job        = $job;
 	}
 
 	/**
@@ -43,6 +50,6 @@ class UpdateAPI extends Command
 	 */
 	public function handle()
 	{
-		$this->dispatcher->dispatchNow(new Job);
+		$this->dispatcher->dispatchNow($this->job);
 	}
 }

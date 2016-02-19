@@ -12,7 +12,11 @@ class CreateUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('users', function (Blueprint $table)
+		if (Schema::hasTable('buyback_users')) {
+			return;
+		}
+
+		Schema::create('buyback_users', function (Blueprint $table)
 		{
 			$table->increments('userID'            )->unsigned();
 			$table->integer   ('characterID'       )->unsigned();
@@ -41,6 +45,8 @@ class CreateUsersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		if (Schema::hasTable('buyback_users')) {
+			Schema::drop('buyback_users');
+		}
 	}
 }
