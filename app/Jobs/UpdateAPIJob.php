@@ -96,11 +96,12 @@ class UpdateAPIJob extends Job implements ShouldQueue
 						$this->contract_item->updateOrCreate([
 							'recordID'     => $item->recordID,
 						], [
-							'contractID' => $contract->contractID,
-							'typeID'     => $item->typeID,
-							'quantity'   => $item->quantity,
-							'singleton'  => $item->singleton,
-							'included'   => $item->included,
+							'contractID'  => $contract->contractID,
+							'typeID'      => $item->typeID,
+							'quantity'    => $item->quantity,
+							'rawQuantity' => isset($item->rawQuantity) ? $item->rawQuantity : 0,
+							'singleton'   => $item->singleton,
+							'included'    => $item->included,
 						]);
 					} // items
 				} // contracts

@@ -37,6 +37,7 @@ class ContractItem extends Model
 		'contractID',
 		'typeID',
 		'quantity',
+		'rawQuantity',
 		'singleton',
 		'included',
 	];
@@ -55,11 +56,12 @@ class ContractItem extends Model
 	 * @var array
 	 */
 	protected $casts = [
-		'recordID'   => 'integer',
-		'contractID' => 'integer',
-		'typeID'     => 'integer',
-		'quantity'   => 'integer',
-		'singleton'  => 'boolean',
-		'included'   => 'boolean',
+		'recordID'    => 'integer',
+		'contractID'  => 'integer',
+		'typeID'      => 'integer',
+		'quantity'    => 'integer',
+		'rawQuantity' => 'integer',
+		'singleton'   => 'boolean',
+		'included'    => 'boolean',
 	];
 }
