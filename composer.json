@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "predis/predis": "^1.0",
         "guzzlehttp/guzzle": "^6.1",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "3rdpartyeve/phealng": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

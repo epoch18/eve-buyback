@@ -4,9 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b73c122e58b5ddf4ddbbe6ccc486140",
-    "content-hash": "72ca1e60f8074e6380780254cc04e923",
+    "hash": "909213cdc8dfda5f3276664bbb92d6c3",
+    "content-hash": "f1b4e1f33bfd0b0e5df4226b7971204e",
     "packages": [
+        {
+            "name": "3rdpartyeve/phealng",
+            "version": "2.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/3rdpartyeve/phealng.git",
+                "reference": "8a35612d1a10b843e462bde93ecaf5ecd0c62e0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/3rdpartyeve/phealng/zipball/8a35612d1a10b843e462bde93ecaf5ecd0c62e0a",
+                "reference": "8a35612d1a10b843e462bde93ecaf5ecd0c62e0a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.1",
+                "php": ">=5.4.0",
+                "psr/log": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.7.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pheal\\": "lib/Pheal/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Petermann",
+                    "email": "ppetermann80@googlemail.com",
+                    "homepage": "http://devedge.eu"
+                },
+                {
+                    "name": "Wollari",
+                    "homepage": "http://evemaps.dotlan.net/"
+                }
+            ],
+            "description": "PHP Eve Api Library, a simple PHP lib to access the EVE Online API",
+            "homepage": "https://github.com/3rdpartyeve/phealng",
+            "keywords": [
+                "EVE API",
+                "EVE Online",
+                "Pheal",
+                "PhealNG"
+            ],
+            "time": "2016-01-10 16:59:33"
+        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v2.2.0",
