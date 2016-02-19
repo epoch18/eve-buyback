@@ -11,17 +11,17 @@ class SSOTest extends TestCase
 	/**
 	 * @var GuzzleHttp\Client
 	 */
-	public $guzzle;
+	private $guzzle;
 
 	/**
 	 * @var Illuminate\Http\Request
 	 */
-	public $request;
+	private $request;
 
 	/**
 	 * @var App\Models\User
 	 */
-	public $user;
+	private $user;
 
 	public function setUp()
 	{

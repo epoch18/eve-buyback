@@ -6,19 +6,19 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserControllerTest extends TestCase
 {
+	use DatabaseMigrations;
+
 	/**
 	 * @var App\EveOnline\SSO
 	 */
-	public $sso;
+	private $sso;
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		Artisan::call('migrate');
-		Artisan::call('db:seed');
-
 		$this->sso = Mockery::mock(App\EveOnline\SSO::class);
+		$this->app->instance(\App\EveOnline\SSO::class, $this->sso);
 	}
 
 	public function testLoginRouteWhileLoggedIn()
@@ -28,6 +28,8 @@ class UserControllerTest extends TestCase
 		     ->andReturn(true);
 
 		$this->get('/user/login');
+
+		$this->assertResponseStatus(302);
 
 		$this->assertRedirectedToRoute('index');
 	}
@@ -45,9 +47,9 @@ class UserControllerTest extends TestCase
 		          ->once()
 		          ->andReturn($user);
 
-		$this->app->instance(\App\EveOnline\SSO::class, $this->sso);
-
 		$this->get('/user/login');
+
+		$this->assertResponseStatus(302);
 
 		$this->assertRedirectedToRoute('index');
 
@@ -69,18 +71,22 @@ class UserControllerTest extends TestCase
 		          ->once()
 		          ->andReturn(false);
 
-		$this->app->instance(\App\EveOnline\SSO::class, $this->sso);
-
 		$this->get('/user/login');
+
+		$this->assertResponseStatus(302);
 
 		$this->assertRedirectedToRoute('index');
 
 		$this->assertSessionHas('errors');
+
+		$this->assertEquals(null, auth()->user());
 	}
 
 	public function testLogoutRoute()
 	{
 		$this->get('/user/logout');
+
+		$this->assertResponseStatus(302);
 
 		$this->assertRedirectedToRoute('index');
 

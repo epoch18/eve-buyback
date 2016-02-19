@@ -6,12 +6,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase
 {
+	use DatabaseMigrations;
+
 	public function setUp()
 	{
 		parent::setUp();
-
-		Artisan::call('migrate');
-		Artisan::call('db:seed');
 	}
 
 	public function testAdministratorFlag()
