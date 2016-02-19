@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UpdateAPITest extends TestCase
+class UpdateAPICommandTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -14,7 +14,7 @@ class UpdateAPITest extends TestCase
 	private $dispatcher;
 
 	/**
-	 * @var \App\Jobs\UpdateAPI
+	 * @var \App\Jobs\UpdateAPIJob
 	 */
 	private $job;
 
@@ -23,14 +23,14 @@ class UpdateAPITest extends TestCase
 		parent::setUp();
 
 		$this->dispatcher = Mockery::mock(\Illuminate\Bus\Dispatcher::class);
-		$this->job        = Mockery::mock(\App\Jobs\UpdateAPI::class);
+		$this->job        = Mockery::mock(\App\Jobs\UpdateAPIJob::class);
 	}
 
 	public function testHandle()
 	{
 		$this->dispatcher->shouldReceive('dispatchNow')->once()->with($this->job);
 
-		$command = new \App\Console\Commands\UpdateAPI($this->dispatcher, $this->job);
+		$command = new \App\Console\Commands\UpdateAPICommand($this->dispatcher, $this->job);
 		$command->handle();
 	}
 }

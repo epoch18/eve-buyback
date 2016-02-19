@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
 	 * @var array
 	 */
 	protected $commands = [
-		\App\Console\Commands\UpdateAPI::class,
+		\App\Console\Commands\UpdateAPICommand::class,
 		// Commands\Inspire::class,
 	];
 
