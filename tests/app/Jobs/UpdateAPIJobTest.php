@@ -11,7 +11,7 @@ class UpdateAPIJobTest extends TestCase
 	/**
 	 * @var \Pheal\Pheal
 	 */
-	private $dispatcher;
+	private $pheal;
 
 	public function setUp()
 	{
