@@ -18,6 +18,7 @@ class UpdateAPIJobTest extends TestCase
 		parent::setUp();
 
 		$this->pheal = Mockery::mock(\Pheal\Pheal::class);
+		$this->app->instance(\Pheal\Pheal::class, $this->pheal);
 	}
 
 	public function testHandle()
@@ -98,9 +99,8 @@ class UpdateAPIJobTest extends TestCase
 
 		$this->pheal->shouldReceive('ContractItems')->once()->andReturn($contract_items);
 
-		// Test the job.
 		$job = app()->make(App\Jobs\UpdateAPIJob::class);
-		$job->handle($this->pheal);
+		$job->handle();
 
 		$this->seeInDatabase('api_contracts'     , ['contractID' => 97809127  ]);
 		$this->seeInDatabase('api_contract_items', ['recordID'   => 1737516979]);

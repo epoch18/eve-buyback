@@ -27,36 +27,43 @@ class UpdateAPIJob extends Job implements ShouldQueue
 	private $contract_item;
 
 	/**
+	 * @var \Pheal\Pheal
+	 */
+	private $pheal;
+
+	/**
 	 * Create a new job instance.
-	 *
+	 * @param  \App\Models\API\Contract     $contract
+	 * @param  \App\Models\API\ContractItem $contract_item
+	 * @param  \Pheal\Pheal                 $pheal
 	 * @return void
 	 */
-	public function __construct(Contract $contract, ContractItem $contract_item)
+	public function __construct(Contract $contract, ContractItem $contract_item, Pheal $pheal)
 	{
 		$this->contract      = $contract;
 		$this->contract_item = $contract_item;
+		$this->pheal         = $pheal;
 	}
 
 	/**
 	 * Execute the job.
-	 *
 	 * @return void
 	 */
-	public function handle(Pheal $pheal)
+	public function handle()
 	{
 		try {
 			Log::info('Updating api records.');
 
-			$apiKeyInfo = $pheal->accountScope->ApiKeyInfo();
+			$apiKeyInfo = $this->pheal->accountScope->ApiKeyInfo();
 			$accessMask = $apiKeyInfo->key->accessMask;
 			$accessType = $apiKeyInfo->key->type;
 			$scope      = substr(lcfirst($accessType), 0, 4).'Scope';
 
 			// Update contracts and contract items.
-			DB::transaction(function () use ($pheal, $scope) {
+			DB::transaction(function () use ($scope) {
 				Log::info('Updating contracts and contract items.');
 
-				$contracts = $pheal->$scope->Contracts();
+				$contracts = $this->pheal->$scope->Contracts();
 
 				foreach ($contracts->contractList as $contract) {
 					$this->contract->updateOrCreate([
@@ -90,7 +97,7 @@ class UpdateAPIJob extends Job implements ShouldQueue
 						continue;
 					}
 
-					$items = $pheal->$scope->ContractItems(['contractID' => $contract->contractID]);
+					$items = $this->pheal->$scope->ContractItems(['contractID' => $contract->contractID]);
 
 					foreach ($items->itemList as $item) {
 						$this->contract_item->updateOrCreate([
