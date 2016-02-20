@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
 	 */
 	protected $commands = [
 		\App\Console\Commands\UpdateAPICommand::class,
+		\App\Console\Commands\UpdateItemsCommand::class,
 		// Commands\Inspire::class,
 	];
 
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('buyback:update-api')->hourly();
+		$schedule->command('buyback:update-api'  )->hourly();
+		$schedule->command('buyback:update-items')->hourly();
 	}
 }

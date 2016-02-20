@@ -40,6 +40,14 @@ return [
 		'vcode' => env('EVE_API_VCODE', ''),
 	],
 
+	'evecentral' => [
+		'url'       => env('EVE_CENTRAL_URL'      , ''),
+		'usesystem' => env('EVE_CENTRAL_USESYSTEM', ''),
+		'minq'      => env('EVE_CENTRAL_MINQ'     , ''),
+		'buy'       => env('EVE_CENTRAL_BUY'      , ''),
+		'sell'      => env('EVE_CENTRAL_SELL'     , ''),
+	],
+
 	'evesso' => [
 		'client'   => env('EVE_SSO_CLIENT_ID'   , ''),
 		'secret'   => env('EVE_SSO_SECRET_KEY'  , ''),
