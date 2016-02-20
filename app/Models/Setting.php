@@ -11,14 +11,14 @@ class Setting extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'settings';
+	protected $table = 'buyback_settings';
 
 	/**
 	 * The primary key.
 	 *
 	 * @var string
 	 */
-	protected $primaryKey = 'settingID';
+	protected $primaryKey = 'key';
 
 	/**
 	 * Indicates if the model should be timestamped.
@@ -33,8 +33,8 @@ class Setting extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'settingKey',
-		'settingValue',
+		'key',
+		'value',
 	];
 
 	/**
@@ -51,7 +51,7 @@ class Setting extends Model
 	 * @var array
 	 */
 	protected $casts = [
-		'settingKey'   => 'string',
-		'settingValue' => 'string',
+		'key'   => 'string',
+		'value' => 'string',
 	];
 }
