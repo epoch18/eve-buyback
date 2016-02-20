@@ -48,13 +48,13 @@ class UserController extends Controller
 
 		if (!$user) {
 			return redirect()->route('index')
-			                 ->withErrors([trans('messages.login_failed')]);
+			                 ->withErrors([trans('buyback.login_failed')]);
 		}
 
 		auth()->loginUsingId($user->userID, true);
 
 		return redirect()->route('index')
-			             ->withSuccess(trans('messages.login_success'));
+			             ->withSuccess(trans('buyback.login_success'));
 	}
 
 	/**
@@ -65,6 +65,6 @@ class UserController extends Controller
 		auth()->logout();
 
 		return redirect()->route('index')
-			             ->withSuccess(trans('messages.logout_success'));
+			             ->withSuccess(trans('buyback.logout_success'));
 	}
 }
