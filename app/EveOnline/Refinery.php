@@ -5,6 +5,7 @@ namespace App\EveOnline;
 use App\Models\SDE\InvType;
 use App\Models\Item;
 use App\Models\Setting;
+use Illuminate\Config\Repository;
 
 /**
  * Handles calculating the materials gained from reprocessing items and
@@ -13,9 +14,15 @@ use App\Models\Setting;
 class Refinery
 {
 	/**
+	* @var \Illuminate\Config\Repository
+	*/
+	private $config;
+
+	/**
 	* @var \App\Models\Item
 	*/
 	private $item;
+
 	/**
 	* @var \App\Models\SDE\InvType
 	*/
@@ -27,10 +34,11 @@ class Refinery
 	* @param  \App\Models\SDE\InvType  $type
 	* @return void
 	*/
-	public function __construct(Item $item, InvType $type)
+	public function __construct(Repository $config, Item $item, InvType $type)
 	{
-		$this->item     = $item;
-		$this->type     = $type;
+		$this->config = $config;
+		$this->item   = $item;
+		$this->type   = $type;
 	}
 
 	/**
@@ -204,10 +212,10 @@ class Refinery
 	public function getRecycledMaterials(InvType $type)
 	{
 		$materials = [];
-		$yield     = 0.52 * (1 + 0.02 * config('refinery.scrapmetal'));
+		$yield     = 0.52 * (1 + 0.02 * $this->config->get('refinery.scrapmetal')) * $this->config->get('refinery.station_tax');
 
 		foreach($type->materials as $material) {
-			$materials[$material->materialTypeID] = $material->quantity * $yield * config('refinery.station_tax');
+			$materials[$material->materialTypeID] = $material->quantity * $yield;
 		}
 
 		return $materials;
@@ -221,11 +229,11 @@ class Refinery
 	public function getRefinedMaterials(InvType $type)
 	{
 		$materials = [];
-		$yield     =      config('refinery.station_tax'  )
-			*             config('refinery.station_yield')
-			* (1 + 0.03 * config('refinery.reprocessing'))
-			* (1 + 0.02 * config('refinery.efficiency'  ))
-			* (1 + 0.01 * config('refinery.beancounter' ))
+		$yield     =      $this->config->get('refinery.station_tax'  )
+			*             $this->config->get('refinery.station_yield')
+			* (1 + 0.03 * $this->config->get('refinery.reprocessing'))
+			* (1 + 0.02 * $this->config->get('refinery.efficiency'  ))
+			* (1 + 0.01 * $this->config->get('refinery.beancounter' ))
 		;
 
 		// Find the base asteroid type without any adjectives.
@@ -258,7 +266,7 @@ class Refinery
 			break;
 		}
 
-		$yield *= (1 + 0.02 * config('refinery.'.strtolower($skill)));
+		$yield *= (1 + 0.02 * $this->config->get('refinery.'.strtolower($skill)));
 
 		// Reprocess the item.
 		foreach($type->materials as $material) {

@@ -8,11 +8,24 @@ class RefineryTest extends TestCase
 {
 	use DatabaseMigrations;
 
+	/**
+	 * @var Illuminate\Config\Repository
+	 */
+	public $config;
+
 	public function setUp()
 	{
 		parent::setUp();
 
 		Artisan::call('db:seed', ['--class' => 'ItemSeeder']);
+
+		$this->config = Mockery::mock(\Illuminate\Config\Repository::class);
+		$this->app->instance(\Illuminate\Config\Repository::class, $this->config);
+
+		$this->config->shouldReceive('get')->with('refinery.station_tax'  )->andReturn(1.00);
+		$this->config->shouldReceive('get')->with('refinery.station_yield')->andReturn(0.60);
+		$this->config->shouldReceive('get')->with('refinery.beancounter'  )->andReturn(4   );
+		$this->config->shouldReceive('get')->andReturn(5);
 	}
 
 	public function testCanBeBoughtRaw()
@@ -82,6 +95,25 @@ class RefineryTest extends TestCase
 			35 =>   72,
 			36 =>   50,
 			37 =>   16,
+		], $materials);
+	}
+
+	public function testGetRefinedMaterials()
+	{
+		$refinery = app()->make(\App\EveOnline\Refinery::class);
+
+		$spodumain = \App\Models\SDE\InvType::find(19);
+		$materials = $refinery->getRefinedMaterials($spodumain);
+
+		foreach ($materials as &$material) {
+			$material = (integer)$material;
+		}
+
+		$this->assertArraySubset([
+			34 => 48624,
+			35 => 10462,
+			36 =>  1823,
+			37 =>   390,
 		], $materials);
 	}
 
