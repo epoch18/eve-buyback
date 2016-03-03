@@ -72,9 +72,9 @@ class Refinery
 
 	/**
 	 * Handles checking if an item's materials can all be bought.
-	 * @param  InvType $type       [description]
-	 * @param  array   $categories [description]
-	 * @return [type]              [description]
+	 * @param  InvType $type
+	 * @param  array   $categories
+	 * @return boolean
 	 */
 	private function checkIfItemMaterialsCanBeBought(InvType $type, array $categories)
 	{
@@ -154,7 +154,12 @@ class Refinery
 
 		// Refine the refinables and recycle the recyclables.
 		foreach ($refined as $item) {
-			//
+			$materials = $this->getRefinedMaterials($item->type);
+			$quantity  = (integer)($item->quantity / $item->type->portionSize);
+
+			foreach ($materials as $key => $value) {
+				$result->materials[$key] += (integer)($quantity * $value);
+			}
 		}
 
 		foreach ($recycled as $item) {
@@ -199,7 +204,7 @@ class Refinery
 	public function getRecycledMaterials(InvType $type)
 	{
 		$materials = [];
-		$yield     = config('refinery.station_yield') * (1 + 0.02 * config('refinery.scrapmetal'));
+		$yield     = 0.52 * (1 + 0.02 * config('refinery.scrapmetal'));
 
 		foreach($type->materials as $material) {
 			$materials[$material->materialTypeID] = $material->quantity * $yield * config('refinery.station_tax');
@@ -215,6 +220,51 @@ class Refinery
 	 */
 	public function getRefinedMaterials(InvType $type)
 	{
-		return [];
+		$materials = [];
+		$yield     =      config('refinery.station_tax'  )
+			*             config('refinery.station_yield')
+			* (1 + 0.03 * config('refinery.reprocessing'))
+			* (1 + 0.02 * config('refinery.efficiency'  ))
+			* (1 + 0.01 * config('refinery.beancounter' ))
+		;
+
+		// Find the base asteroid type without any adjectives.
+		$skill = 'Ice';
+		$bases = [
+			'Arkonor',
+			'Bistot',
+			'Crokite',
+			'Dark Ochre',
+			'Gneiss',
+			'Hedbergite',
+			'Hemorphite',
+			'Jaspet',
+			'Kernite',
+			'Mercoxit',
+			'Omber',
+			'Plagioclase',
+			'Pyroxeres',
+			'Scordite',
+			'Spodumain',
+			'Veldspar',
+		];
+
+		foreach ($bases as $base) {
+			if (strpos($type->typeName, $base) === false) {
+				continue;
+			}
+
+			$skill = $base;
+			break;
+		}
+
+		$yield *= (1 + 0.02 * config('refinery.'.strtolower($skill)));
+
+		// Reprocess the item.
+		foreach($type->materials as $material) {
+			$materials[$material->materialTypeID] = $material->quantity * $yield;
+		}
+
+		return $materials;
 	}
 }
