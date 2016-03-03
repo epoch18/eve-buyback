@@ -29,4 +29,21 @@ class UserTest extends TestCase
 
 		$this->assertEquals(false, $user->isAdministrator());
 	}
+
+	public function testContractorFlag()
+	{
+		$user = new \App\Models\User;
+
+		$user->setContractor(false);
+
+		$this->assertEquals(false, $user->isContractor());
+
+		$user->setContractor(true);
+
+		$this->assertEquals(true, $user->isContractor());
+
+		$user->setContractor(false);
+
+		$this->assertEquals(false, $user->isContractor());
+	}
 }

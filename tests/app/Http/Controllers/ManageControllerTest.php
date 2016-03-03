@@ -18,12 +18,21 @@ class ManageControllerTest extends TestCase
 		parent::setUp();
 
 		$this->user = factory(App\Models\User::class)->make();
+		$this->user->setAdministrator(true);
 		$this->user->save();
 	}
 
-	public function testSomething()
+	public function testPostSystem()
 	{
-		//
+		/*auth()->login($this->user);
+
+		$this->post('/manage/system', [
+			'stations' => [30003631, 30003632],
+		]);
+
+		$this->assertResponseStatus(302);
+
+		$this->assertRedirectedTo('/manage');*/
 	}
 
 	/*public function testUpdateApiKeyWhileNotAuthenticated()
