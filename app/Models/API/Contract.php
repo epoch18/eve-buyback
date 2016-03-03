@@ -94,4 +94,9 @@ class Contract extends Model
 		'buyout'         => 'double',
 		'volume'         => 'double',
 	];
+
+	public function items()
+	{
+		return $this->hasMany(\App\Models\API\ContractItem::class, 'contractID', 'contractID');
+	}
 }

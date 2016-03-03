@@ -2,6 +2,8 @@
 
 namespace App\EveOnline;
 
+use App\Models\API\Contract;
+use App\Models\API\ContractItem;
 use App\Models\SDE\InvType;
 
 /**
@@ -64,7 +66,28 @@ class Parser
 			continue;
 		}
 
-		// Return as an object to avoid mixed array/object formating.
+		return $result;
+	}
+
+	/**
+	 * Converts a contract into an array of items and quantities.
+	 * @param  App\Models\API\Contract $contract
+	 * @return array
+	 */
+	public function convertContractToItems(Contract $contract)
+	{
+		$result = [];
+
+		foreach ($contract->items as $item) {
+			// Add the item model and quantity to the returned results.
+			$result[] = (object)[
+				'type'     => $this->type->find($item->typeID),
+				'quantity' => (integer)$item->quantity,
+			];
+
+			continue;
+		}
+
 		return $result;
 	}
 }

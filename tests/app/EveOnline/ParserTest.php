@@ -21,4 +21,25 @@ class ParserTest extends TestCase
 
 		$this->assertEquals(151, count($items));
 	}
+
+	public function testConvertContractToItems()
+	{
+		$parser = app()->make(\App\EveOnline\Parser::class);
+
+		$contract = Mockery::mock(\App\Models\API\Contract::class);
+		$items    = [];
+
+		for ($i = 34; $i <= 40; $i++) {
+			$item = Mockery::mock(\App\Models\API\ContractItem::class);
+			$item->shouldReceive('getAttribute')->with('typeID'  )->once()->andReturn($i);
+			$item->shouldReceive('getAttribute')->with('quantity')->once()->andReturn(10);
+			$items[] = $item;
+		}
+
+		$contract->shouldReceive('getAttribute')->with('items')->once()->andReturn($items);
+
+		$items = $parser->convertContractToItems($contract);
+
+		$this->assertEquals(7, count($items));
+	}
 }

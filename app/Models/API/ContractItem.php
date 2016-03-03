@@ -64,4 +64,9 @@ class ContractItem extends Model
 		'singleton'   => 'boolean',
 		'included'    => 'boolean',
 	];
+
+	public function contract()
+	{
+		return $this->belongsTo(\App\Models\API\Contract::class, 'contractID', 'contractID');
+	}
 }
