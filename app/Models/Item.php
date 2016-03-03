@@ -36,7 +36,7 @@ class Item extends Model
 		'typeID',
 		'buyRaw',
 		'buyRecycled',
-		'buyReprocessed',
+		'buyRefined',
 		'buyModifier',
 		'buyPrice',
 		'sell',
@@ -59,15 +59,15 @@ class Item extends Model
 	 * @var array
 	 */
 	protected $casts = [
-		'typeID'         => 'integer',
-		'buyRaw'         => 'boolean',
-		'buyRecycled'    => 'boolean',
-		'buyReprocessed' => 'boolean',
-		'buyModifier'    => 'double',
-		'buyPrice'       => 'double',
-		'sell'           => 'boolean',
-		'sellModifier'   => 'double',
-		'sellPrice'      => 'double',
-		'lockPrices'     => 'boolean',
+		'typeID'       => 'integer',
+		'buyRaw'       => 'boolean',
+		'buyRecycled'  => 'boolean',
+		'buyRefined'   => 'boolean',
+		'buyModifier'  => 'double',
+		'buyPrice'     => 'double',
+		'sell'         => 'boolean',
+		'sellModifier' => 'double',
+		'sellPrice'    => 'double',
+		'lockPrices'   => 'boolean',
 	];
 }

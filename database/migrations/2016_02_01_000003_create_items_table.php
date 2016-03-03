@@ -18,16 +18,16 @@ class CreateItemsTable extends Migration
 
 		Schema::create('buyback_items', function (Blueprint $table)
 		{
-			$table->integer('typeID'        )->unsigned()->primary();
-			$table->boolean('buyRaw'        );
-			$table->boolean('buyRecycled'   );
-			$table->boolean('buyReprocessed');
-			$table->double ('buyModifier'   );
-			$table->double ('buyPrice'      );
-			$table->boolean('sell'          );
-			$table->double ('sellModifier'  );
-			$table->double ('sellPrice'     );
-			$table->boolean('lockPrices'    )->default(false);
+			$table->integer('typeID'      )->unsigned()->primary();
+			$table->boolean('buyRaw'      );
+			$table->boolean('buyRecycled' );
+			$table->boolean('buyRefined'  );
+			$table->double ('buyModifier' );
+			$table->double ('buyPrice'    );
+			$table->boolean('sell'        );
+			$table->double ('sellModifier');
+			$table->double ('sellPrice'   );
+			$table->boolean('lockPrices'  )->default(false);
 
 			$table->timestamps();
 		});

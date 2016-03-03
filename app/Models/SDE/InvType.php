@@ -57,6 +57,9 @@ class InvType extends Model
 	public function group() {
 		return $this->hasOne(\App\Models\SDE\InvGroup::class, 'groupID', 'groupID'); }
 
+	public function materials() {
+		return $this->hasMany(\App\Models\SDE\InvTypeMaterial::class, 'typeID', 'typeID'); }
+
 	public function scopePublished($query) {
 		return $query->where('published', 1); }
 }

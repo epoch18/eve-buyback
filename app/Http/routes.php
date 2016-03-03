@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function (\Pheal\Pheal $pheal) {
 	return view('welcome');
-})->name('index');
+})->name('index');*/
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +31,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('login' , 'UserController@login' )->name('login' );
         Route::get('logout', 'UserController@logout')->name('logout');
 	});
+
+	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
+		Route::controller('manage', ManageController::class);
+	});
+
+	Route::get ('/', 'HomeController@index')->name('index');
+	Route::post('/', 'HomeController@paste')->name('paste');
 });

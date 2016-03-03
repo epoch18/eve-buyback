@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 	const ADMINISTRATOR = 1;
+	const CONTRACTOR    = 2;
 
 	/**
 	 * The table associated with the model.
@@ -88,6 +89,31 @@ class User extends Authenticatable
 
 		} else {
 			$this->flags &= ~self::ADMINISTRATOR;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Checks if the user is an contractor.
+	 * @return boolean
+	 */
+	public function isContractor()
+	{
+		return ($this->flags & self::CONTRACTOR) == self::CONTRACTOR;
+	}
+
+	/**
+	 * Sets the contractor flag for the user.
+	 * @param \App\Models\User
+	 */
+	public function setContractor($value)
+	{
+		if ($value) {
+			$this->flags |= self::CONTRACTOR;
+
+		} else {
+			$this->flags &= ~self::CONTRACTOR;
 		}
 
 		return $this;

@@ -1,0 +1,163 @@
+'Abandon' Tracking Disruptor I	3	Tracking Disruptor	Small	Medium	15 m3
+'Limos' Cruise Launcher I	6	Missile Launcher Cruise		High	120 m3
+'Limos' Rapid Heavy Missile Launcher I	10	Missile Launcher Rapid Heavy		High	200 m3
+'Limos' Rocket Launcher I	3	Missile Launcher Rocket		High	15 m3
+'Malkuth' Cruise Launcher I	2	Missile Launcher Cruise		High	40 m3
+'Malkuth' Heavy Missile Launcher I	2	Missile Launcher Heavy		High	20 m3
+'Malkuth' Rapid Heavy Missile Launcher I	4	Missile Launcher Rapid Heavy		High	80 m3
+'Malkuth' Rocket Launcher I	2	Missile Launcher Rocket		High	10 m3
+'Prayer' Remote Tracking Computer	2	Remote Tracking Computer	Small	Medium	10 m3
+'Rash' ECM Emission I	1	ECM Burst		Medium	5 m3
+'Repose' Core Compensation	1	Warp Core Stabilizer		Low	5 m3
+100MN Monopropellant Enduring Afterburner	5	Propulsion Module		Medium	25 m3
+100MN Y-S8 Compact Afterburner	11	Propulsion Module		Medium	55 m3
+10MN Monopropellant Enduring Afterburner	1	Propulsion Module		Medium	5 m3
+125mm Compressed Coil Gun I	1	Hybrid Weapon	Small	High	5 m3
+250mm Compressed Coil Gun I	1	Hybrid Weapon	Medium	High	10 m3
+350mm Carbide Railgun I	1	Hybrid Weapon	Large	High	20 m3
+425mm 'Scout' Accelerator Cannon	7	Hybrid Weapon	Large	High	140 m3
+425mm Carbide Railgun I	5	Hybrid Weapon	Large	High	100 m3
+425mm Compressed Coil Gun I	5	Hybrid Weapon	Large	High	100 m3
+500MN Cold-Gas Enduring Microwarpdrive	9	Propulsion Module		Medium	90 m3
+500MN Quad LiF Restrained Microwarpdrive	7	Propulsion Module		Medium	70 m3
+500MN Y-T8 Compact Microwarpdrive	5	Propulsion Module		Medium	50 m3
+50MN Cold-Gas Enduring Microwarpdrive	2	Propulsion Module		Medium	20 m3
+50MN Quad LiF Restrained Microwarpdrive	1	Propulsion Module		Medium	10 m3
+50MN Y-T8 Compact Microwarpdrive	3	Propulsion Module		Medium	30 m3
+5MN Cold-Gas Enduring Microwarpdrive	1	Propulsion Module		Medium	10 m3
+5MN Y-T8 Compact Microwarpdrive	1	Propulsion Module		Medium	10 m3
+Advanced 'Limos' Heavy Missile Bay I	1	Missile Launcher Heavy		High	10 m3
+Alfven Surface Remote Tracking Computer	1	Remote Tracking Computer	Small	Medium	5 m3
+Alumel Gravimetric ECCM Sensor Array I	2	ECCM		Medium	10 m3
+Alumel-Wired Sensor Augmentation	1	Sensor Booster	Small	Medium	5 m3
+Antimatter Charge L	500	Hybrid Charge	Large		12.50 m3
+Antimatter Charge M	100	Hybrid Charge	Medium		1.25 m3
+Compulsive Ion Field ECM I	3	ECM		Medium	15 m3
+Compulsive Multispectral ECM I	1	ECM		Medium	5 m3
+Compulsive Signal Distortion Amplifier I	3	ECM Stabilizer		Low	15 m3
+Eutectic Compact Cap Recharger	4	Capacitor Recharger		Medium	20 m3
+Experimental XT-2800 Heavy Assault Missile Launcher I	2	Missile Launcher Heavy Assault		High	20 m3
+F-12 Nonlinear Tracking Processor	1	Tracking Computer	Small	Medium	5 m3
+F-293 Nutation Remote Tracking Computer	1	Remote Tracking Computer	Small	Medium	5 m3
+F-89 Synchronized Signal Amplifier	1	Signal Amplifier		Low	5 m3
+Guristas Tungsten Charge L	1,000	Hybrid Charge	Large		25 m3
+Heavy Defender Missile I	1,700	Heavy Defender Missile			51 m3
+Incremental Gravimetric ECCM Scanning Array I	1	ECCM		Medium	5 m3
+Indirect Scanning Dampening Unit I	5	Remote Sensor Damper	Small	Medium	25 m3
+Induced Ion Field ECM I	2	ECM		Medium	10 m3
+Induced Multispectral ECM I	1	ECM		Medium	5 m3
+Inferno Auto-Targeting Cruise Missile I	500	FoF Cruise Missile			25 m3
+Inferno Cruise Missile	1,500	Cruise Missile			75 m3
+Inferno Heavy Missile	600	Heavy Missile			18 m3
+Inferno Rocket	100	Rocket			0.50 m3
+Inferno Torpedo	1,300	Torpedo			65 m3
+Initiated Harmonic Warp Scrambler I	3	Warp Scrambler		Medium	15 m3
+Initiated Ion Field ECM I	3	ECM		Medium	15 m3
+Initiated Multispectral ECM I	3	ECM		Medium	15 m3
+Initiated Signal Distortion Amplifier I	2	ECM Stabilizer		Low	10 m3
+Iridium Charge L	1,000	Hybrid Charge	Large		25 m3
+Iridium Charge S	100	Hybrid Charge	Small		0.25 m3
+Iron Charge L	600	Hybrid Charge	Large		15 m3
+Iron Charge M	500	Hybrid Charge	Medium		6.25 m3
+Iron Charge S	100	Hybrid Charge	Small		0.25 m3
+Kapteyn Sensor Array Inhibitor I	1	Remote Sensor Damper	Small	Medium	5 m3
+Large Asymmetric Remote Shield Booster	8	Remote Shield Booster		High	200 m3
+Large Azeotropic Restrained Shield Extender	5	Shield Extender		Medium	100 m3
+Large Clarity Ward Booster I	3	Shield Booster		Medium	75 m3
+Large Converse Deflection Catalyzer	4	Shield Booster		Medium	100 m3
+Large F-S9 Regolith Compact Shield Extender	4	Shield Extender		Medium	80 m3
+Large Murky Remote Shield Booster	8	Remote Shield Booster		High	200 m3
+Large Neutron Saturation Injector I	3	Shield Booster		Medium	75 m3
+Large Rudimentary Concussion Bomb I	1	Smart Bomb		High	50 m3
+Lead Charge L	600	Hybrid Charge	Large		15 m3
+Lead Charge S	100	Hybrid Charge	Small		0.25 m3
+Limited 'Anointed' EM Ward Field	1	Shield Hardener		Medium	5 m3
+Limited 'Limos' Heavy Assault Missile Launcher I	1	Missile Launcher Heavy Assault		High	10 m3
+Limited 'Limos' Rapid Light Missile Launcher	2	Missile Launcher Rapid Light		High	20 m3
+Limited 'Limos' Torpedo Launcher	7	Missile Launcher Torpedo		High	140 m3
+Limited Thermic Dissipation Field I	1	Shield Hardener		Medium	5 m3
+Local Power Plant Manager: Reaction Shield Power Relay I	2	Shield Power Relay		Low	10 m3
+Mark I Compact Capacitor Flux Coil	1	Capacitor Flux Coil		Low	5 m3
+Mark I Compact Capacitor Power Relay	4	Capacitor Power Relay		Low	20 m3
+Mark I Compact Reactor Control Unit	2	Reactor Control Unit		Low	10 m3
+Medium Asymmetric Remote Capacitor Transmitter	1	Remote Capacitor Transmitter		High	5 m3
+Medium Azeotropic Restrained Shield Extender	1	Shield Extender		Medium	10 m3
+Medium Brief Capacitor Overcharge I	1	Capacitor Booster		Medium	10 m3
+Medium Clarity Ward Booster I	1	Shield Booster		Medium	10 m3
+Medium Converse Deflection Catalyzer	1	Shield Booster		Medium	10 m3
+Medium F-4a Ld-Sulfate Capacitor Charge Unit	1	Capacitor Battery		Medium	10 m3
+Medium Ld-Acid Capacitor Battery I	1	Capacitor Battery		Medium	10 m3
+Medium Murky Remote Shield Booster	1	Remote Shield Booster		High	10 m3
+Medium Neutron Saturation Injector I	1	Shield Booster		Medium	10 m3
+Medium Ohm Capacitor Reserve I	1	Capacitor Battery		Medium	10 m3
+Medium Partial E95b Remote Capacitor Transmitter	1	Remote Capacitor Transmitter		High	5 m3
+Medium Rudimentary Concussion Bomb I	1	Smart Bomb		High	10 m3
+Metal Scraps	208	Commodities			2.08 m3
+Mjolnir Auto-Targeting Cruise Missile I	600	FoF Cruise Missile			30 m3
+Mjolnir Cruise Missile	1,200	Cruise Missile			60 m3
+Mjolnir Heavy Missile	700	Heavy Missile			21 m3
+Mjolnir Light Missile	100	Light Missile			1.50 m3
+Mjolnir Rocket	200	Rocket			1 m3
+Mjolnir Torpedo	1,200	Torpedo			60 m3
+ML-3 Scoped Survey Scanner	5	Survey Scanner		Medium	25 m3
+Nova Auto-Targeting Cruise Missile I	800	FoF Cruise Missile			40 m3
+Nova Auto-Targeting Heavy Missile I	300	FoF Heavy Missile			9 m3
+Nova Cruise Missile	1,100	Cruise Missile			55 m3
+Nova Heavy Missile	200	Heavy Missile			6 m3
+Nova Light Missile	300	Light Missile			4.50 m3
+Nova Rocket	200	Rocket			1 m3
+Nova Torpedo	500	Torpedo			25 m3
+Passive Barrier Compensator I	1	Shield Recharger		Medium	5 m3
+Photonic Upgraded Co-Processor	2	CPU Enhancer		Low	10 m3
+Piercing ECCM Emitter I	1	Projected ECCM		Medium	5 m3
+Plutonium Charge L	400	Hybrid Charge	Large		10 m3
+Plutonium Charge M	300	Hybrid Charge	Medium		3.75 m3
+Protected Ladar Backup Cluster I	1	Sensor Backup Array		Low	5 m3
+Protected RADAR Backup Cluster I	1	Sensor Backup Array		Low	5 m3
+Prototype Sensor Booster	1	Sensor Booster	Small	Medium	5 m3
+Reinforced Metal Scraps	5	Commodities			0.05 m3
+Reserve Multi-Frequency Scanners	1	Sensor Backup Array		Low	20 m3
+Scattering ECCM Projector I	3	Projected ECCM		Medium	15 m3
+Scourge Auto-Targeting Cruise Missile I	300	FoF Cruise Missile			15 m3
+Scourge Auto-Targeting Heavy Missile I	100	FoF Heavy Missile			3 m3
+Scourge Cruise Missile	1,600	Cruise Missile			80 m3
+Scourge Heavy Missile	600	Heavy Missile			18 m3
+Scourge Torpedo	900	Torpedo			45 m3
+Shielded Gravimetric Backup Cluster I	1	Sensor Backup Array		Low	5 m3
+Small 'Ghoul' Energy Siphon I	3	Energy Vampire		High	15 m3
+Small 'Gremlin' Power Core Disruptor I	4	Energy Destabilizer		High	20 m3
+Small 'Knave' Energy Drain	1	Energy Vampire		High	5 m3
+Small Azeotropic Restrained Shield Extender	1	Shield Extender		Medium	5 m3
+Small Brief Capacitor Overcharge I	1	Capacitor Booster		Medium	5 m3
+Small Murky Remote Shield Booster	2	Remote Shield Booster		High	10 m3
+Small Rudimentary Concussion Bomb I	1	Smart Bomb		High	5 m3
+Small Rudimentary Energy Destabilizer I	2	Energy Destabilizer		High	10 m3
+Small YF-12a Smartbomb	1	Smart Bomb		High	5 m3
+Spot Pulsing ECCM I	1	Projected ECCM		Medium	5 m3
+Supplemental Screen Generator I	1	Shield Recharger		Medium	5 m3
+Ta3 Compact Ship Scanner	1	Ship Scanner		Medium	5 m3
+TE-2100 Ample Light Missile Launcher	4	Missile Launcher Light		High	20 m3
+Thorium Charge L	600	Hybrid Charge	Large		15 m3
+Thorium Charge M	400	Hybrid Charge	Medium		5 m3
+Tungsten Charge L	1,000	Hybrid Charge	Large		25 m3
+Tungsten Charge M	200	Hybrid Charge	Medium		2.50 m3
+Tungsten Charge S	400	Hybrid Charge	Small		1 m3
+Type-D Power Core Modification: Shield Flux	1	Shield Flux Coil		Low	5 m3
+Type-D Power Core Modification: Shield Power Relay	2	Shield Power Relay		Low	10 m3
+Type-D Restrained Capacitor Flux Coil	1	Capacitor Flux Coil		Low	5 m3
+Type-D Restrained Capacitor Power Relay	2	Capacitor Power Relay		Low	10 m3
+Type-E Enduring Cargo Scanner	1	Cargo Scanner		Medium	5 m3
+Upgraded 'Malkuth' Heavy Assault Missile Launcher I	2	Missile Launcher Heavy Assault		High	20 m3
+Upgraded 'Malkuth' Rapid Light Missile Launcher	4	Missile Launcher Rapid Light		High	40 m3
+Upgraded 'Malkuth' Torpedo Launcher	7	Missile Launcher Torpedo		High	140 m3
+Upgraded EM Ward Amplifier I	1	Shield Amplifier		Medium	5 m3
+Upgraded Thermic Dissipation Amplifier I	2	Shield Amplifier		Medium	10 m3
+Uranium Charge L	1,000	Hybrid Charge	Large		25 m3
+Uranium Charge M	100	Hybrid Charge	Medium		1.25 m3
+Uranium Charge S	100	Hybrid Charge	Small		0.25 m3
+Wavelength Signal Enhancer I	3	Signal Amplifier		Low	15 m3
+X-Large Clarity Ward Booster I	2	Shield Booster		Medium	100 m3
+X-Large Converse Deflection Catalyzer	1	Shield Booster		Medium	50 m3
+X-Large Neutron Saturation Injector I	7	Shield Booster		Medium	350 m3
+XT-9000 Cruise Launcher	13	Missile Launcher Cruise		High	260 m3
+YO-5000 Rapid Heavy Missile Launcher	3	Missile Launcher Rapid Heavy		High	60 m3
