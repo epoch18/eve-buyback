@@ -60,26 +60,43 @@ class Helper
 		$this->pheal    = $pheal;
 	}
 
-	public function convertStationIdToName($id)
+	/**
+	 * Converts a station id into an model.
+	 * @param  integer $id
+	 * @return \App\Models\SDE\StaStation | \App\Models\API\Outpost | object
+	 */
+	public function convertStationIdToModel($id)
 	{
 		if ($this->cache->has("station:{$id}")) {
 			return $this->cache->get("station:{$id}");
 		}
 
 		if ($station = $this->station->where('stationID', $id)->first()) {
-			$result = $station->stationName;
+			$result = $station;
 
 		} else if ($station = $this->outpost->where('stationID', $id)->first()) {
-			$result = $station->stationName;
+			$result = $station;
 
 		} else {
-			$result = 'Unknown Station';
+			return (object)[
+				'stationID'   => 0,
+				'stationName' => 'Unknown Station',
+				'solarSystem' => (object)[
+					'solarSystemID'   => 0,
+					'solarSystemName' => 'Unknown Solar System',
+				],
+			];
 		}
 
 		$this->cache->put("station:{$id}", $result, $this->carbon->now()->addHours(24));
 		return $result;
 	}
 
+	/**
+	 * Converts a character id into a name.
+	 * @param  integer $id
+	 * @return string
+	 */
 	public function convertCharacterIdToName($id)
 	{
 		if ($this->cache->has("character:{$id}")) {

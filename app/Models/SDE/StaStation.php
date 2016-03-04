@@ -47,4 +47,9 @@ class StaStation extends Model
 	 * @var bool
 	 */
 	public $timestamps = false;
+
+	public function solarSystem()
+	{
+		return $this->belongsTo(\App\Models\SDE\MapSolarSystem::class, 'solarSystemID', 'solarSystemID');
+	}
 }

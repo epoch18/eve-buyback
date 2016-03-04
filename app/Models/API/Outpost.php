@@ -71,6 +71,6 @@ class Outpost extends Model
 
 	public function solarSystem()
 	{
-		return $this->belongsTo(\App\Models\SDE\mapSolarSystem::class, 'solarSystemID', 'solarSystemID');
+		return $this->belongsTo(\App\Models\SDE\MapSolarSystem::class, 'solarSystemID', 'solarSystemID');
 	}
 }

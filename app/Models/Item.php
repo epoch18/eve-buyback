@@ -70,4 +70,9 @@ class Item extends Model
 		'sellPrice'    => 'double',
 		'lockPrices'   => 'boolean',
 	];
+
+	public function type()
+	{
+		return $this->hasOne(\App\Models\SDE\InvType::class, 'typeID', 'typeID');
+	}
 }

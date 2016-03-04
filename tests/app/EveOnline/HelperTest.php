@@ -53,11 +53,12 @@ class HelperTest extends TestCase
 		$this->app->instance(\App\Models\SDE\StaStation::class, $this->station);
 	}
 
-	public function testConvertStationIdToName()
+	public function testConvertStationIdToModel()
 	{
 		$helper = app()->make(\App\EveOnline\Helper::class);
 
-		$station = (object)[
+		$model = (object)[
+			'stationID'   => 12345,
 			'stationName' => 'Station Name',
 		];
 
@@ -65,7 +66,7 @@ class HelperTest extends TestCase
 		$this->carbon->shouldReceive('addHours')->andReturn(12345);
 
 		$this->cache->shouldReceive('has')->with("station:12345678")->once()->andReturn(false);
-		$this->cache->shouldReceive('put')->with("station:12345678", "Station Name", 12345)->once();
+		$this->cache->shouldReceive('put')->with("station:12345678", $model, 12345)->once();
 
 		$this->station->shouldReceive('where')->once()->with('stationID', 12345678)
 			->andReturn($this->station);
@@ -75,16 +76,16 @@ class HelperTest extends TestCase
 		$this->outpost->shouldReceive('where')->once()->with('stationID', 12345678)
 			->andReturn($this->outpost);
 		$this->outpost->shouldReceive('first')->once()
-			->andReturn($station);
+			->andReturn($model);
 
-		$name = $helper->convertStationIdToName(12345678);
-		$this->assertEquals('Station Name', $name);
+		$station = $helper->convertStationIdToModel(12345678);
+		$this->assertEquals('Station Name', $station->stationName);
 
 		$this->cache->shouldReceive('has')->with("station:12345678")->once()->andReturn(true);
-		$this->cache->shouldReceive('get')->with("station:12345678")->once()->andReturn('Station Name');
+		$this->cache->shouldReceive('get')->with("station:12345678")->once()->andReturn($model);
 
-		$name = $helper->convertStationIdToName(12345678);
-		$this->assertEquals('Station Name', $name);
+		$name = $helper->convertStationIdToModel(12345678);
+		$this->assertEquals('Station Name', $model->stationName);
 	}
 
 	public function testConvertCharacterIdToName()
