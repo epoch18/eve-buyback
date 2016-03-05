@@ -5,6 +5,8 @@ namespace App\EveOnline;
 use App\Models\API\Contract;
 use App\Models\API\ContractItem;
 use App\Models\SDE\InvType;
+use Carbon\Carbon;
+use Illuminate\Cache\Repository as Cache;
 
 /**
  * Handles converting text into usable objects.
@@ -12,17 +14,32 @@ use App\Models\SDE\InvType;
 class Parser
 {
 	/**
+	* @var \Illuminate\Cache\Repository
+	*/
+	private $cache;
+
+	/**
+	* @var \Carbon\Carbon
+	*/
+	private $carbon;
+
+	/**
 	* @var \App\Models\SDE\InvType
 	*/
 	private $type;
 
 	/**
 	 * Constructs the class.
+	* @param  \Illuminate\Cache\Repository $cache
+	* @param  \Carbon\Carbon               $carbon
+	* @param  \App\Models\SDE\InvType      $type
 	 * @param InvType $type
 	 */
-	public function __construct(InvType $type)
+	public function __construct(Cache $cache, Carbon $carbon, InvType $type)
 	{
-		$this->type = $type;
+		$this->cache  = $cache;
+		$this->carbon = $carbon;
+		$this->type   = $type;
 	}
 
 	/**
@@ -47,23 +64,34 @@ class Parser
 			$qty        = str_replace($separators, '', $rows[2][$i]);
 
 			// Don't continue if name or qty are the wrong types.
-			if (!is_string($name) || !is_numeric($qty)) {
-				continue;
+			if (!is_string($name) || !is_numeric($qty)) { continue; }
+
+			// Find the type in the cache.
+			if ($this->cache->has("type:{$name}")) {
+				$type = $this->cache->get("type:{$name}");
+
+				$result[] = (object)[
+					'type'     => $type,
+					'quantity' => (integer)$qty,
+				]; continue;
 			}
 
-			// Find the item in the database.
-			$type = $this->type->with('materials')->where('typeName', $name)->first();
-			if (!$type) {
-				continue;
-			}
+			// Find the type in the database.
+			$type = $this->type
+				->with('materials')
+				->with('group')
+				->with('group.category')
+				->where('typeName', $name)
+				->first();
 
-			// Add the item model and quantity to the returned results.
+			if (!$type) { continue; }
+
+			$this->cache->forever("type:{$name}", $type);
+
 			$result[] = (object)[
 				'type'     => $type,
 				'quantity' => (integer)$qty,
-			];
-
-			continue;
+			]; continue;
 		}
 
 		return $result;

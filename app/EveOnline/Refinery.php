@@ -5,7 +5,9 @@ namespace App\EveOnline;
 use App\Models\SDE\InvType;
 use App\Models\Item;
 use App\Models\Setting;
-use Illuminate\Config\Repository;
+use Carbon\Carbon;
+use Illuminate\Cache\Repository as Cache;
+use Illuminate\Config\Repository as Config;
 
 /**
  * Handles calculating the materials gained from reprocessing items and
@@ -13,6 +15,16 @@ use Illuminate\Config\Repository;
  */
 class Refinery
 {
+	/**
+	* @var \Illuminate\Cache\Repository
+	*/
+	private $cache;
+
+	/**
+	* @var \Carbon\Carbon
+	*/
+	private $carbon;
+
 	/**
 	* @var \Illuminate\Config\Repository
 	*/
@@ -24,21 +36,26 @@ class Refinery
 	private $item;
 
 	/**
-	* @var \App\Models\SDE\InvType
+	* @var \Illuminate\Support\Collection
 	*/
-	private $type;
+	private $items;
 
 	/**
 	* Constructs the class.
-	* @param  \App\Models\Item         $item
-	* @param  \App\Models\SDE\InvType  $type
+	* @param  \Illuminate\Cache\Repository  $cache
+	* @param  \Carbon\Carbon                $carbon
+	* @param  \Illuminate\Config\Repository $config
+	* @param  \App\Models\Item              $item
 	* @return void
 	*/
-	public function __construct(Repository $config, Item $item, InvType $type)
+	public function __construct(Cache $cache, Carbon $carbon, Config $config, Item $item)
 	{
+		$this->cache  = $cache;
+		$this->carbon = $carbon;
 		$this->config = $config;
 		$this->item   = $item;
-		$this->type   = $type;
+
+		$this->items  = $this->item->with('type')->get();
 	}
 
 	/**
@@ -48,9 +65,9 @@ class Refinery
 	 */
 	public function canBeBoughtRaw(InvType $type)
 	{
-		$item = $this->item
+		$item = $this->items
 			->where('buyRaw', true)
-			->where('typeID', $type->typeID)
+			->where('typeID', (integer)$type->typeID)
 			->first();
 
 		return $item != null;
@@ -86,19 +103,18 @@ class Refinery
 	 */
 	private function checkIfItemMaterialsCanBeBought(InvType $type, array $categories)
 	{
-		if (!in_array($type->group->category->categoryName, $categories)) {
-			return false;
-		}
+		if (!in_array($type->group->category->categoryName, $categories)) { return false; }
 
-		foreach ($type->materials as $material) {
-			$item = $this->item
+		$materials = $type->materials;
+		if ($materials->count() == 0) { return false; }
+
+		foreach ($materials as $material) {
+			$item = $this->items
 				->where('buyRefined', true)
-				->where('typeID', $material->materialTypeID)
+				->where('typeID', (integer)$material->materialTypeID)
 				->first();
 
-			if (!$item) {
-				return false;
-			}
+			if (!$item) { return false; }
 		}
 
 		return true;
@@ -112,9 +128,25 @@ class Refinery
 		$recycled = [];
 		$unwanted = [];
 
-		foreach ($items as $item) {
+		foreach ($items as &$item) {
 			if ($this->canBeBoughtRaw($item->type)) {
-				$raw[] = $item;
+				$buyback_item = $this->items->where('typeID', (integer)$item->type->typeID)->first();
+
+				$raw[] = (object)[
+					'type'           => $item->type,
+					'quantity'       => $item->quantity,
+
+					'buyUnit'        => $buyback_item->buyPrice,
+					'buyUnitModded'  => $buyback_item->buyPrice * $buyback_item->buyModifier,
+					'buyTotal'       => $buyback_item->buyPrice * $item->quantity,
+					'buyModded'      => $buyback_item->buyPrice * $item->quantity * $buyback_item->buyModifier,
+
+					'sellUnit'       => $buyback_item->sellPrice,
+					'sellUnitModded' => $buyback_item->sellPrice * $buyback_item->sellModifier,
+					'sellTotal'      => $buyback_item->sellPrice * $item->quantity,
+					'sellModded'     => $buyback_item->sellPrice * $item->quantity * $buyback_item->sellModifier,
+				];
+
 				continue;
 			}
 
@@ -144,17 +176,17 @@ class Refinery
 			'totalProfit' => 0.00,
 		];
 
-		$materials = $this->item
+		$materials = $this->items
 			->where('buyRecycled', true)
-			->get();
+			->all();
 
 		foreach($materials as $material) {
 			$result->materials[$material->typeID] = 0;
 		}
 
-		$materials = $this->item
+		$materials = $this->items
 			->where('buyRefined', true)
-			->get();
+			->all();
 
 		foreach($materials as $material) {
 			$result->materials[$material->typeID] = 0;
@@ -183,11 +215,11 @@ class Refinery
 		$prices = $this->item->get(['typeID', 'buyModifier', 'buyPrice'])->keyBy('typeID')->toArray();
 
 		foreach ($result->raw as $item) {
-			$modifier = $prices[$item->typeID]['buyModifier'];
-			$price    = $prices[$item->typeID]['buyPrice'   ];
+			$modifier = $prices[$item->type->typeID]['buyModifier'];
+			$price    = $prices[$item->type->typeID]['buyPrice'   ];
 
-			$result->totalValue  += $quantity * $price;
-			$result->totalModded += $quantity * $price * $modifier;
+			$result->totalValue  += $item->quantity * $price;
+			$result->totalModded += $item->quantity * $price * $modifier;
 		}
 
 		foreach ($result->materials as $materialTypeID => $quantity) {
@@ -196,6 +228,26 @@ class Refinery
 
 			$result->totalValue  += $quantity * $price;
 			$result->totalModded += $quantity * $price * $modifier;
+		}
+
+		foreach ($result->materials as $typeID => &$value) {
+			$item     = $this->items->where('typeID', $typeID)->first();
+			$quantity = $value;
+
+			$value = (object)[
+				'type'           => $item->type,
+				'quantity'       => $quantity,
+
+				'buyUnit'        => $item->buyPrice,
+				'buyUnitModded'  => $item->buyPrice * $item->buyModifier,
+				'buyTotal'       => $item->buyPrice * $quantity,
+				'buyModded'      => $item->buyPrice * $quantity * $item->buyModifier,
+
+				'sellUnit'       => $item->sellPrice,
+				'sellUnitModded' => $item->sellPrice * $item->sellModifier,
+				'sellTotal'      => $item->sellPrice * $quantity,
+				'sellModded'     => $item->sellPrice * $quantity * $item->sellModifier,
+			];
 		}
 
 		$result->totalProfit = $result->totalValue - $result->totalModded;

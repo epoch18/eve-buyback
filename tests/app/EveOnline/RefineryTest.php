@@ -125,16 +125,14 @@ class RefineryTest extends TestCase
 		$items    = $parser->convertTextToItems($text);
 		$result   = $refinery->calculateBuyback($items);
 
-		$this->assertArraySubset([
-			34    => 1739811,
-			35    =>  495292,
-			36    =>  118711,
-			37    =>   30472,
-			38    =>    8571,
-			39    =>    1448,
-			40    =>     587,
-			11399 =>       0,
-		], $result->materials);
+		$this->assertEquals(1739811, $result->materials[   34]->quantity);
+		$this->assertEquals( 495292, $result->materials[   35]->quantity);
+		$this->assertEquals( 118711, $result->materials[   36]->quantity);
+		$this->assertEquals(  30472, $result->materials[   37]->quantity);
+		$this->assertEquals(   8571, $result->materials[   38]->quantity);
+		$this->assertEquals(   1448, $result->materials[   39]->quantity);
+		$this->assertEquals(    587, $result->materials[   40]->quantity);
+		$this->assertEquals(      0, $result->materials[11399]->quantity);
 
 		$this->assertEquals(2394892, (integer)$result->totalValue );
 		$this->assertEquals(2155402, (integer)$result->totalModded);

@@ -68,11 +68,13 @@ class HelperTest extends TestCase
 		$this->cache->shouldReceive('has')->with("station:12345678")->once()->andReturn(false);
 		$this->cache->shouldReceive('put')->with("station:12345678", $model, 12345)->once();
 
+		$this->station->shouldReceive('with' )->once()->with('solarSystem')->andReturn($this->station);
 		$this->station->shouldReceive('where')->once()->with('stationID', 12345678)
 			->andReturn($this->station);
 		$this->station->shouldReceive('first')->once()
 			->andReturn(false);
 
+		$this->outpost->shouldReceive('with' )->once()->with('solarSystem')->andReturn($this->outpost);
 		$this->outpost->shouldReceive('where')->once()->with('stationID', 12345678)
 			->andReturn($this->outpost);
 		$this->outpost->shouldReceive('first')->once()

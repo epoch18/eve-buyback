@@ -28,12 +28,15 @@
 
 Route::group(['middleware' => ['web']], function () {
 	Route::group(['prefix' => 'user'], function () {
-        Route::get('login' , 'UserController@login' )->name('login' );
-        Route::get('logout', 'UserController@logout')->name('logout');
+        Route::get('/login' , 'UserController@login' )->name('login' );
+        Route::get('/logout', 'UserController@logout')->name('logout');
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
-		Route::controller('manage', ManageController::class);
+	});
+
+	Route::group(['middleware' => ['auth', \App\Http\Middleware\Contractor::class]], function () {
+		Route::get('/contract', 'ManageController@contract')->name('contract');
 	});
 
 	Route::get ('/', 'HomeController@index')->name('index');

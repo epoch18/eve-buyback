@@ -71,10 +71,10 @@ class Helper
 			return $this->cache->get("station:{$id}");
 		}
 
-		if ($station = $this->station->where('stationID', $id)->first()) {
+		if ($station = $this->station->with('solarSystem')->where('stationID', $id)->first()) {
 			$result = $station;
 
-		} else if ($station = $this->outpost->where('stationID', $id)->first()) {
+		} else if ($station = $this->outpost->with('solarSystem')->where('stationID', $id)->first()) {
 			$result = $station;
 
 		} else {
