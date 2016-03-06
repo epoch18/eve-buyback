@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Models\Item;
+use App\Models\SDE\InvType;
 use DB;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Queue\SerializesModels;
@@ -17,25 +18,32 @@ class UpdateItemsJob extends Job implements ShouldQueue
 	use InteractsWithQueue, SerializesModels;
 
 	/**
-	 * @var \GuzzleHttp\Client;
+	 * @var \GuzzleHttp\Client
 	 */
 	private $guzzle;
 
 	/**
-	 * @var \App\Models\Item;
+	 * @var \App\Models\Item
 	 */
 	private $item;
 
 	/**
+	 * @var \App\Models\SDE\InvType
+	 */
+	private $type;
+
+	/**
 	 * Create a new job instance.
-	 * @param  \GuzzleHttp\Client $guzzle
-	 * @param  \App\Models\Item   $item
+	 * @param  \GuzzleHttp\Client      $guzzle
+	 * @param  \App\Models\Item        $item
+	 * @param  \App\Models\SDE\InvType $type
 	 * @return void
 	 */
-	public function __construct(Guzzle $guzzle, Item $item)
+	public function __construct(Guzzle $guzzle, Item $item, InvType $type)
 	{
 		$this->guzzle = $guzzle;
 		$this->item   = $item;
+		$this->type   = $type;
 	}
 
 	/**
@@ -66,14 +74,15 @@ class UpdateItemsJob extends Job implements ShouldQueue
 				Log::info('Updating records.');
 
 				DB::transaction(function () use ($response) {
-					$buy   = config('services.evecentral.buy' );
-					$sell  = config('services.evecentral.sell');
+					$buy  = config('services.evecentral.buy' );
+					$sell = config('services.evecentral.sell');
 
 					foreach ($response->marketstat->type as $type) {
 						$item = $this->item->find((integer)$type['id']);
 
 						if (!$item->lockPrices) {
 							$item->update([
+								'typeName'  => $item->type->typeName,
 								'buyPrice'  => (double)$type->buy->$buy,
 								'sellPrice' => (double)$type->sell->$sell,
 							]); $item->touch();

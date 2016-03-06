@@ -34,6 +34,7 @@ class Item extends Model
 	 */
 	protected $fillable = [
 		'typeID',
+		'typeName',
 		'buyRaw',
 		'buyRecycled',
 		'buyRefined',
@@ -60,6 +61,7 @@ class Item extends Model
 	 */
 	protected $casts = [
 		'typeID'       => 'integer',
+		'typeName'     => 'string',
 		'buyRaw'       => 'boolean',
 		'buyRecycled'  => 'boolean',
 		'buyRefined'   => 'boolean',

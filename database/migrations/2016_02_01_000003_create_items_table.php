@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
 		Schema::create('buyback_items', function (Blueprint $table)
 		{
 			$table->integer('typeID'      )->unsigned()->primary();
+			$table->string ('typeName'    )->nullable();
 			$table->boolean('buyRaw'      );
 			$table->boolean('buyRecycled' );
 			$table->boolean('buyRefined'  );

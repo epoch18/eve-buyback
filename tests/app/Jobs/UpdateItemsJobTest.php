@@ -25,6 +25,7 @@ class UpdateItemsJobTest extends TestCase
 	{
 		\App\Models\Item::create([
 			'typeID'         => 34,
+			'typeName'       => 'Tritanium',
 			'buyRaw'         => false,
 			'buyRecycled'    => false,
 			'buyRefined'     => false,
@@ -38,6 +39,7 @@ class UpdateItemsJobTest extends TestCase
 
 		\App\Models\Item::create([
 			'typeID'         => 35,
+			'typeName'       => 'Pyerite',
 			'buyRaw'         => false,
 			'buyRecycled'    => false,
 			'buyRefined'     => false,
@@ -119,7 +121,7 @@ class UpdateItemsJobTest extends TestCase
 		$job = app()->make(App\Jobs\UpdateItemsJob::class);
 		$job->handle();
 
-		$this->seeInDatabase('buyback_items', ['typeID' => 34, 'buyPrice' =>  5.79, 'sellPrice' =>  6.47]);
-		$this->seeInDatabase('buyback_items', ['typeID' => 35, 'buyPrice' => 10.37, 'sellPrice' => 12.98]);
+		$this->seeInDatabase('buyback_items', ['typeID' => 34, 'typeName' => 'Tritanium', 'buyPrice' =>  5.79, 'sellPrice' =>  6.47]);
+		$this->seeInDatabase('buyback_items', ['typeID' => 35, 'typeName' => 'Pyerite'  , 'buyPrice' => 10.37, 'sellPrice' => 12.98]);
 	}
 }
