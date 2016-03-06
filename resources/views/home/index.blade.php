@@ -27,8 +27,8 @@
 		@if (count($buyback->unwanted) > 0)
 			<div class="col-md-12">
 				<div class="panel">
-					<div class="panel-heading">
-						<h3 class="panel-title"><b><center>{!! trans('buyback.unwanted_items') !!}</center></b></h3>
+					<div class="panel-heading" style="text-align: center;">
+						<h5>{!! ucfirst(trans('buyback.unwanted')) !!}</h5>
 					</div>
 					<div class="panel-body">
 						<table id="unwanted" class="table table-condensed table-striped table-hover">
@@ -58,14 +58,14 @@
 			<div class="col-md-12">
 
 				<div class="panel">
-					<div class="panel-heading">
-						<center><h4>{!! trans('buyback.contract_total', ['total' => number_format($buyback->totalModded, 2, '.', '')]) !!}</h4></center>
+					<div class="panel-heading" style="text-align: center;">
+						<h4>{!! trans('buyback.contract_total', ['total' => number_format($buyback->totalModded, 2, '.', '')]) !!}</h4>
 					</div>
 				</div>
 
 				<div class="panel">
-					<div class="panel-body">
-						<h3 class="panel-title"><b><center>{!! ucfirst(trans('buyback.acceptable')) !!}</center></b></h3>
+					<div class="panel-body" style="text-align: center;">
+						<h5>{!! ucfirst(trans('buyback.acceptable')) !!}</h5>
 					</div>
 					<div class="panel-body">
 						<table id="wanted" class="table table-condensed table-striped table-hover">
@@ -108,8 +108,8 @@
 				</div>
 
 				<div class="panel">
-					<div class="panel-body">
-						<h3 class="panel-title"><b><center>{!! ucfirst(trans('buyback.breakdown')) !!}</center></b></h3>
+					<div class="panel-body" style="text-align: center;">
+						<h5>{!! ucfirst(trans('buyback.breakdown')) !!}</5>
 					</div>
 					<div class="panel-body">
 						<table id="breakdown" class="table table-condensed table-striped table-hover">
@@ -306,6 +306,7 @@
 		$('#buying'   ).DataTable();
 		$('#selling'  ).DataTable();
 		$('#wanted'   ).DataTable();
+		$('#unwanted' ).DataTable();
 		$('#breakdown').DataTable();
 	});
 </script>
