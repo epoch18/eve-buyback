@@ -22,13 +22,13 @@ class UpdateContractsCommand extends Command
 	 * The name and signature of the console command.
 	 * @var string
 	 */
-	protected $signature = 'buyback:update-api';
+	protected $signature = 'buyback:update-contracts';
 
 	/**
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = 'Retrieves and stores all relevant api information.';
+	protected $description = 'Retrieves and stores all relevant contract information.';
 
 	/**
 	 * Create a new command instance.
