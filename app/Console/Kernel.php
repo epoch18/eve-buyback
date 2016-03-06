@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
 	 * @var array
 	 */
 	protected $commands = [
-		\App\Console\Commands\UpdateAPICommand::class,
+		\App\Console\Commands\UpdateContractsCommand::class,
 		\App\Console\Commands\UpdateItemsCommand::class,
 		\App\Console\Commands\UpdateOutpostsCommand::class,
 	];

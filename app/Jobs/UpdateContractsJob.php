@@ -12,7 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Log;
 use Pheal\Pheal;
 
-class UpdateAPIJob extends Job implements ShouldQueue
+class UpdateContractsJob extends Job implements ShouldQueue
 {
 	use InteractsWithQueue, SerializesModels;
 

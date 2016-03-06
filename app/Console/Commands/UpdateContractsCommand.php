@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\UpdateAPIJob;
+use App\Jobs\UpdateContractsJob;
 use Illuminate\Console\Command;
 use Illuminate\Bus\Dispatcher;
 
-class UpdateAPICommand extends Command
+class UpdateContractsCommand extends Command
 {
 	/**
 	 * @var \Illuminate\Bus\Dispatcher
@@ -14,7 +14,7 @@ class UpdateAPICommand extends Command
 	private $dispatcher;
 
 	/**
-	 * @var \App\Jobs\UpdateAPIJob
+	 * @var \App\Jobs\UpdateContractsJob
 	 */
 	private $job;
 
@@ -32,11 +32,11 @@ class UpdateAPICommand extends Command
 
 	/**
 	 * Create a new command instance.
-	 * @param  \Illuminate\Bus\Dispatcher $dispatcher
-	 * @param  \App\Jobs\UpdateAPIJob     $job
+	 * @param  \Illuminate\Bus\Dispatcher   $dispatcher
+	 * @param  \App\Jobs\UpdateContractsJob $job
 	 * @return void
 	 */
-	public function __construct(Dispatcher $dispatcher, UpdateAPIJob $job)
+	public function __construct(Dispatcher $dispatcher, UpdateContractsJob $job)
 	{
 		parent::__construct();
 

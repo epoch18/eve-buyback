@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UpdateAPIJobTest extends TestCase
+class UpdateContractsJobTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -99,7 +99,7 @@ class UpdateAPIJobTest extends TestCase
 
 		$this->pheal->shouldReceive('ContractItems')->once()->andReturn($contract_items);
 
-		$job = app()->make(App\Jobs\UpdateAPIJob::class);
+		$job = app()->make(App\Jobs\UpdateContractsJob::class);
 		$job->handle();
 
 		$this->seeInDatabase('api_contracts'     , ['contractID' => 97809127  ]);
