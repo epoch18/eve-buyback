@@ -18,6 +18,8 @@ return [
 	'raw'              => 'raw',
 	'reprocessable'    => 'reprocessable',
 	'selling'          => 'selling',
+	'total'            => 'total|totals',
+	'subtotal'         => 'subtotal|subtotals',
 	'unwanted'         => 'unwanted',
 	'wanted'           => 'wanted',
 

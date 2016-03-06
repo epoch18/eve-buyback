@@ -117,7 +117,7 @@ class ManageController extends Controller
 	 */
 	public function contract()
 	{
-		$models = $this->contract
+		$contracts = $this->contract
 			->where('status', 'Outstanding')
 			->orderBy('contractID', 'DESC')
 			->get();
@@ -126,7 +126,7 @@ class ManageController extends Controller
 		$selling       = [];
 		$buyback_items = $this->item->with('type')->get();
 
-		foreach ($models as $contract) {
+		foreach ($contracts as $contract) {
 			// Calculate the buyback.
 			$items   = $this->parser->convertContractToItems($contract);
 			$buyback = $this->refinery->calculateBuyback($items);
@@ -141,65 +141,6 @@ class ManageController extends Controller
 			$buyback->contractPrice   = $contract->price;
 			$buyback->contractStation = $this->helper->convertStationIdToModel ($contract->startStationID);
 			$buyback->contractIssuer  = $this->helper->convertCharacterIdToName($contract->issuerID      );
-
-			if ($contract->reward == 0) {
-				$buying[]  = $buyback;
-			} else {
-				$selling[] = $buyback;
-			}
-
-			continue;
-			dd($buyback);
-
-
-
-
-
-			// Return a cached result if possible.
-			$this->cache->forget("contract:{$contract->contractID}");
-
-			if ($this->cache->has("contract:{$contract->contractID}")) {
-				if ($contract->reward == 0) {
-					$buying[]  = $this->cache->get("contract:{$contract->contractID}");
-				} else {
-					$selling[] = $this->cache->get("contract:{$contract->contractID}");
-				} continue;
-			}
-
-			// Calculate the buyback.
-			$items   = $this->parser->convertContractToItems($contract);
-			$buyback = $this->refinery->calculateBuyback($items);
-
-			// Insert needed items into the buyback object.
-			$buyback->contract   = $contract;
-			$buyback->price      = $contract->price;
-			$buyback->station    = $this->helper->convertStationIdToModel ($contract->startStationID);
-			$buyback->issuerName = $this->helper->convertCharacterIdToName($contract->issuerID      );
-
-			// Insert the profit margin.
-			if ($contract->price > 0 && $buyback->totalValue > 0) {
-				$buyback->margin = 100 - ($contract->price / $buyback->totalValue * 100);
-			} else { $buyback->margin = 0; }
-
-			// Insert the buyback item model into raw items and materials.
-			foreach ($buyback->materials as $typeID => &$material) {
-				$buyback_item = $buyback_items->where('typeID', $typeID)->first();
-
-				$material = (object)[
-					'buybackItem' => $buyback_item,
-					'type'        => $buyback_item->type,
-					'quantity'    => $material,
-				];
-			}
-
-			// Convert numbers into a easier to read format.
-			$buyback->price       = $buyback->price       == 0 ? $buyback->price       : $this->helper->thousandsCurrencyFormat($buyback->price      );
-			$buyback->totalValue  = $buyback->totalValue  == 0 ? $buyback->totalValue  : $this->helper->thousandsCurrencyFormat($buyback->totalValue );
-			$buyback->totalModded = $buyback->totalModded == 0 ? $buyback->totalModded : $this->helper->thousandsCurrencyFormat($buyback->totalModded);
-			$buyback->totalProfit = $buyback->totalProfit == 0 ? $buyback->totalProfit : $this->helper->thousandsCurrencyFormat($buyback->totalProfit);
-
-			// Cache and add the results to the objects that will be added to the view.
-			$this->cache->put("contract:{$contract->contractID}", $buyback, $this->carbon->now()->addMinutes(30));
 
 			if ($contract->reward == 0) {
 				$buying[]  = $buyback;

@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\EveOnline\Parser;
 use App\EveOnline\Refinery;
+use App\Models\Item;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+	/**
+	* @var \App\Models\Item
+	*/
+	private $item;
+
 	/**
 	* @var \App\EveOnline\Parser
 	*/
@@ -27,12 +33,14 @@ class HomeController extends Controller
 
 	/**
 	* Constructs the class.
+	* @param  \App\Models\Item         $item
 	* @param  \App\EveOnline\Parser    $parser
 	* @param  \App\EveOnline\Refinery  $refinery
 	* @param  \Illuminate\Http\Request $request
 	*/
-	public function __construct(Parser $parser, Refinery $refinery, Request $request)
+	public function __construct(Item $item, Parser $parser, Refinery $refinery, Request $request)
 	{
+		$this->item     = $item;
 		$this->parser   = $parser;
 		$this->refinery = $refinery;
 		$this->request  = $request;
@@ -40,7 +48,13 @@ class HomeController extends Controller
 
 	public function index()
 	{
-		return view('home.index');
+		$items = $this->item
+			->with('type')
+			->with('type.group')
+			->with('type.group.category')
+			->get();
+
+		return view('home.index')->withItems($items);
 	}
 
 	public function paste()
