@@ -48,13 +48,23 @@ class HomeController extends Controller
 
 	public function index()
 	{
-		$items = $this->item
+		$buying = $this->item
 			->with('type')
 			->with('type.group')
 			->with('type.group.category')
+			->buying()
 			->get();
 
-		return view('home.index')->withItems($items);
+		$selling = $this->item
+			->with('type')
+			->with('type.group')
+			->with('type.group.category')
+			->selling()
+			->get();
+
+		return view('home.index')
+			->withBuying ($buying )
+			->withSelling($selling);
 	}
 
 	public function paste()

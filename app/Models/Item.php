@@ -77,4 +77,14 @@ class Item extends Model
 	{
 		return $this->hasOne(\App\Models\SDE\InvType::class, 'typeID', 'typeID');
 	}
+
+	public function scopeBuying($query)
+	{
+		return $query->where('buyRaw', true)->orWhere('buyRecycled', true)->orWhere('buyRefined', true);
+	}
+
+	public function scopeSelling($query)
+	{
+		return $query->where('sell', true);
+	}
 }

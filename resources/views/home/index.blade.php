@@ -1,5 +1,14 @@
 @extends('layouts.main')
 
+@section('styles')
+@parent
+<style>
+	.tooltip-inner {
+		white-space: pre-wrap;
+	}
+</style>
+@endsection
+
 @section('content')
 <form method="POST" action="{!! route('paste') !!}" id="pasteForm">
 	<div style="width:0;height:0;overflow:hidden">
@@ -177,26 +186,25 @@
 								<th>{!! ucfirst(trans_choice('buyback.group'     , 1)) !!}</th>
 								<th>{!! ucfirst(trans_choice('buyback.category'  , 1)) !!}</th>
 								<th>{!! ucfirst(trans       ('buyback.unit_price'   )) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.quantity'  , 1)) !!}</th>
-								<th>{!! ucfirst(trans       ('buyback.payout'       )) !!}</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($items->where('buyRaw', true)->where('buyRecycled', true)->where('buyRefined', true) as $item)
+							@foreach ($buying as $item)
 								<tr>
-									<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
+									<td>
+										<img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png">
+										{!! $item->type->typeName !!}
+										@if ($item->buyRaw     ) <span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_raw'     ) !!}"></span> @endif
+										@if ($item->buyRecycled) <span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_recycled') !!}"></span> @endif
+										@if ($item->buyRefined ) <span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_refined' ) !!}"></span> @endif
+									</td>
 									<td>{!! $item->type->group->groupName              !!}</td>
 									<td>{!! $item->type->group->category->categoryName !!}</td>
 									<td>{!! number_format($item->buyPrice * $item->buyModifier, 2, '.', ',') !!}</td>
-									<td><input type="number" class="form-control buy-control" min="0" data-typeid="{!! $item->type->typeID !!}" data-price="{!! $item->buyPrice * $item->buyModifier !!}"></td>
-									<td class="buy-subtotal" id="buy-subtotal-{!! $item->type->typeID !!}">0.00</td>
 								</tr>
 							@endForeach
 						</tbody>
 					</table>
-				</div>
-				<div class="panel-footer">
-					<h5 style="text-align: right;">Contract Total: <span class="buy-total" id="buy-total">0.00</span></h5>
 				</div>
 			</div>
 		</div>
@@ -220,7 +228,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($items->where('sell', true) as $item)
+							@foreach ($selling as $item)
 								<tr>
 									<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
 									<td>{!! $item->type->group->groupName              !!}</td>
@@ -260,26 +268,6 @@
 		}
 	};
 
-	function updateBuyTotal() {
-		total = 0.0;
-		$(".buy-subtotal").each(function(index) {
-			subtotal  = parseFloat($(this).html());
-			subtotal  = (isNaN(subtotal)) ? 0 : subtotal;
-			total    += subtotal;
-		});
-		$("#buy-total").html(total.toFixed(2));
-	};
-
-	$(".buy-control").on("input", function() {
-		quantity = parseInt($(this).val());
-		quantity = isNaN(quantity) ? 0 : quantity;
-		price    = $(this).data("price");
-
-		$("#buy-subtotal-" + $(this).data("typeid")).html((quantity*price).toFixed(2));
-
-		updateBuyTotal();
-	});
-
 	function updateSellTotal() {
 		total = 0.0;
 		$(".sell-subtotal").each(function(index) {
@@ -302,6 +290,7 @@
 
 	$(document).ready(function() {
 		$('input,textarea').attr('autocomplete', 'off');
+		$('[data-toggle="tooltip"]').tooltip();
 
 		$('#buying'   ).DataTable();
 		$('#selling'  ).DataTable();
