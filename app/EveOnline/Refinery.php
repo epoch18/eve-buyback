@@ -122,6 +122,19 @@ class Refinery
 
 	public function calculateBuyback($items)
 	{
+		if (!$items) {
+			return (object)[
+				'raw'         => [],
+				'refined'     => [],
+				'recycled'    => [],
+				'unwanted'    => [],
+				'materials'   => [],
+				'totalValue'  => 0.00,
+				'totalModded' => 0.00,
+				'totalProfit' => 0.00,
+			];
+		}
+
 		// Sort the items into categories.
 		$raw      = [];
 		$refined  = [];
