@@ -27,15 +27,15 @@
 
 <div class="col-md-offset-2 col-md-8">
 
+	@if ($motd)
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis tellus at consectetur blandit. Mauris sit amet eros eget dui efficitur auctor eu iaculis tellus. Morbi quis ligula nec dui consectetur ornare eu vitae nisl. Aenean id ligula vitae lacus aliquet vestibulum et id diam. Sed a lectus rutrum, tristique orci vitae, vestibulum est. Nullam consectetur odio ut odio gravida, a dictum lectus vehicula. Vestibulum ut posuere urna, vitae suscipit lacus. Vivamus in porttitor felis. Duis congue sollicitudin purus id eleifend.</p>
-				<p>Donec eget blandit nulla. Nullam at sem dui. Praesent congue velit id leo vestibulum, nec aliquet orci placerat. Nam dictum varius elementum. Aenean lacinia nisi ac lacus tempor, at gravida turpis ullamcorper. Praesent mollis rhoncus sapien sed venenatis. Mauris molestie arcu augue, id vestibulum augue sagittis vel. Duis venenatis, odio nec sagittis gravida, purus neque pellentesque nunc, nec ultricies massa sapien non est. Quisque sit amet lacinia nisi. Nulla viverra ex tristique nulla tincidunt semper. Etiam tristique et nisi eu fringilla.</p>
-				<p>Quisque rutrum ac velit et ornare. Mauris eget elementum purus. Integer luctus vehicula quam, eu hendrerit massa hendrerit eget. Maecenas at lacinia erat. Donec vitae tristique arcu. Sed ullamcorper odio non accumsan feugiat. Curabitur orci risus, vehicula ut suscipit non, dictum condimentum sem. Nulla facilisi. Morbi eget dui id nisl dignissim pulvinar. Integer lacinia malesuada pulvinar. Integer ac commodo urna.</p>
+				<p>{!! $motd !!}</p>
 			</div>
 		</div>
 	</div>
+	@endif
 
 
 	<div class="col-md-12">
@@ -110,7 +110,7 @@
 				</table>
 			</div>
 			<div class="panel-footer">
-				<h5 style="text-align: right;">Contract Total: <span class="sell-total" id="sell-total">0.00</span></h5>
+				<h5 style="text-align: right;">{!! trans('buyback.contract_total', ['total' => '<span class="sell-total" id="sell-total">0.00</span>']) !!}</h5>
 			</div>
 		</div>
 	</div>

@@ -44,6 +44,6 @@ return [
 	'login_success'    => 'You have been logged in.',
 	'logout_success'   => 'You have been logged out.',
 
-	'instructions'     => '<p><h4>Paste your inventory<h4></p><p><h5>This page is IGB and drunk friendly: just hit Ctrl+V!</h5</p>'
+	'instructions'     => '<p><h4>Paste your inventory<h4></p><p><h5>This page is IGB and drunk friendly: just hit Ctrl+V!</h5</p>',
 
 ];
