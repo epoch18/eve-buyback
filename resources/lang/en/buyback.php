@@ -24,8 +24,8 @@ return [
 	'wanted'           => 'wanted',
 
 	'buying_raw'       => 'Buying the actual item',
-	'buying_recycled'  => 'Buying items that reprocess into this',
-	'buying_refined'   => 'Buying asteroids that reprocess into this',
+	'buying_recycled'  => 'Buying items that reprocess into this item',
+	'buying_refined'   => 'Buying asteroids that reprocess into this item',
 	'contract_total'   => 'Contract Total: :total',
 	'modified_price'   => 'Modified Price',
 	'total_price'      => 'Total Price',

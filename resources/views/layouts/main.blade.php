@@ -36,8 +36,10 @@
 		</section>
 		<section class="section-footer">
 			@section('footer')
-				<div style="text-align: right; position: fixed; bottom: 0px; right: 0px;">
-					<p><small>Developers: <a href="#" onclick="CCPEVE.showInfo(1377, 94245967)">Memelo Melo</a> (<a href="https://www.github.com/msims04" target="_blank">github</a>)</small></p>
+				<div class="col-md-offset-2 col-md-8" style="text-align: right;">
+					<div class="col-md-12">
+						<p><small><a href="#" onclick="CCPEVE.showInfo(1377, 94245967)">Memelo Melo</a> (<a href="https://www.github.com/msims04/eve-buyback" target="_blank">github</a>)</small></p>
+					</div>
 				</div>
 			@show
 		</section>

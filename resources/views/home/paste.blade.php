@@ -37,10 +37,10 @@
 					<table id="unwanted" class="table table-condensed table-striped table-hover">
 						<thead>
 							<tr>
-								<th>{!! ucfirst(trans('buyback.name'    )) !!}</th>
-								<th>{!! ucfirst(trans('buyback.group'   )) !!}</th>
-								<th>{!! ucfirst(trans('buyback.category')) !!}</th>
-								<th>{!! ucfirst(trans('buyback.quantity')) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.category', 1)) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
 							</tr>
 						</thead>
 						<tbody>
