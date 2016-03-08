@@ -62,7 +62,7 @@
 
 			<div class="panel">
 				<div class="panel-heading" style="text-align: center;">
-					<h4>{!! trans('buyback.contract_total', ['total' => number_format($buyback->totalModded, 2, '.', '')]) !!}</h4>
+					<h4>{!! trans('buyback.contract_total', ['total' => number_format($buyback->totalValueModded, 2, '.', '')]) !!}</h4>
 				</div>
 			</div>
 
@@ -118,28 +118,28 @@
 					<table id="breakdown" class="table table-condensed table-striped table-hover">
 						<thead>
 							<tr>
-								<th>{!! ucfirst(trans_choice('buyback.name'      , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.quantity'  , 1)) !!}</th>
-								<th>{!! ucfirst(trans       ('buyback.unit_price'   )) !!}</th>
-								<th>{!! ucfirst(trans       ('buyback.payout'       )) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
+								<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+								<th>{!! ucfirst(trans       ('buyback.unit'       )) !!}</th>
+								<th>{!! ucfirst(trans       ('buyback.total'      )) !!}</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($buyback->raw as $item)
 								<tr>
 									<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-									<td>{!! number_format($item->quantity     , 0, '.', ',') !!}</td>
-									<td>{!! number_format($item->buyUnitModded, 2, '.', ',') !!}</td>
-									<td>{!! number_format($item->buyModded    , 2, '.', ',') !!}</td>
+									<td>{!! number_format($item->quantity      , 0, '.', ',') !!}</td>
+									<td>{!! number_format($item->buyUnitModded , 2, '.', ',') !!}</td>
+									<td>{!! number_format($item->buyTotalModded, 2, '.', ',') !!}</td>
 								</tr>
 							@endForeach
 							@foreach ($buyback->materials as $item)
 							@if ($item->quantity > 0)
 								<tr>
 									<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-									<td>{!! number_format($item->quantity     , 0, '.', ',') !!}</td>
-									<td>{!! number_format($item->buyUnitModded, 2, '.', ',') !!}</td>
-									<td>{!! number_format($item->buyModded    , 2, '.', ',') !!}</td>
+									<td>{!! number_format($item->quantity      , 0, '.', ',') !!}</td>
+									<td>{!! number_format($item->buyUnitModded , 2, '.', ',') !!}</td>
+									<td>{!! number_format($item->buyTotalModded, 2, '.', ',') !!}</td>
 								</tr>
 							@endif
 							@endForeach

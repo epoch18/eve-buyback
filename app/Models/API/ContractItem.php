@@ -69,4 +69,9 @@ class ContractItem extends Model
 	{
 		return $this->belongsTo(\App\Models\API\Contract::class, 'contractID', 'contractID');
 	}
+
+	public function type()
+	{
+		return $this->hasOne(\App\Models\SDE\InvType::class, 'typeID', 'typeID');
+	}
 }

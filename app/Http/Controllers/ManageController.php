@@ -117,12 +117,47 @@ class ManageController extends Controller
 	 */
 	public function contract()
 	{
-		$contracts = $this->contract
+		$buyback_items = $this->item->with('type')->get();
+		$contracts     = $this->contract
+			->with('items')
+			->with('items.type')
+			->with('items.type.group')
+			->with('items.type.group.category')
+			->with('items.type.materials')
 			->where('status', 'Outstanding')
 			->orderBy('contractID', 'DESC')
 			->get();
 
-		$buying        = [];
+		$buying = $selling = [];
+
+		foreach ($contracts as $contract) {
+			$items = $this->parser->convertContractToItems($contract);
+
+			if ($contract->price > 0) {
+				$buying[] = $buyback = $this->refinery->calculateBuyback($items, $buyback_items);
+
+				// Insert the profit margin.
+				$buyback->totalMargin = 0;
+
+				if ($contract->price > 0 && $buyback->totalValue > 0) {
+					$buyback->totalMargin = 100 - ($contract->price / $buyback->totalValue * 100);
+				}
+
+				// Insert convenience items into the buyback object.
+				$buyback->contract        = $contract;
+				$buyback->contractPrice   = $contract->price;
+				$buyback->contractStation = $this->helper->convertStationIdToModel ($contract->startStationID);
+				$buyback->contractIssuer  = $this->helper->convertCharacterIdToName($contract->issuerID      );
+
+			} else if ($contract->reward > 0) {
+			}
+		}
+
+		return view('manage.contract')
+			->withBuying ($buying )
+			->withSelling($selling);
+
+		/*$buying        = [];
 		$selling       = [];
 		$buyback_items = $this->item->with('type')->get();
 
@@ -153,6 +188,6 @@ class ManageController extends Controller
 
 		return view('manage.contract')
 			->withBuying ($buying )
-			->withSelling($selling);
+			->withSelling($selling);*/
 	}
 }

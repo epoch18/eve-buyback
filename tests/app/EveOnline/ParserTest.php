@@ -31,8 +31,9 @@ class ParserTest extends TestCase
 
 		for ($i = 34; $i <= 40; $i++) {
 			$item = Mockery::mock(\App\Models\API\ContractItem::class);
-			$item->shouldReceive('getAttribute')->with('typeID'  )->once()->andReturn($i);
 			$item->shouldReceive('getAttribute')->with('quantity')->once()->andReturn(10);
+			$item->shouldReceive('getAttribute')->with('type'    )->once()->andReturn(
+				(object)['typeID' => $i]);
 			$items[] = $item;
 		}
 

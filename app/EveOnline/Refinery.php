@@ -8,6 +8,7 @@ use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Handles calculating the materials gained from reprocessing items and
@@ -36,11 +37,6 @@ class Refinery
 	private $item;
 
 	/**
-	* @var \Illuminate\Support\Collection
-	*/
-	private $items;
-
-	/**
 	* Constructs the class.
 	* @param  \Illuminate\Cache\Repository  $cache
 	* @param  \Carbon\Carbon                $carbon
@@ -54,168 +50,149 @@ class Refinery
 		$this->carbon = $carbon;
 		$this->config = $config;
 		$this->item   = $item;
-
-		$this->items  = $this->item->with('type')->get();
 	}
 
 	/**
 	 * Checks if an item can be bought as is.
-	 * @param  InvType $type
+	 * @param  InvType                        $type
+	 * @param  \Illuminate\Support\Collection $items
 	 * @return boolean
 	 */
-	public function canBeBoughtRaw(InvType $type)
+	public function canBeBoughtRaw(InvType $type, Collection $items)
 	{
-		$item = $this->items
-			->where('buyRaw', true)
+		$item = $items
 			->where('typeID', (integer)$type->typeID)
 			->first();
 
-		return $item != null;
+		return ($item && $item->buyRaw) == true;
 	}
 
 	/**
 	 * Checks if an item can be recycled and all materials can be bought.
-	 * @param  InvType $type
+	 * @param  InvType                        $type
+	 * @param  \Illuminate\Support\Collection $items
 	 * @return boolean
 	 */
-	public function canBeRecycledAndBought(InvType $type)
+	public function canBeRecycledAndBought(InvType $type, Collection $items)
 	{
-		return $this->checkIfItemMaterialsCanBeBought($type, [
+		return $this->checkIfItemMaterialsCanBeBought($type, $items, [
 			'Charge', 'Commodity', 'Module', 'Ship'
 		]);
 	}
 
 	/**
 	 * Checks if an item can be refinedand all materials can be bought.
-	 * @param  InvType $type
+	 * @param  InvType                        $type
+	 * @param  \Illuminate\Support\Collection $items
 	 * @return boolean
 	 */
-	public function canBeRefinedAndBought(InvType $type)
+	public function canBeRefinedAndBought(InvType $type, Collection $items)
 	{
-		return $this->checkIfItemMaterialsCanBeBought($type, ['Asteroid']);
+		return $this->checkIfItemMaterialsCanBeBought($type, $items, [
+			'Asteroid'
+		]);
 	}
 
 	/**
 	 * Handles checking if an item's materials can all be bought.
-	 * @param  InvType $type
-	 * @param  array   $categories
+	 * @param  InvType                        $type
+	 * @param  \Illuminate\Support\Collection $items
+	 * @param  array                          $categories
 	 * @return boolean
 	 */
-	private function checkIfItemMaterialsCanBeBought(InvType $type, array $categories)
+	private function checkIfItemMaterialsCanBeBought(InvType $type, Collection $items, array $categories)
 	{
-		if (!in_array($type->group->category->categoryName, $categories)) { return false; }
+		if (!in_array($type->group->category->categoryName, $categories)) {
+			return false;
+		}
 
-		$materials = $type->materials;
-		if ($materials->count() == 0) { return false; }
+		if ($type->materials->count() == 0) {
+			return false;
+		}
 
-		foreach ($materials as $material) {
-			$item = $this->items
+		foreach ($type->materials as $material) {
+			$item = $items
 				->where('buyRefined', true)
 				->where('typeID', (integer)$material->materialTypeID)
 				->first();
 
-			if (!$item) { return false; }
+			if (!$item) {
+				return false;
+			}
 		}
 
 		return true;
 	}
 
-	public function calculateBuyback($items)
+	private function getCategorizedItems($items, $buyback_items = null)
 	{
-		if (!$items) {
-			return (object)[
-				'raw'         => [],
-				'refined'     => [],
-				'recycled'    => [],
-				'unwanted'    => [],
-				'materials'   => [],
-				'totalValue'  => 0.00,
-				'totalModded' => 0.00,
-				'totalProfit' => 0.00,
-			];
-		}
-
-		// Sort the items into categories.
-		$raw      = [];
-		$refined  = [];
-		$recycled = [];
-		$unwanted = [];
+		$result = [];
 
 		foreach ($items as &$item) {
-			if ($this->canBeBoughtRaw($item->type)) {
-				$buyback_item = $this->items->where('typeID', (integer)$item->type->typeID)->first();
-
-				$raw[] = (object)[
-					'type'           => $item->type,
-					'quantity'       => $item->quantity,
-
-					'buyUnit'        => $buyback_item->buyPrice,
-					'buyUnitModded'  => $buyback_item->buyPrice * $buyback_item->buyModifier,
-					'buyTotal'       => $buyback_item->buyPrice * $item->quantity,
-					'buyModded'      => $buyback_item->buyPrice * $item->quantity * $buyback_item->buyModifier,
-
-					'sellUnit'       => $buyback_item->sellPrice,
-					'sellUnitModded' => $buyback_item->sellPrice * $buyback_item->sellModifier,
-					'sellTotal'      => $buyback_item->sellPrice * $item->quantity,
-					'sellModded'     => $buyback_item->sellPrice * $item->quantity * $buyback_item->sellModifier,
-				];
-
+			if ($this->canBeBoughtRaw($item->type, $buyback_items)) {
+				$result['raw'][] = $item;
 				continue;
 			}
 
-			if ($this->canBeRecycledAndBought($item->type)) {
-				$recycled[] = $item;
+			if ($this->canBeRecycledAndBought($item->type, $buyback_items)) {
+				$result['recycled'][] = $item;
 				continue;
 			}
 
-			if ($this->canBeRefinedAndBought($item->type)) {
-				$refined[] = $item;
+			if ($this->canBeRefinedAndBought($item->type, $buyback_items)) {
+				$result['refined'][] = $item;
 				continue;
 			}
 
-			$unwanted[] = $item;
+			$result['unwanted'][] = $item;
 			continue;
 		}
 
-		// Initialize the results object that will be returned.
-		$result = (object)[
-			'raw'         => $raw,
-			'refined'     => $refined,
-			'recycled'    => $recycled,
-			'unwanted'    => $unwanted,
-			'materials'   => [],
-			'totalValue'  => 0.00,
-			'totalModded' => 0.00,
-			'totalProfit' => 0.00,
+		return $result;
+	}
+
+	private function getInitializedMaterials($buyback_items)
+	{
+		$result = [];
+
+		$materials = $buyback_items->filter(function ($item) {
+			return !!$item->buyRecyled || !!$item->buyRefined;
+		});
+
+		foreach($materials as $material) {
+			$result['materials'][$material->typeID] = 0;
+		}
+
+		return $result;
+	}
+
+	public function calculateBuyback($items, $buyback_items = null)
+	{
+		$result = [
+			'raw'              => [],
+			'refined'          => [],
+			'recycled'         => [],
+			'unwanted'         => [],
+			'materials'        => [],
+			'totalValue'       => 0.00,
+			'totalValueModded' => 0.00,
 		];
 
-		$materials = $this->items
-			->where('buyRecycled', true)
-			->all();
-
-		foreach($materials as $material) {
-			$result->materials[$material->typeID] = 0;
+		if (!$items) {
+			return (object)$result;
 		}
 
-		$materials = $this->items
-			->where('buyRefined', true)
-			->all();
-
-		foreach($materials as $material) {
-			$result->materials[$material->typeID] = 0;
+		if (!$buyback_items) {
+			$buyback_items = $this->item->with('type')->get();
 		}
 
-		// Refine the refinables and recycle the recyclables.
-		foreach ($refined as $item) {
-			$materials = $this->getRefinedMaterials($item->type);
-			$quantity  = (integer)($item->quantity / $item->type->portionSize);
+		$result = (object)array_merge($result,
+			$this->getCategorizedItems    ($items, $buyback_items),
+			$this->getInitializedMaterials(        $buyback_items)
+		);
 
-			foreach ($materials as $key => $value) {
-				$result->materials[$key] += (integer)($quantity * $value);
-			}
-		}
-
-		foreach ($recycled as $item) {
+		// Recycle the recyclables and refine the refinables.
+		foreach ($result->recycled as $item) {
 			$materials = $this->getRecycledMaterials($item->type);
 			$quantity  = (integer)($item->quantity / $item->type->portionSize);
 
@@ -224,48 +201,68 @@ class Refinery
 			}
 		}
 
-		// Calculate the buyback value.
-		$prices = $this->item->get(['typeID', 'buyModifier', 'buyPrice'])->keyBy('typeID')->toArray();
+		foreach ($result->refined as $item) {
+			$materials = $this->getRefinedMaterials($item->type);
+			$quantity  = (integer)($item->quantity / $item->type->portionSize);
 
-		foreach ($result->raw as $item) {
+			foreach ($materials as $key => $value) {
+				$result->materials[$key] += (integer)($quantity * $value);
+			}
+		}
+
+		// Calculate the buyback value.
+		$prices = $buyback_items->keyBy('typeID')->toArray();
+
+		foreach ($result->raw as &$item) {
 			$modifier = $prices[$item->type->typeID]['buyModifier'];
 			$price    = $prices[$item->type->typeID]['buyPrice'   ];
 
-			$result->totalValue  += $item->quantity * $price;
-			$result->totalModded += $item->quantity * $price * $modifier;
-		}
+			$result->totalValue       += $item->quantity * $price;
+			$result->totalValueModded += $item->quantity * $price * $modifier;
 
-		foreach ($result->materials as $materialTypeID => $quantity) {
-			$modifier = $prices[$materialTypeID]['buyModifier'];
-			$price    = $prices[$materialTypeID]['buyPrice'   ];
+			$buyback_item = $buyback_items->where('typeID', (integer)$item->type->typeID)->first();
 
-			$result->totalValue  += $quantity * $price;
-			$result->totalModded += $quantity * $price * $modifier;
-		}
+			$item = (object)[
+				'type'            => $item->type,
+				'quantity'        => $item->quantity,
 
-		foreach ($result->materials as $typeID => &$value) {
-			$item     = $this->items->where('typeID', $typeID)->first();
-			$quantity = $value;
+				'buyUnit'         => $buyback_item->buyPrice,
+				'buyUnitModded'   => $buyback_item->buyPrice * $buyback_item->buyModifier,
+				'buyTotal'        => $buyback_item->buyPrice * $item->quantity,
+				'buyTotalModded'  => $buyback_item->buyPrice * $item->quantity * $buyback_item->buyModifier,
 
-			$value = (object)[
-				'type'           => $item->type,
-				'quantity'       => $quantity,
-
-				'buyUnit'        => $item->buyPrice,
-				'buyUnitModded'  => $item->buyPrice * $item->buyModifier,
-				'buyTotal'       => $item->buyPrice * $quantity,
-				'buyModded'      => $item->buyPrice * $quantity * $item->buyModifier,
-
-				'sellUnit'       => $item->sellPrice,
-				'sellUnitModded' => $item->sellPrice * $item->sellModifier,
-				'sellTotal'      => $item->sellPrice * $quantity,
-				'sellModded'     => $item->sellPrice * $quantity * $item->sellModifier,
+				'sellUnit'        => $buyback_item->sellPrice,
+				'sellUnitModded'  => $buyback_item->sellPrice * $buyback_item->sellModifier,
+				'sellTotal'       => $buyback_item->sellPrice * $item->quantity,
+				'sellTotalModded' => $buyback_item->sellPrice * $item->quantity * $buyback_item->sellModifier,
 			];
 		}
 
-		$result->totalProfit = $result->totalValue - $result->totalModded;
+		foreach ($result->materials as $materialTypeID => &$quantity) {
+			$modifier = $prices[$materialTypeID]['buyModifier'];
+			$price    = $prices[$materialTypeID]['buyPrice'   ];
 
-		// Return the result;
+			$result->totalValue       += $quantity * $price;
+			$result->totalValueModded += $quantity * $price * $modifier;
+
+			$buyback_item = $buyback_items->where('typeID', (integer)$materialTypeID)->first();
+
+			$quantity = (object)[
+				'type'            => $buyback_item->type,
+				'quantity'        => $quantity,
+
+				'buyUnit'         => $buyback_item->buyPrice,
+				'buyUnitModded'   => $buyback_item->buyPrice * $buyback_item->buyModifier,
+				'buyTotal'        => $buyback_item->buyPrice * $quantity,
+				'buyTotalModded'  => $buyback_item->buyPrice * $quantity * $buyback_item->buyModifier,
+
+				'sellUnit'        => $buyback_item->sellPrice,
+				'sellUnitModded'  => $buyback_item->sellPrice * $buyback_item->sellModifier,
+				'sellTotal'       => $buyback_item->sellPrice * $quantity,
+				'sellTotalModded' => $buyback_item->sellPrice * $quantity * $buyback_item->sellModifier,
+			];
+		}
+
 		return $result;
 	}
 
@@ -279,6 +276,7 @@ class Refinery
 		$materials = [];
 		$yield     = 0.52 * (1 + 0.02 * $this->config->get('refinery.scrapmetal')) * $this->config->get('refinery.station_tax');
 
+		// Reprocess the item.
 		foreach($type->materials as $material) {
 			$materials[$material->materialTypeID] = $material->quantity * $yield;
 		}

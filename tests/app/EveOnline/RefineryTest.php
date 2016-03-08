@@ -9,7 +9,7 @@ class RefineryTest extends TestCase
 	use DatabaseMigrations;
 
 	/**
-	 * @var Illuminate\Config\Repository
+	 * @var \Illuminate\Config\Repository
 	 */
 	public $config;
 
@@ -32,35 +32,38 @@ class RefineryTest extends TestCase
 	{
 		$refinery  = app()->make(\App\EveOnline\Refinery::class);
 
-		$tritanium = \App\Models\SDE\InvType::find(34);
-		$garbage   = \App\Models\SDE\InvType::find(41);
+		$buyback_items = \App\Models\Item::with('type')->get();
+		$tritanium     = \App\Models\SDE\InvType::find(34);
+		$garbage       = \App\Models\SDE\InvType::find(41);
 
-		$this->assertEquals(true , $refinery->canBeBoughtRaw($tritanium));
-		$this->assertEquals(false, $refinery->canBeBoughtRaw($garbage  ));
+		$this->assertEquals(true , $refinery->canBeBoughtRaw($tritanium, $buyback_items));
+		$this->assertEquals(false, $refinery->canBeBoughtRaw($garbage  , $buyback_items));
 	}
 
 	public function testCanBeRecycledAndBought()
 	{
 		$refinery = app()->make(\App\EveOnline\Refinery::class);
 
-		$kestrel = \App\Models\SDE\InvType::find(602);
-		$erebus  = \App\Models\SDE\InvType::find(671);
+		$buyback_items = \App\Models\Item::with('type')->get();
+		$kestrel       = \App\Models\SDE\InvType::find(602);
+		$erebus        = \App\Models\SDE\InvType::find(671);
 
-		$this->assertEquals(true , $refinery->canBeRecycledAndBought($kestrel));
-		$this->assertEquals(false, $refinery->canBeRecycledAndBought($erebus ));
+		$this->assertEquals(true , $refinery->canBeRecycledAndBought($kestrel, $buyback_items));
+		$this->assertEquals(false, $refinery->canBeRecycledAndBought($erebus , $buyback_items));
 	}
 
 	public function testCanBeRefinedAndBought()
 	{
 		$refinery  = app()->make(\App\EveOnline\Refinery::class);
 
-		$veldspar = \App\Models\SDE\InvType::find(1230 );
-		$glitter  = \App\Models\SDE\InvType::find(16267);
-		$erebus   = \App\Models\SDE\InvType::find(671  );
+		$buyback_items = \App\Models\Item::with('type')->get();
+		$veldspar      = \App\Models\SDE\InvType::find(1230 );
+		$glitter       = \App\Models\SDE\InvType::find(16267);
+		$erebus        = \App\Models\SDE\InvType::find(671  );
 
-		$this->assertEquals(true , $refinery->canBeRefinedAndBought($veldspar));
-		$this->assertEquals(false, $refinery->canBeRefinedAndBought($glitter ));
-		$this->assertEquals(false, $refinery->canBeRefinedAndBought($erebus  ));
+		$this->assertEquals(true , $refinery->canBeRefinedAndBought($veldspar, $buyback_items));
+		$this->assertEquals(false, $refinery->canBeRefinedAndBought($glitter , $buyback_items));
+		$this->assertEquals(false, $refinery->canBeRefinedAndBought($erebus  , $buyback_items));
 	}
 
 	public function testGetRecyledMaterials()
@@ -134,8 +137,7 @@ class RefineryTest extends TestCase
 		$this->assertEquals(    587, $result->materials[   40]->quantity);
 		$this->assertEquals(      0, $result->materials[11399]->quantity);
 
-		$this->assertEquals(2394892, (integer)$result->totalValue );
-		$this->assertEquals(2155402, (integer)$result->totalModded);
-		$this->assertEquals( 239489, (integer)$result->totalProfit);
+		$this->assertEquals(2394892, (integer)$result->totalValue      );
+		$this->assertEquals(2155402, (integer)$result->totalValueModded);
 	}
 }

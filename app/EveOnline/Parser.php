@@ -76,7 +76,7 @@ class Parser
 				]; continue;
 			}
 
-			// Find the type in the database.
+			// Find the type in the database and cache it.
 			$type = $this->type
 				->with('materials')
 				->with('group')
@@ -107,9 +107,8 @@ class Parser
 		$result = [];
 
 		foreach ($contract->items as $item) {
-			// Add the item model and quantity to the returned results.
 			$result[] = (object)[
-				'type'     => $this->type->find($item->typeID),
+				'type'     => $item->type,
 				'quantity' => (integer)$item->quantity,
 			];
 
