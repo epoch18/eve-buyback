@@ -73,6 +73,6 @@ class HomeController extends Controller
 		$items   = $this->parser->convertTextToItems($paste);
 		$buyback = $this->refinery->calculateBuyback($items);
 
-		return view('home.index')->withBuyback($buyback);
+		return view('home.paste')->withBuyback($buyback);
 	}
 }
