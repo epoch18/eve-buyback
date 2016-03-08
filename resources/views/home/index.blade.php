@@ -60,9 +60,11 @@
 								<td>
 									<img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png">
 									{!! $item->type->typeName !!}
+									<span style="float: right;">
 									@if ($item->buyRaw     ) <span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_raw'     ) !!}"></span> @endif
 									@if ($item->buyRecycled) <span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_recycled') !!}"></span> @endif
 									@if ($item->buyRefined ) <span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.buying_refined' ) !!}"></span> @endif
+									</span>
 								</td>
 								<td>{!! $item->type->group->groupName              !!}</td>
 								<td>{!! $item->type->group->category->categoryName !!}</td>
