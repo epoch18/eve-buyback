@@ -19,7 +19,7 @@
 						<li><a href="{!! route('contract') !!}">{!! ucfirst(trans_choice('buyback.contract', 2)) !!}</a></li>
 					@endcan
 					@can('administrate')
-						<li><a href="#">{!! ucfirst(trans('buyback.manage')) !!}</a></li>
+						<li><a href="{!! route('config') !!}">{!! ucfirst(trans('buyback.manage')) !!}</a></li>
 					@endcan
 					<li><a href="{!! route('logout') !!}">{!! ucfirst(trans('buyback.logout')) !!}</a></li>
 				@else

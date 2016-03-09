@@ -12,6 +12,7 @@ use App\Models\API\Outpost;
 use App\Models\SDE\StaStation;
 use App\Models\SDE\InvType;
 use App\Models\Item;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Http\Request;
@@ -74,6 +75,11 @@ class ManageController extends Controller
 	private $request;
 
 	/**
+	* @var \App\Models\Setting
+	*/
+	private $setting;
+
+	/**
 	* Constructs the class.
 	* @param  \Illuminate\Cache\Repository $cache
 	* @param  \Carbon\Carbon               $carbon
@@ -85,6 +91,7 @@ class ManageController extends Controller
 	* @param  \App\EveOnline\Parser        $parser
 	* @param  \App\EveOnline\Refinery      $refinery
 	* @param  \Illuminate\Http\Request     $request
+	* @param  \App\Models\Setting          $setting
 	*/
 	public function __construct(
 		Cache      $cache,
@@ -97,7 +104,8 @@ class ManageController extends Controller
 		Helper     $helper,
 		Parser     $parser,
 		Refinery   $refinery,
-		Request    $request
+		Request    $request,
+		Setting    $setting
 	) {
 		$this->cache    = $cache;
 		$this->carbon   = $carbon;
@@ -110,6 +118,7 @@ class ManageController extends Controller
 		$this->parser   = $parser;
 		$this->refinery = $refinery;
 		$this->request  = $request;
+		$this->setting  = $setting;
 	}
 
 	/**
@@ -156,38 +165,50 @@ class ManageController extends Controller
 		return view('manage.contract')
 			->withBuying ($buying )
 			->withSelling($selling);
+	}
 
-		/*$buying        = [];
-		$selling       = [];
-		$buyback_items = $this->item->with('type')->get();
+	public function config()
+	{
+		$motd = $this->setting->where('key', 'motd')->first();
+		$motd = $motd ? $motd->value : '';
 
-		foreach ($contracts as $contract) {
-			// Calculate the buyback.
-			$items   = $this->parser->convertContractToItems($contract);
-			$buyback = $this->refinery->calculateBuyback($items);
+		return view('manage.config')
+			->withMotd($motd);
+	}
 
-			// Insert the profit margin.
-			if ($contract->price > 0 && $buyback->totalValue > 0) {
-				$buyback->totalMargin = 100 - ($contract->price / $buyback->totalValue * 100);
-			} else { $buyback->totalMargin = 0; }
-
-			// Insert convenience items into the buyback object.
-			$buyback->contract        = $contract;
-			$buyback->contractPrice   = $contract->price;
-			$buyback->contractStation = $this->helper->convertStationIdToModel ($contract->startStationID);
-			$buyback->contractIssuer  = $this->helper->convertCharacterIdToName($contract->issuerID      );
-
-			if ($contract->reward == 0) {
-				$buying[]  = $buyback;
-			} else {
-				$selling[] = $buyback;
-			}
-
-			continue;
+	public function motd()
+	{
+		if (!$this->request->ajax()) {
+			return response()->json(['result' => false]);
 		}
 
-		return view('manage.contract')
-			->withBuying ($buying )
-			->withSelling($selling);*/
+		$text = strip_tags($this->request->input('text')) ?: '';
+
+		if (strlen($text) == 0) {
+			$this->setting->where('key', 'motd')->delete();
+
+			return response()->json([
+				'result'  => true,
+				'message' => trans('buyback.config.motd.removed'),
+			]);
+		}
+
+		if (strlen($text) > 5000) {
+			return response()->json([
+				'result'  => false,
+				'message' => trans('validation.max.string',
+					['attribute' => 'text', 'max' => 5000]),
+			]);
+		}
+
+		$this->setting->updateOrCreate(
+			['key'   => 'motd'],
+			['value' => $text ]
+		);
+
+		return response()->json([
+			'result' => true,
+			'message' => trans('buyback.config.motd.updated'),
+		]);
 	}
 }

@@ -18,7 +18,7 @@
 			<![endif]-->
 			<style type="text/css">
 				body {
-					background-image: url({!! asset('img/bg01.jpg') !!});
+					background-image: url('{!! asset('img/bg01.jpg') !!}');
 					background-repeat: no-repeat;
 					background-position: left top;
 					background-attachment: fixed;
@@ -36,8 +36,8 @@
 		</section>
 		<section class="section-footer">
 			@section('footer')
-				<div class="col-md-offset-2 col-md-8" style="text-align: right;">
-					<div class="col-md-12">
+				<div class="col-md-12" style="text-align: center;">
+					<div class="" style="display: inline-block;">
 						<p><small><a href="#" onclick="CCPEVE.showInfo(1377, 94245967)">Memelo Melo</a> (<a href="https://www.github.com/msims04/eve-buyback" target="_blank">github</a>)</small></p>
 					</div>
 				</div>
@@ -48,6 +48,7 @@
 			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"    type="text/javascript" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
 			<script src="//cdn.datatables.net/s/bs/dt-1.10.10/datatables.min.js"           type="text/javascript"></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js" type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"      type="text/javascript"></script>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					if (!String.prototype.format) {

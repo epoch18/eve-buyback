@@ -22,77 +22,26 @@ class ManageControllerTest extends TestCase
 		$this->user->save();
 	}
 
-	public function testPostSystem()
+	public function testConfigureMotd()
 	{
-		/*auth()->login($this->user);
-
-		$this->post('/manage/system', [
-			'stations' => [30003631, 30003632],
-		]);
-
-		$this->assertResponseStatus(302);
-
-		$this->assertRedirectedTo('/manage');*/
-	}
-
-	/*public function testUpdateApiKeyWhileNotAuthenticated()
-	{
-		$this->post('/manage/api-key', [
-			'_method' => 'PUT',
-			'keyid'   => 12345,
-			'vcode'   => 'dsgahnfvJKFLAFfffvZHff',
-		]);
-
-		$this->assertResponseStatus(302);
-
-		$this->assertRedirectedToRoute('login');
-	}
-
-	public function testUpdateApiKeyWhileAuthenticatedAndWithoutAdministrator()
-	{
-		$this->user->setAdministrator(false)->save();
 		auth()->login($this->user);
 
-		$this->post('/manage/api-key', [
-			'_method' => 'PUT',
-			'keyid'   => 12345,
-			'vcode'   => 'dsgahnfvJKFLAFfffvZHff',
-		]);
+		$this->post('/config/motd', ['text' => 'test message'],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true])
+			->seeInDatabase('buyback_settings',
+				['key'   => 'motd', 'value' => 'test message']);
 
-		$this->assertResponseStatus(401);
+		$this->post('/config/motd', ['text' => ''],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true])
+			->notSeeInDatabase('buyback_settings',
+				['key' => 'motd']);
+
+		auth()->logout();
+
+		$this->post('/config/motd', ['text' => 'test message'],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->assertResponseStatus(401);
 	}
-
-	public function testUpdateApiKeyWhileAuthenticatedAndWithAdministrator()
-	{
-		$this->user->setAdministrator(true)->save();
-		auth()->login($this->user);
-
-		$this->post('/manage/api-key', [
-			'_method' => 'PUT',
-			'keyid'   => 12345,
-			'vcode'   => 'dsgahnfvJKFLAFfffvZHff',
-		], ['HTTP_REFERER' => route('manage.index')]);
-
-		$this->assertResponseStatus(302);
-
-		$this->assertRedirectedToRoute('manage.index');
-
-		$this->assertSessionHas('success');
-	}
-
-	public function testUpdateApiKeyWhileAuthenticatedAndWithAdministratorWithErrors()
-	{
-		$this->user->setAdministrator(true)->save();
-		auth()->login($this->user);
-
-		$this->post('/manage/api-key', [
-			'_method' => 'PUT',
-		], ['HTTP_REFERER' => route('manage.index')]);
-
-		$this->assertResponseStatus(302);
-
-		$this->assertRedirectedToRoute('manage.index');
-
-		$this->assertSessionHas('errors');
-	}*/
 }

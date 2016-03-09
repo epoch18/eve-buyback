@@ -33,6 +33,8 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
+		Route::get ('/config'     , 'ManageController@config')->name('config'     );
+		Route::post('/config/motd', 'ManageController@motd'  )->name('config.motd');
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Contractor::class]], function () {

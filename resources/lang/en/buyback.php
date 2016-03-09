@@ -15,6 +15,8 @@ return [
 	'issued'           => 'issued',
 	'issuer'           => 'issuer',
 	'location'         => 'location',
+	'login'            => 'login',
+	'logout'           => 'logout',
 	'manage'           => 'manage',
 	'margin'           => 'margin',
 	'market'           => 'market',
@@ -25,6 +27,7 @@ return [
 	'raw'              => 'raw',
 	'reprocessable'    => 'reprocessable',
 	'selling'          => 'selling',
+	'submit'           => 'submit',
 	'title'            => 'title',
 	'total'            => 'total',
 	'subtotal'         => 'subtotal',
@@ -33,17 +36,24 @@ return [
 	'volume'           => 'volume',
 	'wanted'           => 'wanted',
 
+	'config'           => [
+		'motd'         => [
+			'header'   => 'Message of the Day',
+			'footer'   => 'You may use markdown language to format the text.',
+			'submit'   => 'Submit',
+			'removed'  => 'The motd has been removed.',
+			'updated'  => 'The motd has been updated.',
+		],
+	],
+
 	'buying_raw'       => 'Buying the actual item',
 	'buying_recycled'  => 'Buying items that reprocess into this item',
 	'buying_refined'   => 'Buying asteroids that reprocess into this item',
+	'config_success'   => 'The configuration was successfully updated.',
+	'config_failure'   => 'The configuration could not be updated.',
 	'contract_total'   => 'Contract Total: :total',
-
-	'login'            => 'login',
-	'logout'           => 'logout',
+	'instructions'     => '<p><h4>Paste your inventory<h4></p><p><h5>This page is IGB and drunk friendly: just hit Ctrl+V!</h5</p>',
 	'login_failed'     => 'You were unable to be logged in.',
 	'login_success'    => 'You have been logged in.',
 	'logout_success'   => 'You have been logged out.',
-
-	'instructions'     => '<p><h4>Paste your inventory<h4></p><p><h5>This page is IGB and drunk friendly: just hit Ctrl+V!</h5</p>',
-
 ];
