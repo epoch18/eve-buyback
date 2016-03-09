@@ -87,12 +87,12 @@
 					<thead>
 						<tr>
 						<tr>
-							<th>{!! ucfirst(trans_choice('buyback.name'      , 1)) !!}</th>
-							<th>{!! ucfirst(trans_choice('buyback.group'     , 1)) !!}</th>
-							<th>{!! ucfirst(trans_choice('buyback.category'  , 1)) !!}</th>
-							<th>{!! ucfirst(trans       ('buyback.unit_price'   )) !!}</th>
-							<th>{!! ucfirst(trans_choice('buyback.quantity'  , 1)) !!}</th>
-							<th>{!! ucfirst(trans_choice('buyback.subtotal'  , 1)) !!}</th>
+							<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
+							<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>
+							<th>{!! ucfirst(trans_choice('buyback.category', 1)) !!}</th>
+							<th>{!! ucfirst(trans       ('buyback.unit'       )) !!}</th>
+							<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+							<th>{!! ucfirst(trans_choice('buyback.subtotal', 1)) !!}</th>
 						</tr>
 					</thead>
 					<tbody>
