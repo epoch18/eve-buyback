@@ -33,8 +33,10 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
-		Route::get ('/config'     , 'ManageController@config')->name('config'     );
-		Route::post('/config/motd', 'ManageController@motd'  )->name('config.motd');
+		Route::get ('/config'      , 'ManageController@config'  )->name('config'          );
+		Route::post('/config/motd' , 'ManageController@motd'    )->name('config.motd'     );
+		Route::get ('/config/items', 'ManageController@getItems')->name('config.items.get');
+		Route::post('/config/items', 'ManageController@items'   )->name('config.items'    );
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Contractor::class]], function () {

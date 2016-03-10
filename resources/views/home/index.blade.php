@@ -47,7 +47,6 @@
 				<table id="buying" class="table table-condensed table-striped table-hover">
 					<thead>
 						<tr>
-						<tr>
 							<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
 							<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>
 							<th>{!! ucfirst(trans_choice('buyback.category', 1)) !!}</th>
@@ -85,7 +84,6 @@
 			<div class="panel-body">
 				<table id="selling" class="table table-condensed table-striped table-hover">
 					<thead>
-						<tr>
 						<tr>
 							<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
 							<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>

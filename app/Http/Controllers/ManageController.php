@@ -169,11 +169,18 @@ class ManageController extends Controller
 
 	public function config()
 	{
-		$motd = $this->setting->where('key', 'motd')->first();
-		$motd = $motd ? $motd->value : '';
+		$motd  = $this->setting->where('key', 'motd')->first();
+		$motd  = $motd ? $motd->value : '';
+
+		$items = $this->item
+			->with('type')
+			->with('type.group')
+			->with('type.group.category')
+			->get();
 
 		return view('manage.config')
-			->withMotd($motd);
+			->withMotd ($motd )
+			->withItems($items);
 	}
 
 	public function motd()
@@ -209,6 +216,28 @@ class ManageController extends Controller
 		return response()->json([
 			'result' => true,
 			'message' => trans('buyback.config.motd.updated'),
+		]);
+	}
+
+	public function getItems()
+	{
+		return $this->item
+			->with('type')
+			->with('type.group')
+			->with('type.group.category')
+			->get()
+			->toJson();
+	}
+
+	public function items()
+	{
+		if (!$this->request->ajax()) {
+			return response()->json(['result' => false]);
+		}
+
+		return response()->json([
+			'result' => true,
+			'message' => trans('buyback.config.items.updated'),
 		]);
 	}
 }

@@ -9,6 +9,9 @@
 			<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cyborg/bootstrap.min.css"   rel="stylesheet" type="text/css" integrity="sha256-P5gS9tfR0S0WBWIsn0OUp1YR2pcYMGwgfwjxX3AqncA= sha512-Jwcua5M3o+swptQ5w8vJxSuiFjfuTG0mwkJAQ/XMoT8dLVr7ZyhiLxEZPwuDSTtQEl22wYbdfQAlGxd7otaCJw==" crossorigin="anonymous" />
 			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous" />
 			<link href="//cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css"         rel="stylesheet" type="text/css" />
+			<link href="//cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css"     rel="stylesheet" type="text/css" />
+			<link href="//cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css"      rel="stylesheet" type="text/css" />
+			<link href="//cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"       rel="stylesheet" type="text/css" />
 			<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css"    rel="stylesheet" />
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,11 +47,13 @@
 			@show
 		</section>
 		@section('scripts')
-			<script src="//code.jquery.com/jquery-2.1.4.min.js"                            type="text/javascript"></script>
-			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"    type="text/javascript" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
-			<script src="//cdn.datatables.net/s/bs/dt-1.10.10/datatables.min.js"           type="text/javascript"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js" type="text/javascript"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"      type="text/javascript"></script>
+			<script src="//code.jquery.com/jquery-2.1.4.min.js"                                 type="text/javascript"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"         type="text/javascript" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+			<script src="//cdn.datatables.net/s/bs/dt-1.10.10/datatables.min.js"                type="text/javascript"></script>
+			<script src="//cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"       type="text/javascript"></script>
+			<script src="//cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"         type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"      type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"           type="text/javascript"></script>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					if (!String.prototype.format) {
