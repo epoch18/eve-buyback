@@ -214,7 +214,7 @@ class ManageController extends Controller
 		);
 
 		return response()->json([
-			'result' => true,
+			'result'  => true,
 			'message' => trans('buyback.config.motd.updated'),
 		]);
 	}
@@ -229,14 +229,65 @@ class ManageController extends Controller
 			->toJson();
 	}
 
-	public function items()
+	public function updateItems()
 	{
 		if (!$this->request->ajax()) {
 			return response()->json(['result' => false]);
 		}
 
+		// Get the input that can be applied to all items.
+		$multiple = [
+			'buyRaw'       => $this->request->input('buyRaw'      ) ? true : false,
+			'buyRecycled'  => $this->request->input('buyRecycled' ) ? true : false,
+			'buyRefined'   => $this->request->input('buyRefined'  ) ? true : false,
+			'buyModifier'  => $this->request->input('buyModifier' ) ?      :  0.00,
+			'sell'         => $this->request->input('sell'        ) ? true : false,
+			'sellModifier' => $this->request->input('sellModifier') ?      :  0.00,
+			'lockPrices'   => $this->request->input('lockPrices'  ) ? true : false,
+		];
+
+		$multiple['buyModifier'] = is_numeric($multiple['buyModifier'])
+			? (double)$multiple['buyModifier' ] : 0.00;
+
+		$multiple['sellModifier'] = is_numeric($multiple['sellModifier'])
+			? (double)$multiple['sellModifier'] : 0.00;
+
+		// Get the input that can only be applied to a single item.
+		$single = [
+			'buyPrice'  => $this->request->input('buyPrice' ) ?: 0.00,
+			'sellPrice' => $this->request->input('sellPrice') ?: 0.00,
+		];
+
+		$single['buyPrice'] = is_numeric($single['buyPrice'])
+			? (double)$single['buyPrice' ] : 0.00;
+
+		$single['sellPrice'] = is_numeric($single['sellPrice'])
+			? (double)$single['sellPrice'] : 0.00;
+
+		// Get the items being updated.
+		$ids   = explode(',', $this->request->input('items'));
+		$ids   = count($ids) ? $ids : [];
+		$items = $this->item->whereIn('typeID', $ids)->get();
+
+		// Update a single item.
+		if ($items->count() == 1) {
+			$items[0]->update(array_merge($multiple, $single));
+
+		// Update multiple items.
+		} else if ($items->count() > 1) {
+			$items->each(function ($item) use ($multiple) {
+				$item->update($multiple);
+			});
+
+		} else {
+			return response()->json([
+				'result'  => false,
+				'message' => trans('buyback.config.items.update_failed'),
+			]);
+		}
+
 		return response()->json([
-			'result' => true,
+			'result'  => true,
 			'message' => trans('buyback.config.items.updated'),
 		]);
 	}

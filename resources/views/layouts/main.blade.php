@@ -47,13 +47,14 @@
 			@show
 		</section>
 		@section('scripts')
-			<script src="//code.jquery.com/jquery-2.1.4.min.js"                                 type="text/javascript"></script>
-			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"         type="text/javascript" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
-			<script src="//cdn.datatables.net/s/bs/dt-1.10.10/datatables.min.js"                type="text/javascript"></script>
-			<script src="//cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"       type="text/javascript"></script>
-			<script src="//cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"         type="text/javascript"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"      type="text/javascript"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"           type="text/javascript"></script>
+			<script src="//code.jquery.com/jquery-2.1.4.min.js"                            type="text/javascript"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"    type="text/javascript" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+			<script src="//cdn.datatables.net/s/bs/dt-1.10.10/datatables.min.js"           type="text/javascript"></script>
+			<script src="//cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"  type="text/javascript"></script>
+			<script src="//cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"    type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js" type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"      type="text/javascript"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" type="text/javascript"></script>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					if (!String.prototype.format) {

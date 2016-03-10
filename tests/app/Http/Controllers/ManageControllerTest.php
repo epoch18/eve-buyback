@@ -30,7 +30,7 @@ class ManageControllerTest extends TestCase
 			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
 			->seeJson(['result' => true])
 			->seeInDatabase('buyback_settings',
-				['key'   => 'motd', 'value' => 'test message']);
+				['key' => 'motd', 'value' => 'test message']);
 
 		$this->post('/config/motd', ['text' => ''],
 			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
@@ -41,6 +41,109 @@ class ManageControllerTest extends TestCase
 		auth()->logout();
 
 		$this->post('/config/motd', ['text' => 'test message'],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->assertResponseStatus(401);
+	}
+
+	public function testConfigureItemsUpdate()
+	{
+		\App\Models\Item::create([
+			'typeID'         => 34,
+			'typeName'       => 'Tritanium',
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'buyPrice'       => 0.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'sellPrice'      => 0.0,
+			'lockPrices'     => false,
+		]);
+
+		\App\Models\Item::create([
+			'typeID'         => 35,
+			'typeName'       => 'Pyerite',
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'buyPrice'       => 0.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'sellPrice'      => 0.0,
+			'lockPrices'     => false,
+		]);
+
+		auth()->login($this->user);
+
+		$this->post('/config/update-items', [
+				'items'        => '34',
+				'buyRaw'         => true,
+				'buyRecycled'    => true,
+				'buyRefined'     => true,
+				'buyModifier'    => 0.9,
+				'buyPrice'       => 5.0,
+				'sell'           => true,
+				'sellModifier'   => 1.1,
+				'sellPrice'      => 6.0,
+				'lockPrices'     => true,
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true])
+			->seeInDatabase('buyback_items', [
+				'typeID'         => 34,
+				'buyRaw'         => true,
+				'buyRecycled'    => true,
+				'buyRefined'     => true,
+				'buyModifier'    => 0.9,
+				'buyPrice'       => 5.0,
+				'sell'           => true,
+				'sellModifier'   => 1.1,
+				'sellPrice'      => 6.0,
+				'lockPrices'     => true,
+			]);
+
+		$this->post('/config/update-items', [
+				'items'        => '34,35',
+				'buyRaw'         => true,
+				'buyRecycled'    => true,
+				'buyRefined'     => true,
+				'buyModifier'    => 0.8,
+				'buyPrice'       => 5.0,
+				'sell'           => true,
+				'sellModifier'   => 1.2,
+				'sellPrice'      => 6.0,
+				'lockPrices'     => false,
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true])
+			->seeInDatabase('buyback_items', [
+				'typeID'         => 34,
+				'buyRaw'         => true,
+				'buyRecycled'    => true,
+				'buyRefined'     => true,
+				'buyModifier'    => 0.8,
+				'buyPrice'       => 5.0,
+				'sell'           => true,
+				'sellModifier'   => 1.2,
+				'sellPrice'      => 6.0,
+				'lockPrices'     => false,
+			])
+			->seeInDatabase('buyback_items', [
+				'typeID'         => 35,
+				'buyRaw'         => true,
+				'buyRecycled'    => true,
+				'buyRefined'     => true,
+				'buyModifier'    => 0.8,
+				'buyPrice'       => 0.0,
+				'sell'           => true,
+				'sellModifier'   => 1.2,
+				'sellPrice'      => 0.0,
+				'lockPrices'     => false,
+			]);
+
+		auth()->logout();
+
+		$this->post('/config/update-items', [],
 			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
 			->assertResponseStatus(401);
 	}
