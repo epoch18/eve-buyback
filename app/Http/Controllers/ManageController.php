@@ -122,7 +122,8 @@ class ManageController extends Controller
 	}
 
 	/**
-	 * Handles displaying contracts assigned to the character or corporation.
+	 * Handles displaying contracts that are assigned to the character or corporation.
+	 * @return \Illuminate\Http\Response
 	 */
 	public function contract()
 	{
@@ -167,6 +168,10 @@ class ManageController extends Controller
 			->withSelling($selling);
 	}
 
+	/**
+	 * Handles displaying the configuration page.
+	 * @return \Illuminate\Http\Response
+	 */
 	public function config()
 	{
 		$motd  = $this->setting->where('key', 'motd')->first();
@@ -183,6 +188,10 @@ class ManageController extends Controller
 			->withItems($items);
 	}
 
+	/**
+	 * Handles updating the motd.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function motd()
 	{
 		if (!$this->request->ajax()) {
@@ -219,6 +228,10 @@ class ManageController extends Controller
 		]);
 	}
 
+	/**
+	 * Gets a list of buyback items.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function getItems()
 	{
 		return $this->item
@@ -229,6 +242,40 @@ class ManageController extends Controller
 			->toJson();
 	}
 
+	/**
+	 * Gets a paginated list of inventory types.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function getTypes()
+	{
+		$query = htmlspecialchars(strip_tags($this->request->input('query')));
+
+		return $this->type
+			->where('published', true)
+			->where('typeName', 'LIKE', "%{$query}%")
+			->paginate(20);
+	}
+
+	/**
+	 * Handles adding new buyback items.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function addItems()
+	{
+		if (!$this->request->ajax()) {
+			return response()->json(['result' => false]);
+		}
+
+		return response()->json([
+			'result'  => true,
+			'message' => trans('buyback.config.items.added'),
+		]);
+	}
+
+	/**
+	 * Handles updating the buyback items.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function updateItems()
 	{
 		if (!$this->request->ajax()) {

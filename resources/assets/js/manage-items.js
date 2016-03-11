@@ -1,7 +1,7 @@
 function initManageItems(args) {
 	var table = $('#manage-form-items').DataTable({
 		dom: "lBfrtip",
-		ajax: args.get,
+		ajax: args.actions.getItems,
 		sAjaxDataProp: "",
 		columns: [
 			{
@@ -117,6 +117,90 @@ function initManageItems(args) {
 			{
 				text: args.trans.buyback.config.items.add,
 				action: function (e, dt, node, config) {
+					var form = ''
+						+ '<div class="row">'
+						+ '	<div class="col-md-12">'
+						+ '		<form id="manage-form-add-items" class="form-horizontal" action="'+args.actions.addItems+'" method="POST">'
+						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.items+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="types" name="types[]" class="form-control" multiple="multiple"></select>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '		</form>'
+						+ '	</div>'
+						+ '</div>'
+					;
+
+					var box = bootbox.dialog({
+						message: form,
+						title: args.trans.buyback.config.items.add_items,
+						buttons: {
+							cancel: {
+								label: args.trans.buyback.config.items.cancel,
+								className: "btn-default",
+								callback: function() {
+								},
+							},
+							update: {
+								label: args.trans.buyback.config.items.add,
+								className: "btn-success",
+								callback: function() {
+									var form   = $("#manage-form-add-items");
+									var action = form.attr("action");
+
+									$.post(action, form.serialize(), function(response) {
+										if (response.result == true) {
+											$.notify(response.message, {className: 'success'});
+											dt.ajax.reload();
+										} else {
+											$.notify(response.message, {className: 'error'});
+										}
+									});
+								},
+							},
+						},
+					});
+
+					box.bind('shown.bs.modal', function () {
+						$("#manage-form-add-items #types").select2({
+							ajax: {
+								url: args.actions.getTypes,
+								dataType: "json",
+								delay: 250,
+								minimumInputLength: 3,
+								data: function (params) {
+									return {
+										query: params.term,
+										page : params.page,
+									};
+								},
+								processResults: function (data, params) {
+									params.page = params.page || 1;
+
+									$.map(data.data, function (obj) {
+										obj.id   = obj.typeID;
+										obj.text = obj.typeName;
+									});
+
+									return {
+										results: data.data,
+										pagination: {
+											more: (params.page * 20) < data.total
+										},
+									};
+								},
+								cache: true,
+							},
+							templateResult: function (state) {
+								if (!state.id) { return state.text; }
+
+								return $('<span><img src="https://image.eveonline.com/Type/'+state.typeID+'_32.png"> '+state.typeName+'</span>');
+							},
+						});
+					});
+
 					dt.ajax.reload();
 				},
 				enabled: true,
@@ -138,7 +222,7 @@ function initManageItems(args) {
 					var form = ''
 						+ '<div class="row">'
 						+ '	<div class="col-md-12">'
-						+ '		<form id="manage-form-update-items" class="form-horizontal" action="'+args.post+'" method="POST">'
+						+ '		<form id="manage-form-update-items" class="form-horizontal" action="'+args.actions.updateItems+'" method="POST">'
 						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
 						+ '			<input type="hidden" name="items" value="'+(types)+'">'
 						+ '			<div class="form-group">'
@@ -201,7 +285,7 @@ function initManageItems(args) {
 								className: "btn-default",
 								callback: function() {
 									//dt.ajax.reload();
-								}
+								},
 							},
 							update: {
 								label: args.trans.buyback.config.items.update,
@@ -218,7 +302,7 @@ function initManageItems(args) {
 											$.notify(response.message, {className: 'error'});
 										}
 									});
-								}
+								},
 							},
 						},
 					});

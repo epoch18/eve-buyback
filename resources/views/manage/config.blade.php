@@ -81,14 +81,19 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		initManageItems({
-			get  : "{!! route('config.items.get'   ) !!}",
-			post : "{!! route('config.items.update') !!}",
+			actions: {
+				addItems   : "{!! route('config.items.add'   ) !!}",
+				getItems   : "{!! route('config.items.get'   ) !!}",
+				getTypes   : "{!! route('config.types.get'   ) !!}",
+				updateItems: "{!! route('config.items.update') !!}",
+			},
 			token: "{!! csrf_token() !!}",
 			trans: {
 				buyback: {
 					config: {
 						items: {
 							add                : "{!! trans       ('buyback.config.items.add'                 ) !!}",
+							add_items          : "{!! trans       ('buyback.config.items.add_items'           ) !!}",
 							buy_modifier       : "{!! trans       ('buyback.config.items.buy_modifier'        ) !!}",
 							buy_price          : "{!! trans       ('buyback.config.items.buy_price'           ) !!}",
 							buy_raw_help_1     : "{!! trans_choice('buyback.config.items.buy_raw_help'     , 1) !!}",
@@ -102,6 +107,7 @@
 							confirm_remove_1   : "{!! trans_choice('buyback.config.items.confirm_remove'   , 1) !!}",
 							confirm_remove_2   : "{!! trans_choice('buyback.config.items.confirm_remove'   , 2) !!}",
 							edit               : "{!! trans       ('buyback.config.items.edit'                ) !!}",
+							items              : "{!! trans       ('buyback.config.items.items'               ) !!}",
 							item_settings      : "{!! trans       ('buyback.config.items.item_settings'       ) !!}",
 							lock_prices_help   : "{!! trans       ('buyback.config.items.lock_prices_help'    ) !!}",
 							remove_item_1      : "{!! trans_choice('buyback.config.items.remove_item'      , 1) !!}",

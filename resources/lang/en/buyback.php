@@ -39,6 +39,9 @@ return [
 	'config'                    => [
 		'items'                 => [
 			'add'               => 'Add',
+			'add_failed'        => 'Failed to add items to the buyback.',
+			'add_items'         => 'Add Items?',
+			'added'             => 'The items were added to the buyback.',
 			'buy_modifier'      => 'Buy Modifier',
 			'buy_raw'           => 'Buy Raw',
 			'buy_price'         => 'Buy Price',
@@ -54,6 +57,7 @@ return [
 			'edit'              => 'Edit',
 			'group'             => 'Group',
 			'header'            => 'Buyback Items',
+			'items'             => 'Items',
 			'item_settings'     => 'Item Settings',
 			'lock_prices'       => 'Lock Prices',
 			'lock_prices_help'  => 'Lock the prices from being auto-updated',
