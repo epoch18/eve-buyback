@@ -1,4 +1,5 @@
-var elixir = require('laravel-elixir');
+var elixir  = require('laravel-elixir');
+var Promise = require('es6-promise').Promise;
 
 /*
  |--------------------------------------------------------------------------
@@ -12,7 +13,15 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    //mix.sass('app.scss');
+	mix.styles([
+		'app.css',
+	]);
+
+	mix.scripts([
+		'string-format.js',
+		'manage-motd.js',
+		'manage-items.js',
+	]);
 
     mix.phpUnit();
 });

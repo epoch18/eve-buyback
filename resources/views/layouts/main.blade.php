@@ -13,20 +13,13 @@
 			<link href="//cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css"      rel="stylesheet" type="text/css" />
 			<link href="//cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"       rel="stylesheet" type="text/css" />
 			<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css"    rel="stylesheet" />
+			<link href="/css/all.css" rel="stylesheet" />
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 			<!--[if lt IE 9]>
 				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 				<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 			<![endif]-->
-			<style type="text/css">
-				body {
-					background-image: url('{!! asset('img/bg01.jpg') !!}');
-					background-repeat: no-repeat;
-					background-position: left top;
-					background-attachment: fixed;
-				}
-			</style>
 		@show
 	</head>
 	<body>
@@ -55,16 +48,7 @@
 			<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js" type="text/javascript"></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"      type="text/javascript"></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" type="text/javascript"></script>
-			<script type="text/javascript">
-				$(document).ready(function() {
-					if (!String.prototype.format) {
-						String.prototype.format = function() {
-						var args = arguments;
-						return this.replace(/{(\d+)}/g, function(match, number) {
-							return typeof args[number] != 'undefined' ? args[number] : match; });
-						};
-					} });
-			</script>
+			<script src="/js/all.js" type="text/javascript"></script>
 		@show
 	</body>
 </html>
