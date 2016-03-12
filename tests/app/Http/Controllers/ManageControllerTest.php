@@ -45,6 +45,115 @@ class ManageControllerTest extends TestCase
 			->assertResponseStatus(401);
 	}
 
+	public function testConfigureBuybackAddItemTypes()
+	{
+		auth()->login($this->user);
+
+		$this->post('/config/add-items', [
+			'types'          => [34, 35, 36, 37, 38, 39, 40],
+			'groups'         => [],
+			'categories'     => [],
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'lockPrices'     => false,
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true]);
+
+		foreach ([34, 35, 36, 37, 38, 39, 40] as $typeID) {
+			$this->seeInDatabase('buyback_items', [
+				'typeID'         => $typeID,
+				'buyRaw'         => false,
+				'buyRecycled'    => false,
+				'buyRefined'     => false,
+				'buyModifier'    => 1.0,
+				'buyPrice'       => 0.0,
+				'sell'           => false,
+				'sellModifier'   => 1.0,
+				'sellPrice'      => 0.0,
+				'lockPrices'     => false,
+			]);
+		}
+	}
+
+	public function testConfigureBuybackAddItemGroups()
+	{
+		auth()->login($this->user);
+
+		$this->post('/config/add-items', [
+			'types'          => [],
+			'groups'         => [18],
+			'categories'     => [],
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'lockPrices'     => false,
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true]);
+
+		foreach ([34, 35, 36, 37, 38, 39, 40] as $typeID) {
+			$this->seeInDatabase('buyback_items', [
+				'typeID'         => $typeID,
+				'buyRaw'         => false,
+				'buyRecycled'    => false,
+				'buyRefined'     => false,
+				'buyModifier'    => 1.0,
+				'buyPrice'       => 0.0,
+				'sell'           => false,
+				'sellModifier'   => 1.0,
+				'sellPrice'      => 0.0,
+				'lockPrices'     => false,
+			]);
+		}
+	}
+
+	public function testConfigureBuybackAddItemCategories()
+	{
+		auth()->login($this->user);
+
+		$this->post('/config/add-items', [
+			'types'          => [],
+			'groups'         => [],
+			'categories'     => [4],
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'lockPrices'     => false,
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true]);
+
+		foreach ([34, 35, 36, 37, 38, 39, 40] as $typeID) {
+			$this->seeInDatabase('buyback_items', [
+				'typeID'         => $typeID,
+				'buyRaw'         => false,
+				'buyRecycled'    => false,
+				'buyRefined'     => false,
+				'buyModifier'    => 1.0,
+				'buyPrice'       => 0.0,
+				'sell'           => false,
+				'sellModifier'   => 1.0,
+				'sellPrice'      => 0.0,
+				'lockPrices'     => false,
+			]);
+		}
+	}
+
+	public function testConfigureBuybackNotLoggedIn()
+	{
+		$this->post('/config/update-items', [],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->assertResponseStatus(401);
+	}
+
 	public function testConfigureItemsUpdate()
 	{
 		\App\Models\Item::create([
