@@ -7,6 +7,7 @@ use App\EveOnline\Parser;
 use App\EveOnline\Refinery;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateItemsJob;
 use App\Models\API\Contract;
 use App\Models\API\Outpost;
 use App\Models\SDE\StaStation;
@@ -457,6 +458,40 @@ class ManageController extends Controller
 		return response()->json([
 			'result'  => true,
 			'message' => trans('buyback.config.items.updated'),
+		]);
+	}
+
+	public function removeItems()
+	{
+		if (!$this->request->ajax()) {
+			return response()->json(['result' => false]);
+		}
+
+		// Get the items being removed.
+		$ids   = explode(',', $this->request->input('items'));
+		$ids   = count($ids) && $ids[0] != '' ? $ids : [];
+		$items = $this->item->whereIn('typeID', $ids)->get();
+
+		$items->each(function ($item) { $item->delete(); });
+
+		return response()->json([
+			'result'  => true,
+			'message' => trans('buyback.config.items.removed'),
+		]);
+	}
+
+	public function updatePrices()
+	{
+		if (!$this->request->ajax()) {
+			return response()->json(['result' => false]);
+		}
+
+		$job = app()->make(UpdateItemsJob::class);
+		$this->dispatchNow($job);
+
+		return response()->json([
+			'result'  => true,
+			'message' => trans('buyback.config.items.updated_prices'),
 		]);
 	}
 }

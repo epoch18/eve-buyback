@@ -256,4 +256,71 @@ class ManageControllerTest extends TestCase
 			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
 			->assertResponseStatus(401);
 	}
+
+	public function testConfigureRemoveItems()
+	{
+		\App\Models\Item::create([
+			'typeID'         => 34,
+			'typeName'       => 'Tritanium',
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'buyPrice'       => 0.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'sellPrice'      => 0.0,
+			'lockPrices'     => false,
+		]);
+
+		\App\Models\Item::create([
+			'typeID'         => 35,
+			'typeName'       => 'Pyerite',
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => false,
+			'buyModifier'    => 1.0,
+			'buyPrice'       => 0.0,
+			'sell'           => false,
+			'sellModifier'   => 1.0,
+			'sellPrice'      => 0.0,
+			'lockPrices'     => false,
+		]);
+
+		auth()->login($this->user);
+
+		$this->post('/config/remove-items', [
+				'items' => '35',
+			], ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true])
+			->seeInDatabase   ('buyback_items', ['typeID' => 34])
+			->notSeeInDatabase('buyback_items', ['typeID' => 35]);
+
+		auth()->logout();
+
+		$this->post('/config/update-items', [],
+			['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->assertResponseStatus(401);
+	}
+
+	public function testConfigureUpdatePrices()
+	{
+		auth()->login($this->user);
+
+		$dispatcher = Mockery::mock(\Illuminate\Bus\Dispatcher::class);
+		$this->app->instance(\Illuminate\Bus\Dispatcher::class, $dispatcher);
+
+		$job = Mockery::mock(\App\Jobs\UpdateItemsJob::class);
+		$this->app->instance(\App\Jobs\UpdateItemsJob::class, $job);
+
+		$dispatcher->shouldReceive('dispatchNow')->once()->with($job);
+
+		$this->get('/config/update-prices', ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->seeJson(['result' => true]);
+
+		auth()->logout();
+
+		$this->get('/config/update-prices', ['HTTP_X-Requested-With' => 'XMLHttpRequest'])
+			->assertResponseStatus(401);
+	}
 }

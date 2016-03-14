@@ -87,7 +87,9 @@
 				getTypes     : "{!! route('config.types.get'     ) !!}",
 				getGroups    : "{!! route('config.groups.get'    ) !!}",
 				getCategories: "{!! route('config.categories.get') !!}",
+				removeItems  : "{!! route('config.items.remove'  ) !!}",
 				updateItems  : "{!! route('config.items.update'  ) !!}",
+				updatePrices : "{!! route('config.prices.update' ) !!}",
 			},
 			token: "{!! csrf_token() !!}",
 			trans: {
@@ -125,6 +127,7 @@
 							sell_modifier      : "{!! trans       ('buyback.config.items.sell_modifier'       ) !!}",
 							sell_price         : "{!! trans       ('buyback.config.items.sell_price'          ) !!}",
 							sell_settings      : "{!! trans       ('buyback.config.items.sell_settings'       ) !!}",
+							update             : "{!! trans       ('buyback.config.items.update'              ) !!}",
 							update_item_1      : "{!! trans_choice('buyback.config.items.update_item'      , 1) !!}",
 							update_item_2      : "{!! trans_choice('buyback.config.items.update_item'      , 2) !!}",
 							update_prices      : "{!! trans       ('buyback.config.items.update_prices'       ) !!}",

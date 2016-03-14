@@ -76,6 +76,7 @@ return [
 			'update_failed'     => 'Failed to update buyback items.',
 			'update_item'       => 'Update Item?|Update Items?',
 			'update_prices'     => 'Update Prices',
+			'updated_prices'    => 'The buyback prices have been updated.',
 			'updated'           => 'The buyback items have been updated.',
 		],
 		'motd'             => [

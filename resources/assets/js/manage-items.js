@@ -429,18 +429,30 @@ function initManageItems(args) {
 			{
 				text: args.trans.buyback.config.items.remove,
 				action: function (e, dt, node, config) {
-					var selectedRows = table.rows({selected: true});
+					var data  = table.rows('.selected').data();
+					var types = "";
 
-					var message = selectedRows.count() == 1
+					$.each(data, function (index, item) {
+						types += item.typeID + ",";
+					}); types  = types.substr(0, types.length - 1);
+
+					var message = data.count() == 1
 						? args.trans.buyback.config.items.confirm_remove_1
 						: args.trans.buyback.config.items.confirm_remove_2;
 
-					var title = selectedRows.count() == 1
+					var title = data.count() == 1
 						? args.trans.buyback.config.items.remove_item_1
 						: args.trans.buyback.config.items.remove_item_2;
 
+					var form = ''
+						+ '<form id="manage-form-remove-items" class="form-horizontal" action="'+args.actions.removeItems+'" method="POST">'
+						+ '	<input type="hidden" name="_token" value="'+args.token+'">'
+						+ '	<input type="hidden" name="items" value="'+(types)+'">'
+						+ '</form>'
+					;
+
 					bootbox.dialog({
-						message: message,
+						message: message + form,
 						title: title,
 						buttons: {
 							cancel: {
@@ -453,7 +465,17 @@ function initManageItems(args) {
 								label: args.trans.buyback.config.items.remove,
 								className: "btn-danger",
 								callback: function() {
-									//dt.ajax.reload();
+									var form   = $("#manage-form-remove-items");
+									var action = form.attr("action");
+
+									$.post(action, form.serialize(), function(response) {
+										if (response.result == true) {
+											$.notify(response.message, {className: 'success'});
+											dt.ajax.reload();
+										} else {
+											$.notify(response.message, {className: 'error'});
+										}
+									});
 								}
 							},
 						},
@@ -465,7 +487,18 @@ function initManageItems(args) {
 			{
 				text: args.trans.buyback.config.items.update_prices,
 				action: function (e, dt, node, config) {
-					dt.ajax.reload();
+					table.button(5).enable(false); // Update Prices
+
+					$.get(args.actions.updatePrices, function(response) {
+						if (response.result == true) {
+							$.notify(response.message, {className: 'success'});
+							table.button(5).enable(true); // Update Prices
+							dt.ajax.reload();
+						} else {
+							$.notify(response.message, {className: 'error'});
+							table.button(5).enable(true); // Update Prices
+						}
+					});
 				},
 				enabled: true,
 			},

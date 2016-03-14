@@ -33,14 +33,16 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
-		Route::get ('/config'             , 'ManageController@config'       )->name('config'               );
-		Route::post('/config/motd'        , 'ManageController@motd'         )->name('config.motd'          );
-		Route::post('/config/add-items'   , 'ManageController@addItems'     )->name('config.items.add'     );
-		Route::get ('/config/items'       , 'ManageController@getItems'     )->name('config.items.get'     );
-		Route::post('/config/update-items', 'ManageController@updateItems'  )->name('config.items.update'  );
-		Route::get ('/config/types'       , 'ManageController@getTypes'     )->name('config.types.get'     );
-		Route::get ('/config/groups'      , 'ManageController@getGroups'    )->name('config.groups.get'    );
-		Route::get ('/config/categories'  , 'ManageController@getCategories')->name('config.categories.get');
+		Route::get ('/config'              , 'ManageController@config'       )->name('config'               );
+		Route::post('/config/motd'         , 'ManageController@motd'         )->name('config.motd'          );
+		Route::post('/config/add-items'    , 'ManageController@addItems'     )->name('config.items.add'     );
+		Route::get ('/config/items'        , 'ManageController@getItems'     )->name('config.items.get'     );
+		Route::post('/config/remove-items' , 'ManageController@removeItems'  )->name('config.items.remove'  );
+		Route::post('/config/update-items' , 'ManageController@updateItems'  )->name('config.items.update'  );
+		Route::get ('/config/update-prices', 'ManageController@updatePrices' )->name('config.prices.update' );
+		Route::get ('/config/types'        , 'ManageController@getTypes'     )->name('config.types.get'     );
+		Route::get ('/config/groups'       , 'ManageController@getGroups'    )->name('config.groups.get'    );
+		Route::get ('/config/categories'   , 'ManageController@getCategories')->name('config.categories.get');
 
 		Route::post('/config/items', 'ManageController@items'   )->name('config.items'       );
 	});
