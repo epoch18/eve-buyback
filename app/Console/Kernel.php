@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('buyback:update-api'     )->hourly();
-		$schedule->command('buyback:update-items'   )->hourly();
-		$schedule->command('buyback:update-outposts')->hourly();
+		$schedule->command('buyback:update-contracts')->hourly();
+		$schedule->command('buyback:update-items'    )->hourly();
+		$schedule->command('buyback:update-outposts' )->hourly();
 	}
 }
