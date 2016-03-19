@@ -18,6 +18,7 @@ elixir(function(mix) {
 	]);
 
 	mix.scripts([
+		'collect.js',
 		'string-format.js',
 		'manage-motd.js',
 		'manage-items.js',

@@ -33,22 +33,23 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Administrator::class]], function () {
-		Route::get ('/config'              , 'ManageController@config'       )->name('config'               );
-		Route::post('/config/motd'         , 'ManageController@motd'         )->name('config.motd'          );
-		Route::post('/config/add-items'    , 'ManageController@addItems'     )->name('config.items.add'     );
-		Route::get ('/config/items'        , 'ManageController@getItems'     )->name('config.items.get'     );
-		Route::post('/config/remove-items' , 'ManageController@removeItems'  )->name('config.items.remove'  );
-		Route::post('/config/update-items' , 'ManageController@updateItems'  )->name('config.items.update'  );
-		Route::get ('/config/update-prices', 'ManageController@updatePrices' )->name('config.prices.update' );
-		Route::get ('/config/types'        , 'ManageController@getTypes'     )->name('config.types.get'     );
-		Route::get ('/config/groups'       , 'ManageController@getGroups'    )->name('config.groups.get'    );
-		Route::get ('/config/categories'   , 'ManageController@getCategories')->name('config.categories.get');
+		Route::get ('/manage/resource/categories', 'Manage\ResourceController@getCategories')->name('manage.resource.categories');
+		Route::get ('/manage/resource/groups'    , 'Manage\ResourceController@getGroups'    )->name('manage.resource.groups'    );
+		Route::get ('/manage/resource/types'     , 'Manage\ResourceController@getTypes'     )->name('manage.resource.types'     );
 
-		Route::post('/config/items', 'ManageController@items'   )->name('config.items'       );
+		Route::post('/manage/motd/edit'          , 'Manage\MotdController@postEditMotd'     )->name('manage.motd.edit'          );
+
+		Route::get ('/manage/item/get'           , 'Manage\ItemController@getGetItems'      )->name('manage.item.get'           );
+		Route::post('/manage/item/add'           , 'Manage\ItemController@postAddItems'     )->name('manage.item.add'           );
+		Route::post('/manage/item/edit'          , 'Manage\ItemController@postEditItems'    )->name('manage.item.edit'          );
+		Route::post('/manage/item/remove'        , 'Manage\ItemController@postRemoveItems'  )->name('manage.item.remove'        );
+		Route::post('/manage/item/update'        , 'Manage\ItemController@postUpdateItems'  )->name('manage.item.update'        );
+
+		Route::get ('/manage'                    , 'Manage\ManageController@getIndex'       )->name('manage.index'              );
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Contractor::class]], function () {
-		Route::get('/contract', 'ManageController@contract')->name('contract');
+		Route::get('/contract', 'Contract\ContractController@getIndex')->name('contract.index');
 	});
 
 	Route::get ('/', 'HomeController@index')->name('index');

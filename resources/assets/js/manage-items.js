@@ -115,62 +115,62 @@ function initManageItems(args) {
 			"selectAll",
 			"selectNone",
 			{
-				text: args.trans.buyback.config.items.add,
+				text: args.trans.buttons.add,
 				action: function (e, dt, node, config) {
 					var form = ''
 						+ '<div class="row">'
 						+ '	<div class="col-md-12">'
-						+ '		<form id="manage-form-add-items" class="form-horizontal" action="'+args.actions.addItems+'" method="POST">'
+						+ '		<form id="manage-form-add-items" class="form-horizontal">'
 						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.item_2+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.types.split('|')[1]+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<select id="types" name="types[]" class="form-control" multiple="multiple"></select>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.group_2+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.groups.split('|')[1]+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<select id="groups" name="groups[]" class="form-control" multiple="multiple"></select>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.category_2+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.categories.split('|')[1]+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<select id="categories" name="categories[]" class="form-control" multiple="multiple"></select>'
 						+ '				</div>'
 						+ '			</div>'
-						// Copy of update items form below.
+						// Copy of update items form below minus prices.
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.buy_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     >'+args.trans.buyback.config.items.buy_raw_help_2     +'</label></div>'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled">'+args.trans.buyback.config.items.buy_recycled_help_2+'</label></div>'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" >'+args.trans.buyback.config.items.buy_refined_help_2 +'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     >'+args.trans.messages.buy_raw     .split('|')[1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled">'+args.trans.messages.buy_recycled.split('|')[1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" >'+args.trans.messages.buy_refined .split('|')[1]+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.buy_modifier+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_modifier+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="">'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.sell_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="sell">'+args.trans.buyback.config.items.sell_help_2+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="sell">'+args.trans.messages.sell_items.split('|')[1]+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.sell_modifier+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_modifier+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="">'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.item_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices">'+args.trans.buyback.config.items.lock_prices_help+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices">'+args.trans.messages.lock_prices+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						// End of update items form.
@@ -181,28 +181,48 @@ function initManageItems(args) {
 
 					var box = bootbox.dialog({
 						message: form,
-						title: args.trans.buyback.config.items.add_items,
+						title: args.trans.messages.add_items.split('|')[1],
 						buttons: {
 							cancel: {
-								label: args.trans.buyback.config.items.cancel,
+								label: args.trans.buttons.cancel,
 								className: "btn-default",
 								callback: function() {
 								},
 							},
 							update: {
-								label: args.trans.buyback.config.items.add,
+								label: args.trans.buttons.add,
 								className: "btn-success",
 								callback: function() {
 									var form   = $("#manage-form-add-items");
-									var action = form.attr("action");
+									var button = table.button(2);
 
-									$.post(action, form.serialize(), function(response) {
-										if (response.result == true) {
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.add);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.addItems,
+										data: form.serialize(),
+
+										success: function(response) {
 											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.add);
+
 											dt.ajax.reload();
-										} else {
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
 											$.notify(response.message, {className: 'error'});
-										}
+
+											button.enable(true);
+											button.text(args.trans.buttons.add);
+
+											dt.ajax.reload();
+										},
 									});
 								},
 							},
@@ -244,7 +264,7 @@ function initManageItems(args) {
 
 								return $('<span><img src="https://image.eveonline.com/Type/'+state.typeID+'_32.png"> '+state.typeName+'</span>');
 							},
-						});
+						}); // #manage-form-add-items #types
 
 						$("#manage-form-add-items #groups").select2({
 							ajax: {
@@ -280,7 +300,7 @@ function initManageItems(args) {
 
 								return $('<span>'+state.groupName+'</span>');
 							},
-						});
+						}); // #manage-form-add-items #groups
 
 						$("#manage-form-add-items #categories").select2({
 							ajax: {
@@ -316,7 +336,7 @@ function initManageItems(args) {
 
 								return $('<span>'+state.categoryName+'</span>');
 							},
-						});
+						}); // #manage-form-add-items #categories
 					});
 
 					dt.ajax.reload();
@@ -324,7 +344,7 @@ function initManageItems(args) {
 				enabled: true,
 			},
 			{
-				text: args.trans.buyback.config.items.edit,
+				text: args.trans.buttons.edit,
 				action: function (e, dt, node, config) {
 					var data  = table.rows('.selected').data();
 					var types = "";
@@ -333,60 +353,58 @@ function initManageItems(args) {
 						types += item.typeID + ",";
 					}); types  = types.substr(0, types.length - 1);
 
-					var title = data.count() == 1
-						? args.trans.buyback.config.items.update_item_1
-						: args.trans.buyback.config.items.update_item_2;
+					var title = args.trans.messages.edit_items.split('|')[data.count() == 1 ? 0 : 1];
 
 					var form = ''
 						+ '<div class="row">'
 						+ '	<div class="col-md-12">'
-						+ '		<form id="manage-form-update-items" class="form-horizontal" action="'+args.actions.updateItems+'" method="POST">'
+						+ '		<form id="manage-form-update-items" class="form-horizontal" action="'+args.actions.editItems+'" method="POST">'
 						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
 						+ '			<input type="hidden" name="items" value="'+(types)+'">'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.buy_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     '+(data[0].buyRaw      ? ' checked' : '')+'>'+(data.count() == 1 ? args.trans.buyback.config.items.buy_raw_help_1      : args.trans.buyback.config.items.buy_raw_help_2     )+'</label></div>'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled"'+(data[0].buyRecycled ? ' checked' : '')+'>'+(data.count() == 1 ? args.trans.buyback.config.items.buy_recycled_help_1 : args.trans.buyback.config.items.buy_recycled_help_2)+'</label></div>'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" '+(data[0].buyRefined  ? ' checked' : '')+'>'+(data.count() == 1 ? args.trans.buyback.config.items.buy_refined_help_1  : args.trans.buyback.config.items.buy_refined_help_2 )+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     '+(data[0].buyRaw      ? ' checked' : '')+'>'+args.trans.messages.buy_raw     .split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled"'+(data[0].buyRecycled ? ' checked' : '')+'>'+args.trans.messages.buy_recycled.split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" '+(data[0].buyRefined  ? ' checked' : '')+'>'+args.trans.messages.buy_refined .split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.buy_modifier+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_modifier+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="'+(data[0].buyModifier)+'">'
 						+ '				</div>'
 						+ '			</div>'
 						+ (data.count() == 1 ?
 						  '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.buy_price+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_price+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="buyPrice" min="0" value="'+(data[0].buyPrice)+'">'
 						+ '				</div>'
 						+ '			</div>' : '')
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.sell_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="sell"'+(data[0].sell ? ' checked' : '')+'>'+(data.count() == 1 ? args.trans.buyback.config.items.sell_help_1 : args.trans.buyback.config.items.sell_help_2)+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="sell"'+(data[0].sell ? ' checked' : '')+'>'+args.trans.messages.sell_items.split('|')[1]+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.sell_modifier+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_modifier+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="'+(data[0].sellModifier)+'">'
 						+ '				</div>'
 						+ '			</div>'
 						+ (data.count() == 1 ?
 						  '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.sell_price+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_price+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<input class="form-control" type="number" name="sellPrice" min="0" value="'+(data[0].sellPrice)+'">'
 						+ '				</div>'
 						+ '			</div>' : '')
 						+ '			<div class="form-group">'
-						+ '				<label class="col-md-4 control-label">'+args.trans.buyback.config.items.item_settings+'</label>'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
 						+ '				<div class="col-md-8">'
-						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices"'+(data[0].lockPrices ? ' checked' : '')+'>'+args.trans.buyback.config.items.lock_prices_help+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices"'+(data[0].lockPrices ? ' checked' : '')+'>'+args.trans.messages.lock_prices+'</label></div>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '		</form>'
@@ -399,35 +417,55 @@ function initManageItems(args) {
 						title: title,
 						buttons: {
 							cancel: {
-								label: args.trans.buyback.config.items.cancel,
+								label: args.trans.buttons.cancel,
 								className: "btn-default",
 								callback: function() {
-									//dt.ajax.reload();
 								},
 							},
 							update: {
-								label: args.trans.buyback.config.items.update,
+								label: args.trans.buttons.edit,
 								className: "btn-success",
 								callback: function() {
 									var form   = $("#manage-form-update-items");
-									var action = form.attr("action");
+									var button = table.button(3);
 
-									$.post(action, form.serialize(), function(response) {
-										if (response.result == true) {
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.edit);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.editItems,
+										data: form.serialize(),
+
+										success: function(response) {
 											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.edit);
+
 											dt.ajax.reload();
-										} else {
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
 											$.notify(response.message, {className: 'error'});
-										}
+
+											button.enable(true);
+											button.text(args.trans.buttons.edit);
+
+											dt.ajax.reload();
+										},
 									});
 								},
 							},
 						},
 					});
 				},
+				enabled: true,
 			},
 			{
-				text: args.trans.buyback.config.items.remove,
+				text: args.trans.buttons.remove,
 				action: function (e, dt, node, config) {
 					var data  = table.rows('.selected').data();
 					var types = "";
@@ -436,68 +474,92 @@ function initManageItems(args) {
 						types += item.typeID + ",";
 					}); types  = types.substr(0, types.length - 1);
 
-					var message = data.count() == 1
-						? args.trans.buyback.config.items.confirm_remove_1
-						: args.trans.buyback.config.items.confirm_remove_2;
-
-					var title = data.count() == 1
-						? args.trans.buyback.config.items.remove_item_1
-						: args.trans.buyback.config.items.remove_item_2;
-
-					var form = ''
-						+ '<form id="manage-form-remove-items" class="form-horizontal" action="'+args.actions.removeItems+'" method="POST">'
-						+ '	<input type="hidden" name="_token" value="'+args.token+'">'
-						+ '	<input type="hidden" name="items" value="'+(types)+'">'
-						+ '</form>'
-					;
+					var message = args.trans.messages.remove_items_confirm.split('|')[data.count() == 1 ? 0 : 1];
+					var title   = args.trans.messages.remove_items        .split('|')[data.count() == 1 ? 0 : 1];
 
 					bootbox.dialog({
-						message: message + form,
+						message: message,
 						title: title,
 						buttons: {
 							cancel: {
-								label: args.trans.buyback.config.items.cancel,
+								label: args.trans.buttons.cancel,
 								className: "btn-default",
 								callback: function() {
-								}
+								},
 							},
 							remove: {
-								label: args.trans.buyback.config.items.remove,
+								label: args.trans.buttons.remove,
 								className: "btn-danger",
 								callback: function() {
-									var form   = $("#manage-form-remove-items");
-									var action = form.attr("action");
+									var button = table.button(4);
 
-									$.post(action, form.serialize(), function(response) {
-										if (response.result == true) {
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.remove);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.removeItems,
+										data: {_token: args.token, types: types},
+
+										success: function(response) {
 											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.remove);
+
 											dt.ajax.reload();
-										} else {
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
 											$.notify(response.message, {className: 'error'});
-										}
+
+											button.enable(true);
+											button.text(args.trans.buttons.remove);
+
+											dt.ajax.reload();
+										},
 									});
 								}
 							},
 						},
 					});
-
 				},
 				enabled: false,
 			},
 			{
-				text: args.trans.buyback.config.items.update_prices,
+				text: args.trans.buttons.update_prices,
 				action: function (e, dt, node, config) {
-					table.button(5).enable(false); // Update Prices
+					var button = table.button(5);
 
-					$.get(args.actions.updatePrices, function(response) {
-						if (response.result == true) {
+					button.enable(false);
+					button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.update_prices);
+
+					$.ajax({
+						type: "POST",
+						url: args.actions.updateItems,
+						data: {_token: args.token},
+
+						success: function(response) {
 							$.notify(response.message, {className: 'success'});
-							table.button(5).enable(true); // Update Prices
+
+							button.enable(true);
+							button.text(args.trans.buttons.update_prices);
+
 							dt.ajax.reload();
-						} else {
+						},
+
+						error: function(request, status, error) {
+							var response = JSON.parse(request.responseText);
+
 							$.notify(response.message, {className: 'error'});
-							table.button(5).enable(true); // Update Prices
-						}
+
+							button.enable(true);
+							button.text(args.trans.buttons.update_prices);
+
+							dt.ajax.reload();
+						},
 					});
 				},
 				enabled: true,
@@ -505,9 +567,9 @@ function initManageItems(args) {
 		],
 	});
 
-	$(".dt-buttons").addClass   ('btn-group'      );
-	$(".dt-button" ).addClass   ('btn btn-default');
-	$(".dt-button" ).removeClass('dt-button'      );
+	$(".dt-buttons").addClass   ("btn-group"      );
+	$(".dt-button" ).addClass   ("btn btn-default");
+	$(".dt-button" ).removeClass("dt-button"      );
 
 	var tableEventFunction = function (e, dt, type, indexes) {
 		var selectedRows = table.rows({selected: true}).count();

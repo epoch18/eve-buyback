@@ -1,21 +1,34 @@
-$("#manage-form-motd").submit(function () {
-	var button = $("#manage-form-motd #submit");
+function initManageMotd(args) {
+	var form = $("#manage-form-motd");
 
-	button.attr("disabled", true);
+	form.submit(function () {
+		var button = $("#manage-form-motd #submit");
 
-	$.post($(this).attr("action"), $(this).serialize(), function(response) {
-		button.attr("disabled", false);
+		button.prop('disabled', true);
+		button.html('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.edit);
 
-		if (response.result == true) {
-			$.notify(response.message, {
-				className: "success",
-			});
-		} else {
-			$.notify(response.message, {
-				className: "error",
-			});
-		}
+		$.ajax({
+			type: "POST",
+			url: args.actions.editMotd,
+			data: form.serialize(),
+
+			success: function(response) {
+				$.notify(response.message, {className: 'success'});
+
+				button.prop('disabled', false);
+				button.html(args.trans.buttons.edit);
+			},
+
+			error: function(request, status, error) {
+				var response = JSON.parse(request.responseText);
+
+				$.notify(response.message, {className: 'error'});
+
+				button.prop('disabled', false);
+				button.html(args.trans.buttons.edit);
+			},
+		});
+
+		return false;
 	});
-
-	return false;
-});
+}
