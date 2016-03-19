@@ -53,7 +53,7 @@ class Parser
 		$result = [];
 
 		// Split text on newlines.
-		if (!preg_match_all('/(.*?)\t(.*?)\t.*?(?:\r\n|\r|\n|$)/', $text, $rows)) {
+		if (!preg_match_all('/(.*?)\t([\d,.]{1,}).*?(?:\r\n|\r|\n|$)/', $text, $rows)) {
 			return false;
 		}
 
