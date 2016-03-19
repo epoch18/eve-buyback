@@ -17,6 +17,15 @@ class UpdateItemsJobTest extends TestCase
 	{
 		parent::setUp();
 
+		$this->config = Mockery::mock(\Illuminate\Config\Repository::class);
+		$this->app->instance(\Illuminate\Config\Repository::class, $this->config);
+
+		$this->config->shouldReceive('get')->once()->with('services.evecentral.url'      )->andReturn(  'a');
+		$this->config->shouldReceive('get')->once()->with('services.evecentral.minq'     )->andReturn(  'b');
+		$this->config->shouldReceive('get')->once()->with('services.evecentral.usesystem')->andReturn(  'c');
+		$this->config->shouldReceive('get')->once()->with('services.evecentral.buy'      )->andReturn('avg');
+		$this->config->shouldReceive('get')->once()->with('services.evecentral.sell'     )->andReturn('avg');
+
 		$this->guzzle = Mockery::mock(\GuzzleHttp\Client::class);
 		$this->app->instance(\GuzzleHttp\Client::class, $this->guzzle);
 	}
@@ -118,7 +127,7 @@ class UpdateItemsJobTest extends TestCase
 			</evec_api>'
 		);
 
-		$job = app()->make(App\Jobs\UpdateItemsJob::class);
+		$job = app()->make(\App\Jobs\UpdateItemsJob::class);
 		$job->handle();
 
 		$this->seeInDatabase('buyback_items', ['typeID' => 34, 'typeName' => 'Tritanium', 'buyPrice' =>  5.79, 'sellPrice' =>  6.47]);

@@ -37,12 +37,12 @@ class Refinery
 	private $item;
 
 	/**
-	* Constructs the class.
-	* @param  \Illuminate\Cache\Repository  $cache
-	* @param  \Carbon\Carbon                $carbon
-	* @param  \Illuminate\Config\Repository $config
-	* @param  \App\Models\Item              $item
-	* @return void
+	 * Constructs the class.
+	 * @param  \Illuminate\Cache\Repository  $cache
+	 * @param  \Carbon\Carbon                $carbon
+	 * @param  \Illuminate\Config\Repository $config
+	 * @param  \App\Models\Item              $item
+	 * @return void
 	*/
 	public function __construct(Cache $cache, Carbon $carbon, Config $config, Item $item)
 	{
