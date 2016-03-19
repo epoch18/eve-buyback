@@ -20,8 +20,10 @@ elixir(function(mix) {
 	mix.scripts([
 		'collect.js',
 		'string-format.js',
+		'index-selling.js',
 		'manage-motd.js',
 		'manage-items.js',
+		'paste.js',
 	]);
 
     mix.phpUnit();

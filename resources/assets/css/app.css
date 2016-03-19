@@ -12,3 +12,7 @@ body {
 #manage-form-motd #submit {
 	float: right;
 }
+
+.sell-control {
+	width: 100% !important;
+}

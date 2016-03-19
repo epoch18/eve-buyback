@@ -1,25 +1,39 @@
 @extends('layouts.main')
 
 @section('content')
-
 <div class="col-md-offset-1 col-md-10 table-responsive">
 	<table id="buying" class="table table-condensed table-striped table-hover">
-		<caption><h4>{!! ucfirst(trans('buyback.buying')) !!}</h4></caption>
+		<caption><h4>{!! trans('buyback.headers.buying') !!}</h4></caption>
 		<thead>
 			<tr>
-				<th>{!! ucfirst(trans('buyback.issued'    )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.issuer'    )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.location'  )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.volume'    )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.asking'    )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.calculated')) !!}</th>
-				<th>{!! ucfirst(trans('buyback.market'    )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.title'     )) !!}</th>
-				<th>{!! ucfirst(trans('buyback.margin'    )) !!}</th>
+				<th>{!! trans('buyback.headers.issued'    ) !!}</th>
+				<th>{!! trans('buyback.headers.issuer'    ) !!}</th>
+				<th>{!! trans('buyback.headers.location'  ) !!}</th>
+				<th>{!! trans('buyback.headers.volume'    ) !!}</th>
+				<th>{!! trans('buyback.headers.asking'    ) !!}</th>
+				<th>{!! trans('buyback.headers.calculated') !!}</th>
+				<th>{!! trans('buyback.headers.market'    ) !!}</th>
+				<th>{!! trans('buyback.headers.title'     ) !!}</th>
+				<th>{!! trans('buyback.headers.margin'    ) !!}</th>
 				<th></th>
 				<th></th>
 			</tr>
 		</thead>
+		<tfoot>
+			<tr>
+				<th>{!! trans('buyback.headers.issued'    ) !!}</th>
+				<th>{!! trans('buyback.headers.issuer'    ) !!}</th>
+				<th>{!! trans('buyback.headers.location'  ) !!}</th>
+				<th>{!! trans('buyback.headers.volume'    ) !!}</th>
+				<th>{!! trans('buyback.headers.asking'    ) !!}</th>
+				<th>{!! trans('buyback.headers.calculated') !!}</th>
+				<th>{!! trans('buyback.headers.market'    ) !!}</th>
+				<th>{!! trans('buyback.headers.title'     ) !!}</th>
+				<th>{!! trans('buyback.headers.margin'    ) !!}</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
 		<tbody>
 			@foreach ($buying as $contract)
 				@if (count($contract->unwanted) > 0)
@@ -40,8 +54,8 @@
 					<td>{!! number_abbreviate($contract->totalValue                   ) !!} </td>
 					<td>{!!                  ($contract->contract->title              ) !!} </td>
 					<td>{!! number_format    ($contract->totalMargin     , 2, '.', ',') !!}%</td>
-					<td><a href="#" onclick="CCPEVE.showContract({!! $contract->contractStation->solarSystem->solarSystemID !!} , {!! $contract->contract->contractID !!})">{!! ucfirst(trans_choice('buyback.contract', 1)) !!}</a></td>
-					<td><a href="#" onClick="collapse('#contract-{!! $contract->contract->contractID !!}');">{!! ucfirst(trans_choice('buyback.detail', 2)) !!}</a></td>
+					<td><a href="#" onclick="CCPEVE.showContract({!! $contract->contractStation->solarSystem->solarSystemID !!} , {!! $contract->contract->contractID !!})">{!! trans_choice('buyback.headers.contracts', 1) !!}</a></td>
+					<td><a href="#" onClick="collapse('#contract-{!! $contract->contract->contractID !!}');">{!! trans('buyback.headers.details') !!}</a></td>
 				</tr>
 				<tr>
 					<td colspan="11" class="hiddenRow hidden" id="contract-{!! $contract->contract->contractID !!}-td">
@@ -49,13 +63,19 @@
 
 							<div class="col-md-5">
 								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! ucfirst(trans('buyback.unwanted')) !!}</caption>
+									<caption>{!! trans('buyback.headers.unwanted') !!}</caption>
 									<thead>
 										<tr>
-											<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-											<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+										</tr>
+									</tfoot>
 									<tbody>
 										@foreach ($contract->unwanted as $item)
 											<tr>
@@ -69,15 +89,23 @@
 
 							<div class="col-md-7">
 								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! ucfirst(trans('buyback.wanted')) !!}</caption>
+									<caption>{!! trans('buyback.headers.wanted') !!}</caption>
 									<thead>
 										<tr>
-											<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-											<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
-											<th>{!! ucfirst(trans       ('buyback.unit'       )) !!}</th>
-											<th>{!! ucfirst(trans       ('buyback.total'      )) !!}</th>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
+										</tr>
+									</tfoot>
 									<tbody>
 										@foreach ($contract->raw as $item)
 											<tr>
@@ -93,13 +121,19 @@
 
 							<div class="col-md-5">
 								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! ucfirst(trans('buyback.reprocessable')) !!}</caption>
+									<caption>{!! trans('buyback.headers.reprocessable') !!}</caption>
 									<thead>
 										<tr>
-											<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-											<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+										</tr>
+									</tfoot>
 									<tbody>
 										@foreach ($contract->recycled as $item)
 											<tr>
@@ -119,15 +153,23 @@
 
 							<div class="col-md-7">
 								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! ucfirst(trans_choice('buyback.material', 2)) !!}</caption>
+									<caption>{!! trans('buyback.headers.materials') !!}</caption>
 									<thead>
 										<tr>
-											<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-											<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
-											<th>{!! ucfirst(trans       ('buyback.unit'       )) !!}</th>
-											<th>{!! ucfirst(trans       ('buyback.total'      )) !!}</th>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
+										</tr>
+									</tfoot>
 									<tbody>
 										@foreach ($contract->materials as $item)
 											@if ($item->quantity > 0)
@@ -150,27 +192,22 @@
 		</tbody>
 	</table>
 </div>
-
 @endSection
 
 @section('scripts')
 @parent
-
 <script>
 	function collapse(id) {
 		var visible = $(id+"-td").is(":visible");
 
 		if (visible == true) {
 			$(id+"-td").addClass('hidden');
-			$(id).collapse("hide"); }
-		else {
+			$(id).collapse("hide");
+
+		 } else {
 			$(id+"-td").removeClass('hidden');
-			$(id).collapse("show"); }
+			$(id).collapse("show");
+		}
 	}
-
-	$(document).ready(function() {
-		//$('#buying').DataTable();
-	});
 </script>
-
 @endSection

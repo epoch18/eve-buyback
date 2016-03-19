@@ -63,13 +63,13 @@ class HomeControllerTest extends TestCase
 		$this->visit('/')
 			->type("Tritanium\t10\tMineral\tMaterial\n", 'pasteData')
 			->press('pasteSubmit')
-			->see(ucfirst(trans('buyback.acceptable')))->see('Tritanium')->see('10')->see('52.83')
+			->see(ucfirst(trans('buyback.headers.acceptable')))->see('Tritanium')->see('10')->see('52.83')
 		;
 
 		$this->visit('/')
 			->type("Tritanium\t10\tMineral\tMaterial\nPyerite\t10\tMineral\tMaterial", 'pasteData')
 			->press('pasteSubmit')
-			->see(ucfirst(trans('buyback.unwanted')))->see('Pyerite')->see('10')
+			->see(ucfirst(trans('buyback.headers.unwanted')))->see('Pyerite')->see('10')
 		;
 	}
 }

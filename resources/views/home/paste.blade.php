@@ -18,7 +18,7 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-body">
-				<b><center>{!! trans('buyback.instructions') !!}</center></b>
+				<b><center>{!! trans('buyback.messages.instructions') !!}</center></b>
 			</div>
 		</div>
 	</div>
@@ -31,18 +31,26 @@
 		<div class="col-md-12">
 			<div class="panel">
 				<div class="panel-heading" style="text-align: center;">
-					<h5>{!! ucfirst(trans('buyback.unwanted')) !!}</h5>
+					<h5>{!! trans('buyback.headers.unwanted') !!}</h5>
 				</div>
 				<div class="panel-body">
 					<table id="unwanted" class="table table-condensed table-striped table-hover">
 						<thead>
 							<tr>
-								<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.category', 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+							</tr>
+						</tfoot>
 						<tbody>
 							@foreach ($buyback->unwanted as $item)
 								<tr>
@@ -62,24 +70,32 @@
 
 			<div class="panel">
 				<div class="panel-heading" style="text-align: center;">
-					<h4>{!! trans('buyback.contract_total', ['total' => number_format($buyback->totalValueModded, 2, '.', ',')]) !!}</h4>
+					<h3>{!! trans('buyback.messages.contract_total', ['total' => number_format($buyback->totalValueModded, 2, '.', ',')]) !!}</h3>
 				</div>
 			</div>
 
 			<div class="panel">
 				<div class="panel-body" style="text-align: center;">
-					<h5>{!! ucfirst(trans('buyback.acceptable')) !!}</h5>
+					<h5>{!! ucfirst(trans('buyback.headers.acceptable')) !!}</h5>
 				</div>
 				<div class="panel-body">
 					<table id="wanted" class="table table-condensed table-striped table-hover">
 						<thead>
 							<tr>
-								<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.group'   , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.category', 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+							</tr>
+						</tfoot>
 						<tbody>
 							@foreach ($buyback->raw as $item)
 								<tr>
@@ -112,18 +128,26 @@
 
 			<div class="panel">
 				<div class="panel-body" style="text-align: center;">
-					<h5>{!! ucfirst(trans('buyback.breakdown')) !!}</5>
+					<h5>{!! ucfirst(trans('buyback.headers.breakdown')) !!}</5>
 				</div>
 				<div class="panel-body">
 					<table id="breakdown" class="table table-condensed table-striped table-hover">
 						<thead>
 							<tr>
-								<th>{!! ucfirst(trans_choice('buyback.name'    , 1)) !!}</th>
-								<th>{!! ucfirst(trans_choice('buyback.quantity', 1)) !!}</th>
-								<th>{!! ucfirst(trans       ('buyback.unit'       )) !!}</th>
-								<th>{!! ucfirst(trans       ('buyback.total'      )) !!}</th>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+								<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+								<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+								<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+								<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
+							</tr>
+						</tfoot>
 						<tbody>
 							@foreach ($buyback->raw as $item)
 								<tr>
@@ -156,47 +180,4 @@
 
 @section('scripts')
 @parent
-<script>
-	document.onkeydown = function(evt) {
-		evt = evt || window.event;
-		if (evt.ctrlKey && evt.keyCode == 86) {
-			var input = document.getElementById("pasteDataTextBox");
-			input.focus();
-
-			setTimeout(function() {
-				form = document.getElementById("pasteForm");
-				form.submit();
-			}, 500);
-		}
-	};
-
-	function updateSellTotal() {
-		total = 0.0;
-		$(".sell-subtotal").each(function(index) {
-			subtotal  = parseFloat($(this).html());
-			subtotal  = (isNaN(subtotal)) ? 0 : subtotal;
-			total    += subtotal;
-		});
-		$("#sell-total").html(total.toFixed(2));
-	};
-
-	$(".sell-control").on("input", function() {
-		quantity = parseInt($(this).val());
-		quantity = isNaN(quantity) ? 0 : quantity;
-		price    = $(this).data("price");
-
-		$("#sell-subtotal-" + $(this).data("typeid")).html((quantity*price).toFixed(2));
-
-		updateSellTotal();
-	});
-
-	$(document).ready(function() {
-		$('input,textarea').attr('autocomplete', 'off');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		$('#wanted'   ).DataTable();
-		$('#unwanted' ).DataTable();
-		$('#breakdown').DataTable();
-	});
-</script>
 @endsection

@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">{!! @env('APP_NAME', ucfirst(trans('buyback.buyback'))) !!}</a>
+			<a class="navbar-brand" href="/">{!! @env('APP_NAME', trans('buyback.headers.buyback')) !!}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -16,14 +16,14 @@
 			<ul class="nav navbar-nav navbar-right">
 				@if(Auth::check())
 					@can('contract')
-						<li><a href="{!! route('contract.index') !!}">{!! ucfirst(trans_choice('buyback.contract', 2)) !!}</a></li>
+						<li><a href="{!! route('contract.index') !!}">{!! trans_choice('buyback.headers.contracts', 2) !!}</a></li>
 					@endcan
 					@can('administrate')
-						<li><a href="{!! route('manage.index') !!}">{!! ucfirst(trans('buyback.manage')) !!}</a></li>
+						<li><a href="{!! route('manage.index') !!}">{!! trans('buyback.headers.manage') !!}</a></li>
 					@endcan
-					<li><a href="{!! route('logout') !!}">{!! ucfirst(trans('buyback.logout')) !!}</a></li>
+					<li><a href="{!! route('logout') !!}">{!! trans('buyback.headers.logout') !!}</a></li>
 				@else
-					<li><a href="{!! route('login') !!}">{!! ucfirst(trans('buyback.login')) !!}</a></li>
+					<li><a href="{!! route('login') !!}">{!! trans('buyback.headers.login') !!}</a></li>
 				@endif
 			</ul>
 		</div><!-- /.navbar-collapse -->
