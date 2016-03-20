@@ -38,15 +38,15 @@
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
 							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
 							<th>{!! trans       ('buyback.headers.sell'         ) !!}</th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
+							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top" title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -55,15 +55,15 @@
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
 							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
 							<th>{!! trans       ('buyback.headers.sell'         ) !!}</th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top"title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
+							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top" title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
 						</tr>
 					</tfoot>
 				</table>

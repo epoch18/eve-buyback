@@ -13,7 +13,7 @@
 			<link href="//cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css"      rel="stylesheet" type="text/css" />
 			<link href="//cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css"       rel="stylesheet" type="text/css" />
 			<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css"    rel="stylesheet" />
-			<link href="/css/all.css" rel="stylesheet" />
+			<link href="/css/all.css" rel="stylesheet" type="text/css" />
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 			<!--[if lt IE 9]>

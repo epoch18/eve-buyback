@@ -37,7 +37,6 @@
 	</div>
 	@endif
 
-
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
@@ -50,9 +49,9 @@
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
 							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
 						</tr>
 					</thead>
@@ -61,9 +60,9 @@
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
 							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top"title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
 						</tr>
 					</tfoot>
@@ -141,7 +140,7 @@
 
 @section('scripts')
 @parent
-<script>
+<script type="text/javascript">
 	initIndexSelling();
 
 	$(document).ready(function() {
