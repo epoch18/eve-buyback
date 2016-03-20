@@ -32,6 +32,7 @@
 			<div class="panel">
 				<div class="panel-heading" style="text-align: center;">
 					<h5>{!! trans('buyback.headers.unwanted') !!}</h5>
+					<p>{!! trans('buyback.messages.unwanted') !!}</p>
 				</div>
 				<div class="panel-body">
 					<table id="unwanted" class="table table-condensed table-striped table-hover">
@@ -76,7 +77,8 @@
 
 			<div class="panel">
 				<div class="panel-body" style="text-align: center;">
-					<h5>{!! ucfirst(trans('buyback.headers.acceptable')) !!}</h5>
+					<h5>{!! trans('buyback.headers.acceptable') !!}</h5>
+					<p>{!! trans('buyback.messages.acceptable') !!}</p>
 				</div>
 				<div class="panel-body">
 					<table id="wanted" class="table table-condensed table-striped table-hover">
@@ -128,7 +130,8 @@
 
 			<div class="panel">
 				<div class="panel-body" style="text-align: center;">
-					<h5>{!! ucfirst(trans('buyback.headers.breakdown')) !!}</5>
+					<h5>{!! trans('buyback.headers.breakdown') !!}</h5>
+					<p>{!! trans('buyback.messages.breakdown') !!}</p>
 				</div>
 				<div class="panel-body">
 					<table id="breakdown" class="table table-condensed table-striped table-hover">

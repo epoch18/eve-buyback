@@ -54,11 +54,13 @@ return [
 	],
 
 	'messages' => [
+		'acceptable'                 => 'These items are acceptable to contract to the buyback.',
 		'add_items'                  => 'Add Item?|Add Items?',
 		'add_items_failure'          => 'Failed to add the item.|Failed to add the items.',
 		'add_items_success'          => 'The item has been added.|The items have been added.',
 		'add_items_nothing'          => 'There were no items to add.',
 		'ajax_requests_only'         => 'Only ajax requests are allowed for this endpoint.',
+		'breakdown'                  => 'Items may be bought based on what they reprocess into and not the item itself.',
 		'buy_raw'                    => 'Buying the actual item|Buying the actual items',
 		'buy_recycled'               => 'Buying modules that reprocess into the item|Buying modules that reprocess into the items',
 		'buy_refined'                => 'Buying rocks that reprocess into the item|Buying rocks that reprocess into the items',
@@ -79,6 +81,7 @@ return [
 		'remove_items_failure'       => 'Failed to remove the item.|Failed to remove the items.',
 		'remove_items_nothing'       => 'There were no items to remove.',
 		'sell_items'                 => 'Selling the item|Selling the items',
+		'unwanted'                   => 'Please unselect these items and paste your inventory again.',
 		'update_item_prices_failure' => 'Failed to update the item prices.',
 		'update_item_prices_success' => 'The item prices have been updated.',
 	],

@@ -5,6 +5,10 @@ body {
 	background-attachment: fixed;
 }
 
+div.tooltip-inner {
+	width: 250px;
+}
+
 .dataTable > thead > tr > th[class*="sort"]:after{
 	content: "" !important;
 }
