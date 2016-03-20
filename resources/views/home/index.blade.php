@@ -141,25 +141,7 @@
 @section('scripts')
 @parent
 <script type="text/javascript">
-function updateSellTotal() {
-	total = 0.0;
-	$(".sell-subtotal").each(function(index) {
-		subtotal = parseFloat($(this).html());
-		if (isNaN(subtotal)) subtotal = 0;
-		total += subtotal;
-	});
-	$("#leftNet").html(total.toFixed(2));
-}
-
-$(".sell-control").on("input",function() {
-	quantity = parseInt($(this).val());
-	if (isNaN(quantity)) quantity = 0;
-	price = $(this).data("price");
-	$("#sell-subtotal" + $(this).data("typeid")).html((quantity*price).toFixed(2));
-	updateSellTotal();
-});
-
-	/*function updateSellTotal() {
+	function updateSellTotal() {
 		total = 0.0;
 		$(".sell-subtotal").each(function(index) {
 			subtotal  = parseFloat($(this).html());
@@ -177,7 +159,7 @@ $(".sell-control").on("input",function() {
 		$("#sell-subtotal-" + $(this).data("typeid")).html((quantity*price).toFixed(2));
 
 		updateSellTotal();
-	});*/
+	});
 
 	$(document).ready(function() {
 		$('input,textarea').attr('autocomplete', 'off');
