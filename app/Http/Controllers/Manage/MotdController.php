@@ -45,7 +45,7 @@ class MotdController extends Controller {
 
 		// Validate the text.
 		if (strlen($text) > 5000) {
-			return $this->ajaxfailureResponse(
+			return $this->ajaxFailureResponse(
 				trans('validation.max.string',
 					['attribute' => 'text', 'max' => 5000]));
 		}
@@ -61,7 +61,7 @@ class MotdController extends Controller {
 				trans('buyback.messages.motd_edited'));
 
 		} catch (\Exception $e) {
-			return $this->ajaxfailureResponse(
+			return $this->ajaxFailureResponse(
 				trans('buyback.message.motd_failure'));
 		}
 	}

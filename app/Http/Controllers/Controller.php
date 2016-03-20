@@ -17,7 +17,7 @@ class Controller extends BaseController
 	 */
 	protected function ajaxErrorResponse()
 	{
-		return $this->failureResponse(
+		return $this->ajaxFailureResponse(
 			trans('buyback.messages.ajax_requests_only'));
 	}
 
