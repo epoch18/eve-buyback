@@ -52,7 +52,7 @@
 			<script type="text/javascript">
 				document.onkeydown = function(evt) {
 					evt = evt || window.event;
-					if (evt.ctrlKey && evt.keyCode == 86) {
+					if (evt.keyCode == 86 && (evt.ctrlKey || evt.metaKey)) {
 						var input = document.getElementById("pasteDataTextBox");
 						input.focus();
 
