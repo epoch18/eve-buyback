@@ -61,128 +61,132 @@
 					<td colspan="11" class="hiddenRow hidden" id="contract-{!! $contract->contract->contractID !!}-td">
 						<div class="table-responsive accordian-body collapse" id="contract-{!! $contract->contract->contractID !!}">
 
-							<div class="col-md-5">
-								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! trans('buyback.headers.unwanted') !!}</caption>
-									<thead>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										@foreach ($contract->unwanted as $item)
+							<div class="container-fluid">
+								<div class="col-md-5">
+									<table id="" class="table table-condensed table-striped table-hover">
+										<caption>{!! trans('buyback.headers.unwanted') !!}</caption>
+										<thead>
 											<tr>
-												<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-												<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 											</tr>
-										@endForeach
-									</tbody>
-								</table>
-							</div>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											@foreach ($contract->unwanted as $item)
+												<tr>
+													<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
+													<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
+												</tr>
+											@endForeach
+										</tbody>
+									</table>
+								</div>
 
-							<div class="col-md-7">
-								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! trans('buyback.headers.wanted') !!}</caption>
-									<thead>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										@foreach ($contract->raw as $item)
+								<div class="col-md-7">
+									<table id="" class="table table-condensed table-striped table-hover">
+										<caption>{!! trans('buyback.headers.wanted') !!}</caption>
+										<thead>
 											<tr>
-												<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-												<td>{!! number_format($item->quantity, 0) !!}</td>
-												<td>{!! number_format($item->buyUnit , 2) !!}</td>
-												<td>{!! number_format($item->buyTotal, 2) !!}</td>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+												<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+												<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 											</tr>
-										@endForeach
-									</tbody>
-								</table>
-							</div>
-
-							<div class="col-md-5">
-								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! trans('buyback.headers.reprocessable') !!}</caption>
-									<thead>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										@foreach ($contract->recycled as $item)
+										</thead>
+										<tfoot>
 											<tr>
-												<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-												<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+												<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+												<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 											</tr>
-										@endForeach
-										@foreach ($contract->refined as $item)
-											<tr>
-												<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
-												<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
-											</tr>
-										@endForeach
-									</tbody>
-								</table>
-							</div>
-
-							<div class="col-md-7">
-								<table id="" class="table table-condensed table-striped table-hover">
-									<caption>{!! trans('buyback.headers.materials') !!}</caption>
-									<thead>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-											<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
-											<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-											<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										@foreach ($contract->materials as $item)
-											@if ($item->quantity > 0)
+										</tfoot>
+										<tbody>
+											@foreach ($contract->raw as $item)
 												<tr>
 													<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
 													<td>{!! number_format($item->quantity, 0) !!}</td>
 													<td>{!! number_format($item->buyUnit , 2) !!}</td>
 													<td>{!! number_format($item->buyTotal, 2) !!}</td>
 												</tr>
-											@endif
-										@endForeach
-									</tbody>
-								</table>
+											@endForeach
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="container-fluid">
+								<div class="col-md-5">
+									<table id="" class="table table-condensed table-striped table-hover">
+										<caption>{!! trans('buyback.headers.reprocessable') !!}</caption>
+										<thead>
+											<tr>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											@foreach ($contract->recycled as $item)
+												<tr>
+													<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
+													<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
+												</tr>
+											@endForeach
+											@foreach ($contract->refined as $item)
+												<tr>
+													<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
+													<td>{!! number_format($item->quantity, 0, '.', ',') !!}</td>
+												</tr>
+											@endForeach
+										</tbody>
+									</table>
+								</div>
+
+								<div class="col-md-7">
+									<table id="" class="table table-condensed table-striped table-hover">
+										<caption>{!! trans('buyback.headers.materials') !!}</caption>
+										<thead>
+											<tr>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+												<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+												<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+												<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
+												<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+												<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											@foreach ($contract->materials as $item)
+												@if ($item->quantity > 0)
+													<tr>
+														<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
+														<td>{!! number_format($item->quantity, 0) !!}</td>
+														<td>{!! number_format($item->buyUnit , 2) !!}</td>
+														<td>{!! number_format($item->buyTotal, 2) !!}</td>
+													</tr>
+												@endif
+											@endForeach
+										</tbody>
+									</table>
+								</div>
 							</div>
 
 						</div>
