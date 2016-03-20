@@ -49,6 +49,20 @@
 			<script src="//cdnjs.cloudflare.com/ajax/libs/notify/0.4.0/notify.min.js"      type="text/javascript"></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" type="text/javascript"></script>
 			<script src="/js/all.js" type="text/javascript"></script>
+			<script type="text/javascript">
+				document.onkeydown = function(evt) {
+					evt = evt || window.event;
+					if (evt.ctrlKey && evt.keyCode == 86) {
+						var input = document.getElementById("pasteDataTextBox");
+						input.focus();
+
+						setTimeout(function() {
+							form = document.getElementById("pasteForm");
+							form.submit();
+						}, 500);
+					}
+				};
+			</script>
 		@show
 	</body>
 </html>

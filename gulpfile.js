@@ -23,7 +23,6 @@ elixir(function(mix) {
 		'index-selling.js',
 		'manage-motd.js',
 		'manage-items.js',
-		'paste.js',
 	]);
 
     mix.phpUnit();
