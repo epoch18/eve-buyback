@@ -88,7 +88,7 @@ class UpdateContractsJob extends Job implements ShouldQueue
 
 			$this->setting_model->updateOrCreate(
 				['key'   => 'ownerName'],
-				['value' => $scope == 'char'
+				['value' => $accessType == 'Character'
 					? $apiKeyInfo->key->characters[0]->characterName
 					: $apiKeyInfo->key->characters[0]->corporationName
 				]
