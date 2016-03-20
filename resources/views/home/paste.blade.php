@@ -18,7 +18,7 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-body">
-				<b><center>{!! trans('buyback.messages.instructions') !!}</center></b>
+				<b><center>{!! trans('buyback.messages.instructions', ['link' => $ownerLink]) !!}</center></b>
 			</div>
 		</div>
 	</div>
@@ -180,4 +180,8 @@
 
 @section('scripts')
 @parent
+	<script type="text/javascript">
+		$("#wanted"   ).DataTable();
+		$("#breakdown").DataTable();
+	</script>
 @endsection

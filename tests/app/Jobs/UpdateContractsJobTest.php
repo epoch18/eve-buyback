@@ -34,6 +34,12 @@ class UpdateContractsJobTest extends TestCase
 		$apiKeyInfo->key = (object)[
 			'accessMask' => 12345,
 			'type'       => 'Corporation',
+			'characters' => [(object)[
+				'characterID'     => 'characterID',
+				'characterName'   => 'characterName',
+				'corporationID'   => 'corporationID',
+				'corporationName' => 'corporationName',
+			]],
 		];
 
 		$this->pheal->shouldReceive('ApiKeyInfo')->once()->andReturn($apiKeyInfo);
@@ -101,6 +107,10 @@ class UpdateContractsJobTest extends TestCase
 
 		$job = app()->make(App\Jobs\UpdateContractsJob::class);
 		$job->handle();
+
+		$this->seeInDatabase('buyback_settings', ['key' => 'ownerID'  , 'value' => 'corporationID'  ]);
+		$this->seeInDatabase('buyback_settings', ['key' => 'ownerName', 'value' => 'corporationName']);
+		$this->seeInDatabase('buyback_settings', ['key' => 'ownerType', 'value' => 'Corporation'    ]);
 
 		$this->seeInDatabase('api_contracts'     , ['contractID' => 97809127  ]);
 		$this->seeInDatabase('api_contract_items', ['recordID'   => 1737516979]);

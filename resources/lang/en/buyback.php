@@ -67,7 +67,7 @@ return [
 		'edit_items_failure'         => 'Failed to edited the item.|Failed to edited the items.',
 		'edit_items_success'         => 'The item has been edited.|The items have been edited.',
 		'edit_items_nothing'         => 'There were no items to edit.',
-		'instructions'               => '<p><h4>Paste your inventory: just hit Ctrl+V!</h5</p>',
+		'instructions'               => '<p><h4>Paste your inventory: just hit Ctrl+V!</h4></p><p><h4>Make all contracts to :link</h4></p>',
 		'lock_prices'                => 'Lock the prices from being auto-updated',
 		'markdown_enabled'           => 'You may use markdown language to format the text.',
 		'motd_edited'                => 'The motd has been edited.',

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\BuybackOwnerComposer;
 use App\Http\ViewComposers\JavascriptTranslationsComposer;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		view()->composer('*', BuybackOwnerComposer::class);
 		view()->composer('*', JavascriptTranslationsComposer::class);
 	}
 
