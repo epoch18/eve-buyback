@@ -52,16 +52,16 @@ class Parser
 	{
 		$result = [];
 
-		// Split text on newlines.
-		if (!preg_match_all('/(.*?)\t([\d,. ]{1,}).*?(?:\r\n|\r|\n|$)/', $text, $rows)) {
+		// Split text on newlines and capture the item name and quantity.
+		// \xC2\xA0 are non-breaking spaces present in some locales.
+		if (!preg_match_all('/(.*?)\t([\d,. \xC2\xA0]*).*(?:\r\n|\r|\n|$)/', $text, $rows)) {
 			return false;
 		}
 
 		for ($i = 0; $i < count($rows[0]); $i++) {
 			// Get the neccessary fields and strip any currency separators.
-			$separators = [' ', ',', '.'];
-			$name       = $rows[1][$i];
-			$qty        = str_replace($separators, '', $rows[2][$i]);
+			$name = $rows[1][$i];
+			$qty  = preg_replace('/[\D]/', '', $rows[2][$i]);
 
 			// Don't continue if name or qty are the wrong types.
 			if (!is_string($name) || !is_numeric($qty)) { continue; }
