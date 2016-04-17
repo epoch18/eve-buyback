@@ -3,11 +3,12 @@
 return [
 
 	'buttons' => [
-		'add'           => 'Add',
-		'cancel'        => 'Cancel',
-		'edit'          => 'Edit',
-		'remove'        => 'Remove',
-		'update_prices' => 'Update Prices',
+		'add'              => 'Add',
+		'cancel'           => 'Cancel',
+		'edit'             => 'Edit',
+		'remove'           => 'Remove',
+		'update_contracts' => 'Update Contracts',
+		'update_prices'    => 'Update Prices',
 	],
 
 	'headers' => [
@@ -82,6 +83,8 @@ return [
 		'remove_items_nothing'       => 'There were no items to remove.',
 		'sell_items'                 => 'Selling the item|Selling the items',
 		'unwanted'                   => 'Please unselect these items and paste your inventory again.',
+		'update_contracts_failure'   => 'Failed to update the contracts.',
+		'update_contracts_success'   => 'The contracts have been updated. The page should refresh in 5 seconds.',
 		'update_item_prices_failure' => 'Failed to update the item prices.',
 		'update_item_prices_success' => 'The item prices have been updated.',
 	],

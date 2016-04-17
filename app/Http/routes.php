@@ -49,7 +49,8 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::group(['middleware' => ['auth', \App\Http\Middleware\Contractor::class]], function () {
-		Route::get('/contract', 'Contract\ContractController@getIndex')->name('contract.index');
+		Route::post('/contract/update', 'Contract\ContractController@postUpdateContracts')->name('contract.update');
+		Route::get ('/contract'       , 'Contract\ContractController@getIndex'           )->name('contract.index' );
 	});
 
 	Route::get ('/', 'HomeController@index')->name('index');
