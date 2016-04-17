@@ -8,6 +8,15 @@ class HomeControllerTest extends TestCase
 {
 	use DatabaseMigrations;
 
+	private $headers;
+
+	public function setUp()
+	{
+		parent::setUp();
+
+		$this->headers = ['HTTP_X-Requested-With' => 'XMLHttpRequest'];
+	}
+
 	public function testViewIndex()
 	{
 		\App\Models\Item::create([
@@ -71,5 +80,49 @@ class HomeControllerTest extends TestCase
 			->press('pasteSubmit')
 			->see(ucfirst(trans('buyback.headers.unwanted')))->see('Pyerite')->see('10')
 		;
+	}
+
+	public function testGetAsteroids()
+	{
+		\App\Models\Item::create([
+			'typeID'         => 34,
+			'typeName'       => 'Tritanium',
+			'buyRaw'         => false,
+			'buyRecycled'    => false,
+			'buyRefined'     => true,
+			'buyModifier'    => 0.9,
+			'buyPrice'       => 5.87,
+			'sell'           => true,
+			'sellModifier'   => 1.0,
+			'sellPrice'      => 6.50,
+			'lockPrices'     => false,
+		]);
+
+		$this->get('/mining/asteroids', $this->headers);
+
+		$this->assertResponseStatus(200);
+
+		$response = json_decode($this->response->getContent(), true);
+
+		$this->assertArraySubset([
+			'typeID'       => '17471',
+			'typeName'     => 'Dense Veldspar',
+			'groupName'    => 'Veldspar',
+			'categoryName' => 'Asteroid',
+		], $response[0]);
+
+		$this->assertArraySubset([
+			'typeID'       => '17470',
+			'typeName'     => 'Concentrated Veldspar',
+			'groupName'    => 'Veldspar',
+			'categoryName' => 'Asteroid',
+		], $response[1]);
+
+		$this->assertArraySubset([
+			'typeID'       => '1230',
+			'typeName'     => 'Veldspar',
+			'groupName'    => 'Veldspar',
+			'categoryName' => 'Asteroid',
+		], $response[2]);
 	}
 }

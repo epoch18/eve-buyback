@@ -9,6 +9,9 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/">{!! @env('APP_NAME', trans('buyback.headers.buyback')) !!}</a>
+			<ul class="nav navbar-nav">
+				<li><a href="{!! route('home.mining') !!}">{!! trans('buyback.headers.mining_prices') !!}</a></li>
+			</ul>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->

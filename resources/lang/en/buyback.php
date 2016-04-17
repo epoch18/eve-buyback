@@ -35,6 +35,7 @@ return [
 		'margin'         => 'Margin',
 		'market'         => 'Market',
 		'materials'      => 'Materials',
+		'mining_prices'  => 'Mining Prices',
 		'modifier'       => 'Modifier',
 		'motd'           => 'Message of the Day',
 		'name'           => 'Name',

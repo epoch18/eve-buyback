@@ -11,7 +11,8 @@ use App\Models\SDE\InvType;
 use Illuminate\Http\Request;
 use DB;
 
-class ItemController extends Controller {
+class ItemController extends Controller
+{
 	/**
 	* @var \App\Models\Item
 	*/

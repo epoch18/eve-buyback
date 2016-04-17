@@ -39,7 +39,7 @@
 
 	<div class="col-md-12">
 		<div class="panel">
-			<div class="panel-heading" style="text-align: center;">
+			<div class="panel-heading">
 				<h5>{!! trans('buyback.headers.buying') !!}</h5>
 			</div>
 			<div class="panel-body">
@@ -89,7 +89,7 @@
 
 	<div class="col-md-12">
 		<div class="panel">
-			<div class="panel-heading" style="text-align: center;">
+			<div class="panel-heading">
 				<h5>{!! trans('buyback.headers.selling') !!}</h5>
 			</div>
 			<div class="panel-body">

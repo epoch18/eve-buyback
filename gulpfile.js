@@ -22,6 +22,7 @@ elixir(function(mix) {
 		'string-format.js',
 		'manage-motd.js',
 		'manage-items.js',
+		'mining-table.js',
 	]);
 
     mix.phpUnit();

@@ -53,6 +53,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get ('/contract'       , 'Contract\ContractController@getIndex'           )->name('contract.index' );
 	});
 
-	Route::get ('/', 'HomeController@index')->name('index');
-	Route::post('/', 'HomeController@paste')->name('paste');
+	Route::get ('/'                , 'HomeController@index'         )->name('index'                );
+	Route::post('/'                , 'HomeController@paste'         )->name('paste'                );
+	Route::get ('/mining'          , 'HomeController@getMiningTable')->name('home.mining'          );
+	Route::get ('/mining/asteroids', 'HomeController@getAsteroids'  )->name('home.mining.asteroids');
 });

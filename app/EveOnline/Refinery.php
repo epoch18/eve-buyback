@@ -17,23 +17,23 @@ use Illuminate\Database\Eloquent\Collection;
 class Refinery
 {
 	/**
-	* @var \Illuminate\Cache\Repository
-	*/
+	 * @var \Illuminate\Cache\Repository
+	 */
 	private $cache;
 
 	/**
-	* @var \Carbon\Carbon
-	*/
+	 * @var \Carbon\Carbon
+	 */
 	private $carbon;
 
 	/**
-	* @var \Illuminate\Config\Repository
-	*/
+	 * @var \Illuminate\Config\Repository
+	 */
 	private $config;
 
 	/**
-	* @var \App\Models\Item
-	*/
+	 * @var \App\Models\Item
+	 */
 	private $item;
 
 	/**
