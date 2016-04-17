@@ -8,8 +8,8 @@
 			<div class="panel-heading">
 				<h5>{!! trans('buyback.headers.buying') !!}</h5>
 			</div>
-			<div class="panel-body table-responsive">
-				<div class="btn-group" style="float: left;">
+			<div class="panel-body">
+				<div class="btn-group">
 					<button class="btn btn-default" id="contracts-button">{!! trans('buyback.buttons.update_contracts') !!}</button>
 				</div>
 				<table id="buying" class="table table-condensed table-striped table-hover">
