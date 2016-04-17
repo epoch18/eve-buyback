@@ -14,25 +14,25 @@ use Illuminate\Cache\Repository as Cache;
 class Parser
 {
 	/**
-	* @var \Illuminate\Cache\Repository
-	*/
+	 * @var \Illuminate\Cache\Repository
+	 */
 	private $cache;
 
 	/**
-	* @var \Carbon\Carbon
-	*/
+	 * @var \Carbon\Carbon
+	 */
 	private $carbon;
 
 	/**
-	* @var \App\Models\SDE\InvType
-	*/
+	 * @var \App\Models\SDE\InvType
+	 */
 	private $type;
 
 	/**
 	 * Constructs the class.
-	* @param  \Illuminate\Cache\Repository $cache
-	* @param  \Carbon\Carbon               $carbon
-	* @param  \App\Models\SDE\InvType      $type
+	 * @param  \Illuminate\Cache\Repository $cache
+	 * @param  \Carbon\Carbon               $carbon
+	 * @param  \App\Models\SDE\InvType      $type
 	 * @param InvType $type
 	 */
 	public function __construct(Cache $cache, Carbon $carbon, InvType $type)
