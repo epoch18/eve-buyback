@@ -195,11 +195,11 @@ class HomeController extends Controller
 
 		// Sort asteroids by descending price.
 		usort($asteroids, function ($a, $b) {
-			if ($a->price == $b->price) {
+			if ($a['price'] == $b['price']) {
 				return 0;
 			}
 
-			return ($a->price > $b->price) ? -1 : 1;
+			return ($a['price'] > $b['price']) ? -1 : 1;
 		});
 
 		// Cache the result.
