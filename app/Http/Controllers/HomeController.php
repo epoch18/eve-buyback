@@ -186,7 +186,7 @@ class HomeController extends Controller
 			// Add the asteroid to the response array.
 			$asteroids[] = [
 				'typeID'       => $type->typeID,
-				'typeName'     => $type->typeName,
+				'typeName'     => "{$type->typeName} ({$type->portionSize})",
 				'groupName'    => $type->group->groupName,
 				'categoryName' => $type->group->category->categoryName,
 				'price'        => $buyback->totalValueModded,
