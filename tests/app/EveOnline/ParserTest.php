@@ -19,7 +19,8 @@ class ParserTest extends TestCase
 		$text   = file_get_contents(__DIR__.'/paste01.txt');
 		$items  = $parser->convertTextToItems($text);
 
-		$this->assertEquals(151, count($items));
+		//$this->assertEquals(151, count($items)); // tiericed
+		$this->assertEquals(137, count($items));
 	}
 
 	public function testConvertContractToItems()

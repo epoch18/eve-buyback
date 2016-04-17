@@ -128,16 +128,25 @@ class RefineryTest extends TestCase
 		$items    = $parser->convertTextToItems($text);
 		$result   = $refinery->calculateBuyback($items);
 
-		$this->assertEquals(1739811, $result->materials[   34]->quantity);
-		$this->assertEquals( 495292, $result->materials[   35]->quantity);
-		$this->assertEquals( 118711, $result->materials[   36]->quantity);
-		$this->assertEquals(  30472, $result->materials[   37]->quantity);
-		$this->assertEquals(   8571, $result->materials[   38]->quantity);
-		$this->assertEquals(   1448, $result->materials[   39]->quantity);
-		$this->assertEquals(    587, $result->materials[   40]->quantity);
+		// $this->assertEquals(1739811, $result->materials[   34]->quantity);
+		// $this->assertEquals( 495292, $result->materials[   35]->quantity);
+		// $this->assertEquals( 118711, $result->materials[   36]->quantity);
+		// $this->assertEquals(  30472, $result->materials[   37]->quantity);
+		// $this->assertEquals(   8571, $result->materials[   38]->quantity);
+		// $this->assertEquals(   1448, $result->materials[   39]->quantity);
+		// $this->assertEquals(    587, $result->materials[   40]->quantity);
+		// $this->assertEquals(      0, $result->materials[11399]->quantity);
+
+		$this->assertEquals(1730939, $result->materials[   34]->quantity);
+		$this->assertEquals( 491945, $result->materials[   35]->quantity);
+		$this->assertEquals( 117894, $result->materials[   36]->quantity);
+		$this->assertEquals(  30183, $result->materials[   37]->quantity);
+		$this->assertEquals(   8479, $result->materials[   38]->quantity);
+		$this->assertEquals(   1447, $result->materials[   39]->quantity);
+		$this->assertEquals(    585, $result->materials[   40]->quantity);
 		$this->assertEquals(      0, $result->materials[11399]->quantity);
 
-		$this->assertEquals(2394892, (integer)$result->totalValue      );
-		$this->assertEquals(2155402, (integer)$result->totalValueModded);
+		$this->assertEquals(2381472, (integer)$result->totalValue      );
+		$this->assertEquals(2143324, (integer)$result->totalValueModded);
 	}
 }
