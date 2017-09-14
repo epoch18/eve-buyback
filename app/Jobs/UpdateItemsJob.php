@@ -66,12 +66,12 @@ class UpdateItemsJob extends Job implements ShouldQueue
 			Log::info('UpdateItemsJob started.');
 
 			foreach ($this->item->all()->chunk(100) as $chunk) {
-				$url = config('services.evecentral.url');
+				$url = config('services.fuzzworks.url');
 
-				if (config('services.evecentral.usestation')) {
-                    $url .= 'station=' . config('services.evecentral.usestation');
+				if (config('services.fuzzworks.usestation')) {
+                    $url .= 'station=' . config('services.fuzzworks.usestation');
                 } else {
-                    $url .= 'region=' . config('services.evecentral.useregion');
+                    $url .= 'region=' . config('services.fuzzworks.useregion');
                 }
 
                 $url .= "&types=";
@@ -89,8 +89,8 @@ class UpdateItemsJob extends Job implements ShouldQueue
 				Log::info('Updating records.');
 
 				DB::transaction(function () use ($response) {
-					$buy  = config('services.evecentral.buy' );
-					$sell = config('services.evecentral.sell');
+					$buy  = config('services.fuzzworks.buy' );
+					$sell = config('services.fuzzworks.sell');
 
 					foreach ($response as $typeID => $values) {
 						$item = $this->item->find((int)$typeID);
