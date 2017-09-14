@@ -62,37 +62,44 @@ class UpdateItemsJob extends Job implements ShouldQueue
 	public function handle()
 	{
 		try {
+
 			Log::info('UpdateItemsJob started.');
 
 			foreach ($this->item->all()->chunk(100) as $chunk) {
-				$url = $this->config->get('services.evecentral.url')
-					. 'usesystem=' . $this->config->get('services.evecentral.usesystem')
-					. '&minq='     . $this->config->get('services.evecentral.minq')
-				;
+				$url = config('services.evecentral.url');
 
+				if (config('services.evecentral.usestation')) {
+                    $url .= 'station=' . config('services.evecentral.usestation');
+                } else {
+                    $url .= 'region=' . config('services.evecentral.useregion');
+                }
+
+                $url .= "&types=";
 				foreach ($chunk as $item) {
-					$url .= "&typeid={$item->typeID}";
+					$url .= "{$item->typeID},";
 				}
+
+				$url = substr($url, 0, -1);
 
 				Log::info("Fetching prices using url: {$url}");
 
 				$response = $this->guzzle->request('GET', $url);
-				$response = simplexml_load_string($response->getBody());
+				$response = json_decode($response->getBody());
 
 				Log::info('Updating records.');
 
 				DB::transaction(function () use ($response) {
-					$buy  = $this->config->get('services.evecentral.buy' );
-					$sell = $this->config->get('services.evecentral.sell');
+					$buy  = config('services.evecentral.buy' );
+					$sell = config('services.evecentral.sell');
 
-					foreach ($response->marketstat->type as $type) {
-						$item = $this->item->find((integer)$type['id']);
+					foreach ($response as $typeID => $values) {
+						$item = $this->item->find((int)$typeID);
 
 						if (!$item->lockPrices) {
 							$item->update([
-								'typeName'  => $item->type->typeName,
-								'buyPrice'  => (double)$type->buy->$buy,
-								'sellPrice' => (double)$type->sell->$sell,
+								//'typeName'  => $item->type->typeName,
+								'buyPrice'  => (double)$values->buy->$buy,
+								'sellPrice' => (double)$values->sell->$sell,
 							]); $item->touch();
 						} // pricesLocked
 					} // foreach
