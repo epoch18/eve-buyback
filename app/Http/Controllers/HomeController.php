@@ -106,13 +106,14 @@ class HomeController extends Controller
 			->with('type.group')
 			->with('type.group.category')
 			->buying()
+            ->take(500)
 			->get();
 
 		$selling = $this->item_model
 			->with('type')
 			->with('type.group')
 			->with('type.group.category')
-			->selling()
+            ->take(500)
 			->get();
 
 		$motd = $this->setting_model->where('key', 'motd')->first();
