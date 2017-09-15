@@ -137,20 +137,24 @@ class UpdateContractsJob extends Job implements ShouldQueue
 						continue;
 					}
 
-					$items = $this->pheal->$scope->ContractItems(['contractID' => $contract->contractID]);
+					try {
+                        $items = $this->pheal->$scope->ContractItems(['contractID' => $contract->contractID]);
 
-					foreach ($items->itemList as $item) {
-						$this->contract_item_model->updateOrCreate([
-							'recordID'     => $item->recordID,
-						], [
-							'contractID'  => $contract->contractID,
-							'typeID'      => $item->typeID,
-							'quantity'    => $item->quantity,
-							'rawQuantity' => isset($item->rawQuantity) ? $item->rawQuantity : 0,
-							'singleton'   => $item->singleton,
-							'included'    => $item->included,
-						]);
-					} // items
+                        foreach ($items->itemList as $item) {
+                            $this->contract_item_model->updateOrCreate([
+                                'recordID' => $item->recordID,
+                            ], [
+                                'contractID' => $contract->contractID,
+                                'typeID' => $item->typeID,
+                                'quantity' => $item->quantity,
+                                'rawQuantity' => isset($item->rawQuantity) ? $item->rawQuantity : 0,
+                                'singleton' => $item->singleton,
+                                'included' => $item->included,
+                            ]);
+                        } // items
+                    } catch (\Pheal\Exceptions\ConnectionException $connectionException) {
+                        logger()->warning('Unable to get Items for a contract', ['contractID' => $contract->contractID, 'contractData' => $contract]);
+                    }
 				} // contracts
 			}); // transaction
 
