@@ -106,6 +106,9 @@ class HomeController extends Controller
 			->with('type.group')
 			->with('type.group.category')
 			->buying()
+            ->where('buyRaw', '=', 1)
+            ->orWhere('buyRecycled', '=', 1)
+            ->orWhere('buyRefined', '=', 1)
             ->take(500)
 			->get();
 
@@ -113,6 +116,7 @@ class HomeController extends Controller
 			->with('type')
 			->with('type.group')
 			->with('type.group.category')
+            ->where('sell', '=', 1)
             ->take(500)
 			->get();
 
