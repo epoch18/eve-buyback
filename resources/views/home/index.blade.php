@@ -37,64 +37,67 @@
 	</div>
 	@endif
 
-	<div class="col-md-12">
-		<div class="panel">
-			<div class="panel-heading">
-				<h5>{!! trans('buyback.headers.buying') !!}</h5>
-			</div>
-			<div class="panel-body">
-				<table id="buying" class="table table-condensed table-striped table-hover">
-					<thead>
-						<tr>
-							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
-							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
-							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
-							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
-							<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
-							<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
-							<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
-							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
-						</tr>
-					</tfoot>
-					<tbody>
-						@foreach ($buying as $item)
+	@if($buying->notEmpty())
+		<div class="col-md-12">
+			<div class="panel">
+				<div class="panel-heading">
+					<h5>{!! trans('buyback.headers.buying') !!}</h5>
+				</div>
+				<div class="panel-body">
+					<table id="buying" class="table table-condensed table-striped table-hover">
+						<thead>
 							<tr>
-								<td>
-									<img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png">
-									{!! $item->type->typeName !!}
-								</td>
-								<td>{!! $item->type->group->groupName              !!}</td>
-								<td>{!! $item->type->group->category->categoryName !!}</td>
-								<td>@if ($item->buyRaw     )<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
-								<td>@if ($item->buyRecycled)<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
-								<td>@if ($item->buyRefined )<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
-								<td>{!! number_format($item->buyPrice * $item->buyModifier, 2, '.', ',') !!}</td>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+								<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+								<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+								<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
 							</tr>
-						@endForeach
-					</tbody>
-				</table>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
+								<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
+								<th>{!! trans_choice('buyback.headers.categories', 1) !!}</th>
+								<th><span class="fa fa-fw fa-cube"     data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_raw'     , 1) !!}"></span></th>
+								<th><span class="fa fa-fw fa-recycle"  data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_recycled', 1) !!}"></span></th>
+								<th><span class="fa fa-fw fa-industry" data-toggle="tooltip" data-placement="top" title="{!! trans_choice('buyback.messages.buy_refined' , 1) !!}"></span></th>
+								<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($buying as $item)
+								<tr>
+									<td>
+										<img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png">
+										{!! $item->type->typeName !!}
+									</td>
+									<td>{!! $item->type->group->groupName              !!}</td>
+									<td>{!! $item->type->group->category->categoryName !!}</td>
+									<td>@if ($item->buyRaw     )<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
+									<td>@if ($item->buyRecycled)<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
+									<td>@if ($item->buyRefined )<span class="fa fa-fw fa-check-square-o"></span>@else<span class="fa fa-fw fa-square-o"></span>@endif</td>
+									<td>{!! number_format($item->buyPrice * $item->buyModifier, 2, '.', ',') !!}</td>
+								</tr>
+							@endForeach
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
+	@endif
 
-	<div class="col-md-12">
-		<div class="panel">
-			<div class="panel-heading">
-				<h5>{!! trans('buyback.headers.selling') !!}</h5>
-			</div>
-			<div class="panel-body">
-				<table id="selling" class="table table-condensed table-striped table-hover">
-					<thead>
+	@if($selling->notEmpty())
+		<div class="col-md-12">
+			<div class="panel">
+				<div class="panel-heading">
+					<h5>{!! trans('buyback.headers.selling') !!}</h5>
+				</div>
+				<div class="panel-body">
+					<table id="selling" class="table table-condensed table-striped table-hover">
+						<thead>
 						<tr>
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
@@ -103,8 +106,8 @@
 							<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 							<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 						</tr>
-					</thead>
-					<tfoot>
+						</thead>
+						<tfoot>
 						<tr>
 							<th>{!! trans       ('buyback.headers.name'         ) !!}</th>
 							<th>{!! trans_choice('buyback.headers.groups'    , 1) !!}</th>
@@ -113,8 +116,8 @@
 							<th>{!! trans_choice('buyback.headers.quantities', 1) !!}</th>
 							<th>{!! trans       ('buyback.headers.total'        ) !!}</th>
 						</tr>
-					</tfoot>
-					<tbody>
+						</tfoot>
+						<tbody>
 						@foreach ($selling as $item)
 							<tr>
 								<td><img src="https://image.eveonline.com/Type/{!! $item->type->typeID !!}_32.png"> {!! $item->type->typeName !!}</td>
@@ -125,14 +128,15 @@
 								<td class="sell-subtotal" id="sell-subtotal-{!! $item->type->typeID !!}">0.00</td>
 							</tr>
 						@endForeach
-					</tbody>
-				</table>
-			</div>
-			<div class="panel-footer">
-				<h5 style="text-align: right;">{!! trans('buyback.messages.contract_total', ['total' => '<span class="sell-total" id="sell-total">0.00</span>']) !!}</h5>
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-footer">
+					<h5 style="text-align: right;">{!! trans('buyback.messages.contract_total', ['total' => '<span class="sell-total" id="sell-total">0.00</span>']) !!}</h5>
+				</div>
 			</div>
 		</div>
-	</div>
+	@endif
 
 </div>
 
