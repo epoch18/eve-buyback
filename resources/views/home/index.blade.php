@@ -37,7 +37,7 @@
 	</div>
 	@endif
 
-	@if($buying->isNotEmpty())
+	@if(!$buying->isEmpty())
 		<div class="col-md-12">
 			<div class="panel">
 				<div class="panel-heading">
@@ -89,7 +89,7 @@
 		</div>
 	@endif
 
-	@if($selling->isNotEmpty())
+	@if(!$selling->isEmpty())
 		<div class="col-md-12">
 			<div class="panel">
 				<div class="panel-heading">
