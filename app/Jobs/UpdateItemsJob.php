@@ -65,7 +65,7 @@ class UpdateItemsJob extends Job implements ShouldQueue
 
 			Log::info('UpdateItemsJob started.');
 
-			foreach ($this->item->all()->chunk(100) as $chunk) {
+			foreach ($this->item->all()->chunk(500) as $chunk) {
 				$url = config('services.fuzzworks.url');
 
 				if (config('services.fuzzworks.usestation')) {
