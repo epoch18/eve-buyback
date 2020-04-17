@@ -71,7 +71,7 @@
 
 			<div class="panel">
 				<div class="panel-heading" style="text-align: center;">
-					<h3>{!! trans('buyback.messages.contract_total', ['total' => number_format($buyback->totalValueModded, 2, '.', ',')]) !!}</h3>
+					<h3>{!! trans('buyback.messages.contract_total', ['total' => number_format($buyback->totalValueModded, 0, '.', ',')]) !!}</h3>
 				</div>
 			</div>
 
