@@ -137,16 +137,16 @@ class RefineryTest extends TestCase
 		// $this->assertEquals(    587, $result->materials[   40]->quantity);
 		// $this->assertEquals(      0, $result->materials[11399]->quantity);
 
-		$this->assertEquals(1730939, $result->materials[   34]->quantity);
-		$this->assertEquals( 491945, $result->materials[   35]->quantity);
-		$this->assertEquals( 117894, $result->materials[   36]->quantity);
-		$this->assertEquals(  30183, $result->materials[   37]->quantity);
-		$this->assertEquals(   8479, $result->materials[   38]->quantity);
-		$this->assertEquals(   1447, $result->materials[   39]->quantity);
-		$this->assertEquals(    585, $result->materials[   40]->quantity);
-		$this->assertEquals(      0, $result->materials[11399]->quantity);
+		$this->assertEquals(20003538, $result->materials[   34]->quantity);
+		$this->assertEquals( 7271149, $result->materials[   35]->quantity);
+		$this->assertEquals( 2677009, $result->materials[   36]->quantity);
+		$this->assertEquals(  347083, $result->materials[   37]->quantity);
+		$this->assertEquals(   74438, $result->materials[   38]->quantity);
+		$this->assertEquals(   13699, $result->materials[   39]->quantity);
+		$this->assertEquals(    3496, $result->materials[   40]->quantity);
+		$this->assertEquals(       0, $result->materials[11399]->quantity);
 
-		$this->assertEquals(2381472, (integer)$result->totalValue      );
-		$this->assertEquals(2143324, (integer)$result->totalValueModded);
+		$this->assertEquals(30390412, (integer)$result->totalValue      );
+		$this->assertEquals(27351370, (integer)$result->totalValueModded);
 	}
 }

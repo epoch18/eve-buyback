@@ -84,6 +84,10 @@ class HomeControllerTest extends TestCase
 
 	public function testGetAsteroids()
 	{
+		$this->markTestSkipped(
+			'We do not use this'
+		);
+
 		\App\Models\Item::create([
 			'typeID'         => 34,
 			'typeName'       => 'Tritanium',

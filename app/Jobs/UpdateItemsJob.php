@@ -65,16 +65,48 @@ class UpdateItemsJob extends Job implements ShouldQueue
 
 			Log::info('UpdateItemsJob started.');
 
-			foreach ($this->item->all()->chunk(500) as $chunk) {
+			$this->item->where('source', '=', '1DQ1-A')->chunk(50, function ( $chunk ) {
+				$url = config('services.goonmetrics.url');
+				$url .= 'station_id=' . config('services.goonmetrics.station');
+				$url .= '&type_id=';
+
+				foreach ($chunk as $item) {
+					$url .= "{$item->typeID},";
+				}
+
+				$url = substr($url, 0, -1);
+
+				Log::info("Fetching prices using url: {$url}");
+
+				$response = $this->guzzle->request('GET', $url);
+				$xml = new \SimpleXMLElement($response->getBody());
+
+				Log::info('Updating records.');
+
+				DB::transaction(function () use ($xml) {
+					foreach ($xml->price_data->type as $type) {
+						$item = $this->item->find($type['id']);
+
+						if (!$item->lockPrices) {
+							$item->update([
+								'buyPrice'  => (double)$type->buy->max,
+								'sellPrice' => (double)$type->sell->min,
+							]); $item->touch();
+						} // pricesLocked
+					} // foreach
+				}); // transaction
+			}); // chunk
+
+			$this->item->where('source', '=', 'Jita')->chunk(500, function ($chunk) {
 				$url = config('services.fuzzworks.url');
 
 				if (config('services.fuzzworks.usestation')) {
-                    $url .= 'station=' . config('services.fuzzworks.usestation');
-                } else {
-                    $url .= 'region=' . config('services.fuzzworks.useregion');
-                }
+					$url .= 'station=' . config('services.fuzzworks.usestation');
+				} else {
+					$url .= 'region=' . config('services.fuzzworks.useregion');
+				}
 
-                $url .= "&types=";
+				$url .= "&types=";
 				foreach ($chunk as $item) {
 					$url .= "{$item->typeID},";
 				}
@@ -85,11 +117,6 @@ class UpdateItemsJob extends Job implements ShouldQueue
 
 				$response = $this->guzzle->request('GET', $url);
 				$response = json_decode($response->getBody());
-
-				if(is_null($response)) {
-					Log::error('json_decode returned NULL');
-					break;
-				}
 
 				Log::info('Updating records.');
 
@@ -102,14 +129,13 @@ class UpdateItemsJob extends Job implements ShouldQueue
 
 						if (!$item->lockPrices) {
 							$item->update([
-								//'typeName'  => $item->type->typeName,
-								'buyPrice'  => (double)$values->buy->$buy,
-								'sellPrice' => (double)$values->sell->$sell,
+								'buyPrice'  => round((double)$values->buy->$buy, 2),
+								'sellPrice' => round((double)$values->sell->$sell, 2),
 							]); $item->touch();
 						} // pricesLocked
 					} // foreach
 				}); // transaction
-			} // chunk
+			}); // chunk
 
 			Log::info('UpdateItemsJob finished.');
 
