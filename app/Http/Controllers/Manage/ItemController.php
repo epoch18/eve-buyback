@@ -101,6 +101,7 @@ class ItemController extends Controller
 			'sell'         => $this->request->input('sell'        ) ? true : false,
 			'sellModifier' => $this->request->input('sellModifier') ?      :  0.00,
 			'lockPrices'   => $this->request->input('lockPrices'  ) ? true : false,
+			'source'       => $this->request->input('source'      ) ?      : "Jita",
 			'buyPrice'     => 0.00,
 			'sellPrice'    => 0.00,
 		];
@@ -160,6 +161,7 @@ class ItemController extends Controller
 						'sellModifier' => $properties['sellModifier'],
 						'lockPrices'   => $properties['lockPrices'  ],
 						'sellPrice'    => $properties['sellPrice'   ],
+						'source'       => $properties['source'      ],
 					]);
 				});
 			});
@@ -190,6 +192,7 @@ class ItemController extends Controller
 			'sell'         => $this->request->input('sell'        ) ? true : false,
 			'sellModifier' => $this->request->input('sellModifier') ?      :  0.00,
 			'lockPrices'   => $this->request->input('lockPrices'  ) ? true : false,
+			'source'       => $this->request->input('source'      ) ?      : "Jita",
 		];
 
 		$properties['buyModifier'] = is_numeric($properties['buyModifier'])

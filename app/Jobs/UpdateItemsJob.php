@@ -86,6 +86,11 @@ class UpdateItemsJob extends Job implements ShouldQueue
 				$response = $this->guzzle->request('GET', $url);
 				$response = json_decode($response->getBody());
 
+				if(is_null($response)) {
+					Log::error('json_decode returned NULL');
+					break;
+				}
+
 				Log::info('Updating records.');
 
 				DB::transaction(function () use ($response) {

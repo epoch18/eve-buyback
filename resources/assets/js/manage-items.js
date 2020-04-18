@@ -97,6 +97,9 @@ function initManageItems(args) {
 				},
 			},
 			{
+				data: "source",
+			},
+			{
 				data: "lockPrices",
 				render: function (data, type, row, meta) {
 					if (type != "display") { return data; }
@@ -171,6 +174,15 @@ function initManageItems(args) {
 						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices">'+args.trans.messages.lock_prices+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.source+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="source" name="source" class="form-control">'
+						+ '					<option selected="selected">Jita</option>'
+						+ '					<option>1DQ1-A</option>'
+						+ '					</select>'
 						+ '				</div>'
 						+ '			</div>'
 						// End of update items form.
@@ -405,6 +417,15 @@ function initManageItems(args) {
 						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
 						+ '				<div class="col-md-8">'
 						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices"'+(data[0].lockPrices ? ' checked' : '')+'>'+args.trans.messages.lock_prices+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.source+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="source" name="source" class="form-control">'
+						+ '					<option selected="selected">Jita</option>'
+						+ '					<option>1DQ1-A</option>'
+						+ '					</select>'
 						+ '				</div>'
 						+ '			</div>'
 						+ '		</form>'
