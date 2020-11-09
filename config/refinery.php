@@ -45,5 +45,8 @@ return[
 	'monazite'	=> env('EVE_PROCESSING_MONAZITE'		, 5	),
 	'xenotime'	=> env('EVE_PROCESSING_XENOTIME'		, 5	),
 	'ytterbite'	=> env('EVE_PROCESSING_YTTERBITE'		, 5	),
+	'bezdnacine'	=> env('EVE_PROCESSING_BEZDNACINE'		, 5	),
+	'rakovene'	=> env('EVE_PROCESSING_RAKOVENE'		, 5	),
+	'talassonite'	=> env('EVE_PROCESSING_TALASSONITE'		, 5	),
 
 ];
