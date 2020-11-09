@@ -49,6 +49,11 @@ return [
         'sell' => env('FUZZWORKS_SELL', ''),
     ],
 
+    'goonmetrics' => [
+        'url' => env('GOONMETRICS_URL', ''),
+        'station' => env('GOONMETRICS_STATION_ID', false),
+    ],
+
     'evesso' => [
         'client' => env('EVE_SSO_CLIENT_ID', ''),
         'secret' => env('EVE_SSO_SECRET_KEY', ''),

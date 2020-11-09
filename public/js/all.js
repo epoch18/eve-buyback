@@ -1,1 +1,699 @@
-function collect(){for(var e={},a=arguments.length,s=0;a>s;s++)for(p in arguments[s])arguments[s].hasOwnProperty(p)&&(e[p]=arguments[s][p]);return e}function initManageMotd(e){var a=$("#manage-form-motd");a.submit(function(){var s=$("#manage-form-motd #submit");return s.prop("disabled",!0),s.html('<span class="fa fa-spinner fa-spin"></span> '+e.trans.buttons.edit),$.ajax({type:"POST",url:e.actions.editMotd,data:a.serialize(),success:function(a){$.notify(a.message,{className:"success"}),s.prop("disabled",!1),s.html(e.trans.buttons.edit)},error:function(a,t,n){var l=JSON.parse(a.responseText);$.notify(l.message,{className:"error"}),s.prop("disabled",!1),s.html(e.trans.buttons.edit)}}),!1})}function initManageItems(e){var a=$("#manage-form-items").DataTable({dom:"lBfrtip",ajax:e.actions.getItems,sAjaxDataProp:"",columns:[{data:null,defaultContent:"",className:"select-checkbox",orderable:!1},{data:"type.typeName",render:function(e,a,s,t){return"display"!=a?e:'<img src="https://image.eveonline.com/Type/'+s.typeID+'_32.png"> '+e}},{data:"type.group.groupName"},{data:"type.group.category.categoryName"},{data:"buyRaw",render:function(e,a,s,t){return"display"!=a?e:1==e?'<span class="fa fa-fw fa-check-square-o"></span>':'<span class="fa fa-fw fa-square-o"></span>'}},{data:"buyRecycled",render:function(e,a,s,t){return"display"!=a?e:1==e?'<span class="fa fa-fw fa-check-square-o"></span>':'<span class="fa fa-fw fa-square-o"></span>'}},{data:"buyRefined",render:function(e,a,s,t){return"display"!=a?e:1==e?'<span class="fa fa-fw fa-check-square-o"></span>':'<span class="fa fa-fw fa-square-o"></span>'}},{data:"buyModifier",render:function(e,a,s,t){return"display"!=a?e:e.toFixed(2)}},{data:"buyPrice",render:function(e,a,s,t){return"display"!=a?e:e.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")+" ISK"}},{data:"sell",render:function(e,a,s,t){return"display"!=a?e:1==e?'<span class="fa fa-fw fa-check-square-o"></span>':'<span class="fa fa-fw fa-square-o"></span>'}},{data:"sellModifier",render:function(e,a,s,t){return"display"!=a?e:e.toFixed(2)}},{data:"sellPrice",render:function(e,a,s,t){return"display"!=a?e:e.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")+" ISK"}},{data:"lockPrices",render:function(e,a,s,t){return"display"!=a?e:1==e?'<span class="fa fa-fw fa-check-square-o"></span>':'<span class="fa fa-fw fa-square-o"></span>'}}],select:{style:"multi",selector:"td:first-child"},buttons:["selectAll","selectNone",{text:e.trans.buttons.add,action:function(s,t,n,l){var o='<div class="row">	<div class="col-md-12">		<form id="manage-form-add-items" class="form-horizontal">			<input type="hidden" name="_token" value="'+e.token+'">			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.types.split("|")[1]+'</label>				<div class="col-md-8">					<select id="types" name="types[]" class="form-control" multiple="multiple"></select>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.groups.split("|")[1]+'</label>				<div class="col-md-8">					<select id="groups" name="groups[]" class="form-control" multiple="multiple"></select>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.categories.split("|")[1]+'</label>				<div class="col-md-8">					<select id="categories" name="categories[]" class="form-control" multiple="multiple"></select>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.buy_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     >'+e.trans.messages.buy_raw.split("|")[1]+'</label></div>					<div class="checkbox"><label><input type="checkbox" name="buyRecycled">'+e.trans.messages.buy_recycled.split("|")[1]+'</label></div>					<div class="checkbox"><label><input type="checkbox" name="buyRefined" >'+e.trans.messages.buy_refined.split("|")[1]+'</label></div>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.buy_modifier+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="">				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.sell_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="sell">'+e.trans.messages.sell_items.split("|")[1]+'</label></div>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.sell_modifier+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="">				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.item_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="lockPrices">'+e.trans.messages.lock_prices+"</label></div>				</div>			</div>		</form>	</div></div>",r=bootbox.dialog({message:o,title:e.trans.messages.add_items.split("|")[1],buttons:{cancel:{label:e.trans.buttons.cancel,className:"btn-default",callback:function(){}},update:{label:e.trans.buttons.add,className:"btn-success",callback:function(){var s=$("#manage-form-add-items"),n=a.button(2);n.enable(!1),n.text('<span class="fa fa-spinner fa-spin"></span> '+e.trans.buttons.add),$.ajax({type:"POST",url:e.actions.addItems,data:s.serialize(),success:function(a){$.notify(a.message,{className:"success"}),n.enable(!0),n.text(e.trans.buttons.add),t.ajax.reload()},error:function(a,s,l){var o=JSON.parse(a.responseText);$.notify(o.message,{className:"error"}),n.enable(!0),n.text(e.trans.buttons.add),t.ajax.reload()}})}}}});r.bind("shown.bs.modal",function(){$("#manage-form-add-items #types").select2({ajax:{url:e.actions.getTypes,dataType:"json",delay:250,minimumInputLength:3,data:function(e){return{query:e.term,page:e.page}},processResults:function(e,a){return a.page=a.page||1,$.map(e.data,function(e){e.id=e.typeID,e.text=e.typeName}),{results:e.data,pagination:{more:20*a.page<e.total}}},cache:!0},templateResult:function(e){return e.id?$('<span><img src="https://image.eveonline.com/Type/'+e.typeID+'_32.png"> '+e.typeName+"</span>"):e.text}}),$("#manage-form-add-items #groups").select2({ajax:{url:e.actions.getGroups,dataType:"json",delay:250,minimumInputLength:3,data:function(e){return{query:e.term,page:e.page}},processResults:function(e,a){return a.page=a.page||1,$.map(e.data,function(e){e.id=e.groupID,e.text=e.groupName}),{results:e.data,pagination:{more:20*a.page<e.total}}},cache:!0},templateResult:function(e){return e.id?$("<span>"+e.groupName+"</span>"):e.text}}),$("#manage-form-add-items #categories").select2({ajax:{url:e.actions.getCategories,dataType:"json",delay:250,minimumInputLength:3,data:function(e){return{query:e.term,page:e.page}},processResults:function(e,a){return a.page=a.page||1,$.map(e.data,function(e){e.id=e.categoryID,e.text=e.categoryName}),{results:e.data,pagination:{more:20*a.page<e.total}}},cache:!0},templateResult:function(e){return e.id?$("<span>"+e.categoryName+"</span>"):e.text}})}),t.ajax.reload()},enabled:!0},{text:e.trans.buttons.edit,action:function(s,t,n,l){var o=a.rows(".selected").data(),r="";$.each(o,function(e,a){r+=a.typeID+","}),r=r.substr(0,r.length-1);var c=e.trans.messages.edit_items.split("|")[1==o.count()?0:1],i='<div class="row">	<div class="col-md-12">		<form id="manage-form-update-items" class="form-horizontal" action="'+e.actions.editItems+'" method="POST">			<input type="hidden" name="_token" value="'+e.token+'">			<input type="hidden" name="items" value="'+r+'">			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.buy_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     '+(o[0].buyRaw?" checked":"")+">"+e.trans.messages.buy_raw.split("|")[1==o.count()?0:1]+'</label></div>					<div class="checkbox"><label><input type="checkbox" name="buyRecycled"'+(o[0].buyRecycled?" checked":"")+">"+e.trans.messages.buy_recycled.split("|")[1==o.count()?0:1]+'</label></div>					<div class="checkbox"><label><input type="checkbox" name="buyRefined" '+(o[0].buyRefined?" checked":"")+">"+e.trans.messages.buy_refined.split("|")[1==o.count()?0:1]+'</label></div>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.buy_modifier+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="'+o[0].buyModifier+'">				</div>			</div>'+(1==o.count()?'			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.buy_price+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="buyPrice" min="0" value="'+o[0].buyPrice+'">				</div>			</div>':"")+'			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.sell_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="sell"'+(o[0].sell?" checked":"")+">"+e.trans.messages.sell_items.split("|")[1]+'</label></div>				</div>			</div>			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.sell_modifier+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="'+o[0].sellModifier+'">				</div>			</div>'+(1==o.count()?'			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.sell_price+'</label>				<div class="col-md-8">					<input class="form-control" type="number" name="sellPrice" min="0" value="'+o[0].sellPrice+'">				</div>			</div>':"")+'			<div class="form-group">				<label class="col-md-4 control-label">'+e.trans.headers.item_settings+'</label>				<div class="col-md-8">					<div class="checkbox"><label><input type="checkbox" name="lockPrices"'+(o[0].lockPrices?" checked":"")+">"+e.trans.messages.lock_prices+"</label></div>				</div>			</div>		</form>	</div></div>";bootbox.dialog({message:i,title:c,buttons:{cancel:{label:e.trans.buttons.cancel,className:"btn-default",callback:function(){}},update:{label:e.trans.buttons.edit,className:"btn-success",callback:function(){var s=$("#manage-form-update-items"),n=a.button(3);n.enable(!1),n.text('<span class="fa fa-spinner fa-spin"></span> '+e.trans.buttons.edit),$.ajax({type:"POST",url:e.actions.editItems,data:s.serialize(),success:function(a){$.notify(a.message,{className:"success"}),n.enable(!0),n.text(e.trans.buttons.edit),t.ajax.reload()},error:function(a,s,l){var o=JSON.parse(a.responseText);$.notify(o.message,{className:"error"}),n.enable(!0),n.text(e.trans.buttons.edit),t.ajax.reload()}})}}}})},enabled:!0},{text:e.trans.buttons.remove,action:function(s,t,n,l){var o=a.rows(".selected").data(),r="";$.each(o,function(e,a){r+=a.typeID+","}),r=r.substr(0,r.length-1);var c=e.trans.messages.remove_items_confirm.split("|")[1==o.count()?0:1],i=e.trans.messages.remove_items.split("|")[1==o.count()?0:1];bootbox.dialog({message:c,title:i,buttons:{cancel:{label:e.trans.buttons.cancel,className:"btn-default",callback:function(){}},remove:{label:e.trans.buttons.remove,className:"btn-danger",callback:function(){var s=a.button(4);s.enable(!1),s.text('<span class="fa fa-spinner fa-spin"></span> '+e.trans.buttons.remove),$.ajax({type:"POST",url:e.actions.removeItems,data:{_token:e.token,types:r},success:function(a){$.notify(a.message,{className:"success"}),s.enable(!0),s.text(e.trans.buttons.remove),t.ajax.reload()},error:function(a,n,l){var o=JSON.parse(a.responseText);$.notify(o.message,{className:"error"}),s.enable(!0),s.text(e.trans.buttons.remove),t.ajax.reload()}})}}}})},enabled:!1},{text:e.trans.buttons.update_prices,action:function(s,t,n,l){var o=a.button(5);o.enable(!1),o.text('<span class="fa fa-spinner fa-spin"></span> '+e.trans.buttons.update_prices),$.ajax({type:"POST",url:e.actions.updateItems,data:{_token:e.token},success:function(a){$.notify(a.message,{className:"success"}),o.enable(!0),o.text(e.trans.buttons.update_prices),t.ajax.reload()},error:function(a,s,n){var l=JSON.parse(a.responseText);$.notify(l.message,{className:"error"}),o.enable(!0),o.text(e.trans.buttons.update_prices),t.ajax.reload()}})},enabled:!0}]});$(".dt-buttons").addClass("btn-group"),$(".dt-button").addClass("btn btn-default"),$(".dt-button").removeClass("dt-button");var s=function(e,s,t,n){var l=a.rows({selected:!0}).count();a.button(3).enable(l>=1),a.button(4).enable(l>=1)};a.on("select",s),a.on("deselect",s),a.on("draw",s)}function initMiningTable(e){$("#mining-table").DataTable({ajax:e.actions.getAsteroids,sAjaxDataProp:"",order:[[3,"desc"]],columns:[{data:"typeName",render:function(e,a,s,t){return"display"!=a?e:'<img src="https://image.eveonline.com/Type/'+s.typeID+'_32.png"> '+e}},{data:"groupName"},{data:"categoryName"},{data:"price",render:function(e,a,s,t){return"display"!=a?e:e.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")+" ISK"}}]})}$(document).ready(function(){String.prototype.format||(String.prototype.format=function(){var e=arguments;return this.replace(/{(\d+)}/g,function(a,s){return"undefined"!=typeof e[s]?e[s]:a})})});
+function collect() {
+	var ret = {};
+	var len = arguments.length;
+	for (var i=0; i<len; i++) {
+		for (p in arguments[i]) {
+			if (arguments[i].hasOwnProperty(p)) {
+				ret[p] = arguments[i][p];
+			}
+		}
+	}
+	return ret;
+}
+
+$(document).ready(function() {
+	if (!String.prototype.format) {
+		String.prototype.format = function() {
+			var args = arguments;
+
+			return this.replace(/{(\d+)}/g, function(match, number) {
+				return typeof args[number] != 'undefined' ? args[number] : match;
+			});
+		};
+	}
+});
+
+function initManageMotd(args) {
+	var form = $("#manage-form-motd");
+
+	form.submit(function () {
+		var button = $("#manage-form-motd #submit");
+
+		button.prop('disabled', true);
+		button.html('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.edit);
+
+		$.ajax({
+			type: "POST",
+			url: args.actions.editMotd,
+			data: form.serialize(),
+
+			success: function(response) {
+				$.notify(response.message, {className: 'success'});
+
+				button.prop('disabled', false);
+				button.html(args.trans.buttons.edit);
+			},
+
+			error: function(request, status, error) {
+				var response = JSON.parse(request.responseText);
+
+				$.notify(response.message, {className: 'error'});
+
+				button.prop('disabled', false);
+				button.html(args.trans.buttons.edit);
+			},
+		});
+
+		return false;
+	});
+}
+
+function initManageItems(args) {
+	var table = $('#manage-form-items').DataTable({
+		dom: "lBfrtip",
+		ajax: args.actions.getItems,
+		sAjaxDataProp: "",
+		columns: [
+			{
+				data: null,
+				defaultContent: '',
+				className: 'select-checkbox',
+				orderable: false,
+			},
+			{
+				data: "type.typeName",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return '<img src="https://image.eveonline.com/Type/'+row.typeID+'_32.png"> '+data;
+				},
+			},
+			{
+				data: "type.group.groupName",
+			},
+			{
+				data: "type.group.category.categoryName",
+			},
+			{
+				data: "buyRaw",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data == true
+						? '<span class="fa fa-fw fa-check-square-o"></span>'
+						: '<span class="fa fa-fw fa-square-o"></span>';
+				},
+			},
+			{
+				data: "buyRecycled",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data == true
+						? '<span class="fa fa-fw fa-check-square-o"></span>'
+						: '<span class="fa fa-fw fa-square-o"></span>';
+				},
+			},
+			{
+				data: "buyRefined",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data == true
+						? '<span class="fa fa-fw fa-check-square-o"></span>'
+						: '<span class="fa fa-fw fa-square-o"></span>';
+				},
+			},
+			{
+				data: "buyModifier",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data.toFixed(2);
+				},
+			},
+			{
+				data: "buyPrice",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+' ISK';
+				},
+			},
+			{
+				data: "sell",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data == true
+						? '<span class="fa fa-fw fa-check-square-o"></span>'
+						: '<span class="fa fa-fw fa-square-o"></span>';
+				},
+			},
+			{
+				data: "sellModifier",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data.toFixed(2);
+				},
+			},
+			{
+				data: "sellPrice",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+' ISK';
+				},
+			},
+			{
+				data: "source",
+			},
+			{
+				data: "lockPrices",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data == true
+						? '<span class="fa fa-fw fa-check-square-o"></span>'
+						: '<span class="fa fa-fw fa-square-o"></span>';
+				},
+			},
+		],
+		select: {
+			style:    "multi",
+			selector: "td:first-child",
+		},
+		buttons: [
+			"selectAll",
+			"selectNone",
+			{
+				text: args.trans.buttons.add,
+				action: function (e, dt, node, config) {
+					var form = ''
+						+ '<div class="row">'
+						+ '	<div class="col-md-12">'
+						+ '		<form id="manage-form-add-items" class="form-horizontal">'
+						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.types.split('|')[1]+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="types" name="types[]" class="form-control" multiple="multiple"></select>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.groups.split('|')[1]+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="groups" name="groups[]" class="form-control" multiple="multiple"></select>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.categories.split('|')[1]+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="categories" name="categories[]" class="form-control" multiple="multiple"></select>'
+						+ '				</div>'
+						+ '			</div>'
+						// Copy of update items form below minus prices.
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     >'+args.trans.messages.buy_raw     .split('|')[1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled">'+args.trans.messages.buy_recycled.split('|')[1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" >'+args.trans.messages.buy_refined .split('|')[1]+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_modifier+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="">'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="sell">'+args.trans.messages.sell_items.split('|')[1]+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_modifier+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="">'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices">'+args.trans.messages.lock_prices+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.source+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="source" name="source" class="form-control">'
+						+ '					<option selected="selected">Jita</option>'
+						+ '					<option>1DQ1-A</option>'
+						+ '					</select>'
+						+ '				</div>'
+						+ '			</div>'
+						// End of update items form.
+						+ '		</form>'
+						+ '	</div>'
+						+ '</div>'
+					;
+
+					var box = bootbox.dialog({
+						message: form,
+						title: args.trans.messages.add_items.split('|')[1],
+						buttons: {
+							cancel: {
+								label: args.trans.buttons.cancel,
+								className: "btn-default",
+								callback: function() {
+								},
+							},
+							update: {
+								label: args.trans.buttons.add,
+								className: "btn-success",
+								callback: function() {
+									var form   = $("#manage-form-add-items");
+									var button = table.button(2);
+
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.add);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.addItems,
+										data: form.serialize(),
+
+										success: function(response) {
+											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.add);
+
+											dt.ajax.reload();
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
+											$.notify(response.message, {className: 'error'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.add);
+
+											dt.ajax.reload();
+										},
+									});
+								},
+							},
+						},
+					});
+
+					box.bind('shown.bs.modal', function () {
+						$("#manage-form-add-items #types").select2({
+							ajax: {
+								url: args.actions.getTypes,
+								dataType: "json",
+								delay: 250,
+								minimumInputLength: 3,
+								data: function (params) {
+									return {
+										query: params.term,
+										page : params.page,
+									};
+								},
+								processResults: function (data, params) {
+									params.page = params.page || 1;
+
+									$.map(data.data, function (obj) {
+										obj.id   = obj.typeID;
+										obj.text = obj.typeName;
+									});
+
+									return {
+										results: data.data,
+										pagination: {
+											more: (params.page * 20) < data.total
+										},
+									};
+								},
+								cache: true,
+							},
+							templateResult: function (state) {
+								if (!state.id) { return state.text; }
+
+								return $('<span><img src="https://image.eveonline.com/Type/'+state.typeID+'_32.png"> '+state.typeName+'</span>');
+							},
+						}); // #manage-form-add-items #types
+
+						$("#manage-form-add-items #groups").select2({
+							ajax: {
+								url: args.actions.getGroups,
+								dataType: "json",
+								delay: 250,
+								minimumInputLength: 3,
+								data: function (params) {
+									return {
+										query: params.term,
+										page : params.page,
+									};
+								},
+								processResults: function (data, params) {
+									params.page = params.page || 1;
+
+									$.map(data.data, function (obj) {
+										obj.id   = obj.groupID;
+										obj.text = obj.groupName;
+									});
+
+									return {
+										results: data.data,
+										pagination: {
+											more: (params.page * 20) < data.total
+										},
+									};
+								},
+								cache: true,
+							},
+							templateResult: function (state) {
+								if (!state.id) { return state.text; }
+
+								return $('<span>'+state.groupName+'</span>');
+							},
+						}); // #manage-form-add-items #groups
+
+						$("#manage-form-add-items #categories").select2({
+							ajax: {
+								url: args.actions.getCategories,
+								dataType: "json",
+								delay: 250,
+								minimumInputLength: 3,
+								data: function (params) {
+									return {
+										query: params.term,
+										page : params.page,
+									};
+								},
+								processResults: function (data, params) {
+									params.page = params.page || 1;
+
+									$.map(data.data, function (obj) {
+										obj.id   = obj.categoryID;
+										obj.text = obj.categoryName;
+									});
+
+									return {
+										results: data.data,
+										pagination: {
+											more: (params.page * 20) < data.total
+										},
+									};
+								},
+								cache: true,
+							},
+							templateResult: function (state) {
+								if (!state.id) { return state.text; }
+
+								return $('<span>'+state.categoryName+'</span>');
+							},
+						}); // #manage-form-add-items #categories
+					});
+
+					dt.ajax.reload();
+				},
+				enabled: true,
+			},
+			{
+				text: args.trans.buttons.edit,
+				action: function (e, dt, node, config) {
+					var data  = table.rows('.selected').data();
+					var types = "";
+
+					$.each(data, function (index, item) {
+						types += item.typeID + ",";
+					}); types  = types.substr(0, types.length - 1);
+
+					var title = args.trans.messages.edit_items.split('|')[data.count() == 1 ? 0 : 1];
+
+					var form = ''
+						+ '<div class="row">'
+						+ '	<div class="col-md-12">'
+						+ '		<form id="manage-form-update-items" class="form-horizontal" action="'+args.actions.editItems+'" method="POST">'
+						+ '			<input type="hidden" name="_token" value="'+args.token+'">'
+						+ '			<input type="hidden" name="items" value="'+(types)+'">'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRaw"     '+(data[0].buyRaw      ? ' checked' : '')+'>'+args.trans.messages.buy_raw     .split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRecycled"'+(data[0].buyRecycled ? ' checked' : '')+'>'+args.trans.messages.buy_recycled.split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="buyRefined" '+(data[0].buyRefined  ? ' checked' : '')+'>'+args.trans.messages.buy_refined .split('|')[data.count() == 1 ? 0 : 1]+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_modifier+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="buyModifier" min="0" step="0.01" value="'+(data[0].buyModifier)+'">'
+						+ '				</div>'
+						+ '			</div>'
+						+ (data.count() == 1 ?
+						  '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.buy_price+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="buyPrice" min="0" value="'+(data[0].buyPrice)+'">'
+						+ '				</div>'
+						+ '			</div>' : '')
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="sell"'+(data[0].sell ? ' checked' : '')+'>'+args.trans.messages.sell_items.split('|')[1]+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_modifier+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="sellModifier" min="0" step="0.01" value="'+(data[0].sellModifier)+'">'
+						+ '				</div>'
+						+ '			</div>'
+						+ (data.count() == 1 ?
+						  '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.sell_price+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<input class="form-control" type="number" name="sellPrice" min="0" value="'+(data[0].sellPrice)+'">'
+						+ '				</div>'
+						+ '			</div>' : '')
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.item_settings+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<div class="checkbox"><label><input type="checkbox" name="lockPrices"'+(data[0].lockPrices ? ' checked' : '')+'>'+args.trans.messages.lock_prices+'</label></div>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '			<div class="form-group">'
+						+ '				<label class="col-md-4 control-label">'+args.trans.headers.source+'</label>'
+						+ '				<div class="col-md-8">'
+						+ '					<select id="source" name="source" class="form-control">'
+						+ '					<option selected="selected">Jita</option>'
+						+ '					<option>1DQ1-A</option>'
+						+ '					</select>'
+						+ '				</div>'
+						+ '			</div>'
+						+ '		</form>'
+						+ '	</div>'
+						+ '</div>'
+					;
+
+					bootbox.dialog({
+						message: form,
+						title: title,
+						buttons: {
+							cancel: {
+								label: args.trans.buttons.cancel,
+								className: "btn-default",
+								callback: function() {
+								},
+							},
+							update: {
+								label: args.trans.buttons.edit,
+								className: "btn-success",
+								callback: function() {
+									var form   = $("#manage-form-update-items");
+									var button = table.button(3);
+
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.edit);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.editItems,
+										data: form.serialize(),
+
+										success: function(response) {
+											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.edit);
+
+											dt.ajax.reload();
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
+											$.notify(response.message, {className: 'error'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.edit);
+
+											dt.ajax.reload();
+										},
+									});
+								},
+							},
+						},
+					});
+				},
+				enabled: true,
+			},
+			{
+				text: args.trans.buttons.remove,
+				action: function (e, dt, node, config) {
+					var data  = table.rows('.selected').data();
+					var types = "";
+
+					$.each(data, function (index, item) {
+						types += item.typeID + ",";
+					}); types  = types.substr(0, types.length - 1);
+
+					var message = args.trans.messages.remove_items_confirm.split('|')[data.count() == 1 ? 0 : 1];
+					var title   = args.trans.messages.remove_items        .split('|')[data.count() == 1 ? 0 : 1];
+
+					bootbox.dialog({
+						message: message,
+						title: title,
+						buttons: {
+							cancel: {
+								label: args.trans.buttons.cancel,
+								className: "btn-default",
+								callback: function() {
+								},
+							},
+							remove: {
+								label: args.trans.buttons.remove,
+								className: "btn-danger",
+								callback: function() {
+									var button = table.button(4);
+
+									button.enable(false);
+									button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.remove);
+
+									$.ajax({
+										type: "POST",
+										url: args.actions.removeItems,
+										data: {_token: args.token, types: types},
+
+										success: function(response) {
+											$.notify(response.message, {className: 'success'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.remove);
+
+											dt.ajax.reload();
+										},
+
+										error: function(request, status, error) {
+											var response = JSON.parse(request.responseText);
+
+											$.notify(response.message, {className: 'error'});
+
+											button.enable(true);
+											button.text(args.trans.buttons.remove);
+
+											dt.ajax.reload();
+										},
+									});
+								}
+							},
+						},
+					});
+				},
+				enabled: false,
+			},
+			{
+				text: args.trans.buttons.update_prices,
+				action: function (e, dt, node, config) {
+					var button = table.button(5);
+
+					button.enable(false);
+					button.text('<span class="fa fa-spinner fa-spin"></span> ' + args.trans.buttons.update_prices);
+
+					$.ajax({
+						type: "POST",
+						url: args.actions.updateItems,
+						data: {_token: args.token},
+
+						success: function(response) {
+							$.notify(response.message, {className: 'success'});
+
+							button.enable(true);
+							button.text(args.trans.buttons.update_prices);
+
+							dt.ajax.reload();
+						},
+
+						error: function(request, status, error) {
+							var response = JSON.parse(request.responseText);
+
+							$.notify(response.message, {className: 'error'});
+
+							button.enable(true);
+							button.text(args.trans.buttons.update_prices);
+
+							dt.ajax.reload();
+						},
+					});
+				},
+				enabled: true,
+			},
+		],
+	});
+
+	$(".dt-buttons").addClass   ("btn-group"      );
+	$(".dt-button" ).addClass   ("btn btn-default");
+	$(".dt-button" ).removeClass("dt-button"      );
+
+	var tableEventFunction = function (e, dt, type, indexes) {
+		var selectedRows = table.rows({selected: true}).count();
+
+		table.button(3).enable(selectedRows >= 1); // Edit
+		table.button(4).enable(selectedRows >= 1); // Remove
+	};
+
+	table.on("select"  , tableEventFunction);
+	table.on("deselect", tableEventFunction);
+	table.on("draw"    , tableEventFunction);
+};
+
+function initMiningTable(args) {
+	var table = $('#mining-table').DataTable({
+		ajax: args.actions.getAsteroids,
+		sAjaxDataProp: "",
+		order: [[ 3, "desc" ]],
+		columns: [
+			{
+				data: "typeName",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return '<img src="https://image.eveonline.com/Type/'+row.typeID+'_32.png"> '+data;
+				},
+			},
+			{
+				data: "groupName",
+			},
+			{
+				data: "categoryName",
+			},
+			{
+				data: "price",
+				render: function (data, type, row, meta) {
+					if (type != "display") { return data; }
+
+					return data.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+' ISK';
+				},
+			},
+		],
+	});
+};
+
+//# sourceMappingURL=all.js.map

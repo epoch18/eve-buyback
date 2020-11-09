@@ -44,6 +44,7 @@ class Item extends Model
 		'sellModifier',
 		'sellPrice',
 		'lockPrices',
+		'source',
 	];
 
 	/**
@@ -71,6 +72,7 @@ class Item extends Model
 		'sellModifier' => 'double',
 		'sellPrice'    => 'double',
 		'lockPrices'   => 'boolean',
+		'source'       => 'string',
 	];
 
 	public function type()

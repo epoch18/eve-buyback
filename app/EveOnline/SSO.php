@@ -51,6 +51,16 @@ class SSO
 	}
 
 	/**
+	 * Checks if the token query value is present
+	 * @return boolean
+	 */
+	public function hasTokenParam()
+	{
+		$token = $this->request->input('code');
+		return $token != NULL;
+	}
+
+	/**
 	 * Redirects the user to the login page.
 	 * @return Illuminate\Http\RedirectResponse
 	 */

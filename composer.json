@@ -11,7 +11,8 @@
 		"guzzlehttp/guzzle": "^6.1",
 		"barryvdh/laravel-debugbar": "^2.2",
 		"3rdpartyeve/phealng": "^2.3",
-		"michelf/php-markdown": "^1.6"
+		"michelf/php-markdown": "^1.6",
+		"doctrine/dbal": "^2.9"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

@@ -40,7 +40,7 @@ class UserController extends Controller
 			return redirect()->route('index');
 		}
 
-		if (!$this->sso->isReferredByEveOnline()) {
+		if (!$this->sso->hasTokenParam()) {
 			return $this->sso->redirectToEveOnline();
 		}
 

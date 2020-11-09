@@ -39,7 +39,7 @@ class UserControllerTest extends TestCase
 		$user = factory(App\Models\User::class)->make();
 		$user->save();
 
-		$this->sso->shouldReceive('isReferredByEveOnline')
+		$this->sso->shouldReceive('hasTokenParam')
 		          ->once()
 		          ->andReturn(true);
 
@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
 		$user = factory(App\Models\User::class)->make();
 		$user->save();
 
-		$this->sso->shouldReceive('isReferredByEveOnline')
+		$this->sso->shouldReceive('hasTokenParam')
 		          ->once()
 		          ->andReturn(true);
 

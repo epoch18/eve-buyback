@@ -48,6 +48,7 @@ return [
 		'sell_price'     => 'Sell Price',
 		'sell_settings'  => 'Sell Settings',
 		'title'          => 'Title',
+		'source'         => 'Source',
 		'total'          => 'Total',
 		'types'          => 'Type|Types',
 		'unwanted'       => 'Unwanted',

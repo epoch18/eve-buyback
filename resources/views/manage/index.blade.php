@@ -46,6 +46,7 @@
 							<th>{!! trans       ('buyback.headers.sell'         ) !!}</th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+							<th>{!! trans       ('buyback.headers.source'        ) !!}</th>
 							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top" title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
 						</tr>
 					</thead>
@@ -63,6 +64,7 @@
 							<th>{!! trans       ('buyback.headers.sell'         ) !!}</th>
 							<th>{!! trans       ('buyback.headers.modifier'     ) !!}</th>
 							<th>{!! trans       ('buyback.headers.price'        ) !!}</th>
+							<th>{!! trans       ('buyback.headers.source'        ) !!}</th>
 							<th><span class="fa fa-fw fa-lock" data-toggle="tooltip" data-placement="top" title="{!! trans('buyback.messages.lock_prices') !!}"></span></th>
 						</tr>
 					</tfoot>
