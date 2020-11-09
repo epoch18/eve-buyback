@@ -338,6 +338,9 @@ class Refinery
 			'Monazite',
 			'Xenotime',
 			'Ytterbite',
+			'Bezdnacine',
+			'Rakovene',
+			'Talassonite',
 		];
 
 		foreach ($bases as $base) {
